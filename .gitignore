@@ -72,24 +72,31 @@ buildNumber.properties
 ## Logger Files
 #################
 /audit-impl/logs/
+/audit-node/audit-node-all-he/logs/
 
 #################
 ## Configuration Files
 #################
 /audit-impl/conf/
+/audit-node/audit-node-all-he/conf/
 
 #################
 ## Libext Files
 #################
+/audit-node/audit-node-all-he/libext/
 
 #################
 ## Opt Files
 #################
+/audit-node/audit-node-all-he/opt/
 
 #################
 ## Optext Files
 #################
+/audit-node/audit-node-all-he/optext/
 
 #################
 ## Confext Files
 #################
+/audit-node/audit-node-all-he/confext/
+
