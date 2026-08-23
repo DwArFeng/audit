@@ -9,6 +9,8 @@ public class LauncherSettingHandler implements Handler {
 
     @Value("${com.dwarfeng.audit.launcher.start_audit_record_delay}")
     private long startAuditRecordDelay;
+    @Value("${com.dwarfeng.audit.launcher.start_reset_delay}")
+    private long startResetDelay;
 
     public long getStartAuditRecordDelay() {
         return startAuditRecordDelay;
@@ -18,10 +20,19 @@ public class LauncherSettingHandler implements Handler {
         this.startAuditRecordDelay = startAuditRecordDelay;
     }
 
+    public long getStartResetDelay() {
+        return startResetDelay;
+    }
+
+    public void setStartResetDelay(long startResetDelay) {
+        this.startResetDelay = startResetDelay;
+    }
+
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
                 "startAuditRecordDelay=" + startAuditRecordDelay +
+                ", startResetDelay=" + startResetDelay +
                 '}';
     }
 }

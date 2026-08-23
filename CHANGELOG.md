@@ -4,6 +4,16 @@
 
 ### 功能构建
 
+- 实现预设重置器。
+  - com.dwarfeng.audit.impl.handler.resetter.CronResetter。
+  - com.dwarfeng.audit.impl.handler.resetter.DubboResetter。
+  - com.dwarfeng.audit.impl.handler.resetter.FixedDelayResetter。
+  - com.dwarfeng.audit.impl.handler.resetter.FixedRateResetter。
+  - com.dwarfeng.audit.impl.handler.resetter.NeverResetter。
+
+- 实现核心机制。
+  - 重置机制。
+
 - 实现核心服务。
   - com.dwarfeng.audit.stack.service.AuditEntryLookupService。
   - com.dwarfeng.audit.stack.service.AuditRecordService。
