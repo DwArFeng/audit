@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现预设推送器。
+  - com.dwarfeng.audit.impl.handler.pusher.DrainPusher。
+  - com.dwarfeng.audit.impl.handler.pusher.LogPusher。
+  - com.dwarfeng.audit.impl.handler.pusher.MultiPusher。
+  - com.dwarfeng.audit.impl.handler.pusher.NativeKafkaPusher。
+
 - 实现预设重置器。
   - com.dwarfeng.audit.impl.handler.resetter.CronResetter。
   - com.dwarfeng.audit.impl.handler.resetter.DubboResetter。
@@ -12,6 +18,7 @@
   - com.dwarfeng.audit.impl.handler.resetter.NeverResetter。
 
 - 实现核心机制。
+  - 推送机制。
   - 重置机制。
 
 - 实现核心服务。

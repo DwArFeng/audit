@@ -2,8 +2,11 @@ package com.dwarfeng.audit.impl.handler;
 
 import com.dwarfeng.audit.stack.handler.AuditRecordHandler;
 import com.dwarfeng.audit.stack.handler.AuditRecordLocalCacheHandler;
+import com.dwarfeng.audit.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.locks.Lock;
@@ -21,17 +24,22 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class ResetProcessor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResetProcessor.class);
+
     private final AuditRecordHandler auditRecordHandler;
     private final AuditRecordLocalCacheHandler auditRecordLocalCacheHandler;
+    private final PushHandler pushHandler;
 
     private final Lock lock = new ReentrantLock();
 
     public ResetProcessor(
             AuditRecordHandler auditRecordHandler,
-            AuditRecordLocalCacheHandler auditRecordLocalCacheHandler
+            AuditRecordLocalCacheHandler auditRecordLocalCacheHandler,
+            PushHandler pushHandler
     ) {
         this.auditRecordHandler = auditRecordHandler;
         this.auditRecordLocalCacheHandler = auditRecordLocalCacheHandler;
+        this.pushHandler = pushHandler;
     }
 
     /**
@@ -63,6 +71,13 @@ public class ResetProcessor {
         // 如果审计记录处理器之前已经启动，则恢复其运行状态。
         if (auditRecordStarted) {
             auditRecordHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.auditRecordReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送审核记录功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 }
