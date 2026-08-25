@@ -45,6 +45,14 @@ public final class ServiceExceptionHelper {
         map.put(ConsumeStoppedException.class, ServiceExceptionCodes.CONSUME_STOPPED);
         map.put(InvalidAuditPropertyTypeException.class, ServiceExceptionCodes.INVALID_AUDIT_PROPERTY_TYPE);
         map.put(InvalidAuditRecordInfoException.class, ServiceExceptionCodes.INVALID_AUDIT_RECORD_INFO);
+        map.put(
+                InvalidAuditEntryCompositeLookupInfoException.class,
+                ServiceExceptionCodes.INVALID_AUDIT_ENTRY_COMPOSITE_LOOKUP_INFO
+        );
+        map.put(
+                InvalidAuditEntryGroupedLookupInfoException.class,
+                ServiceExceptionCodes.INVALID_AUDIT_ENTRY_GROUPED_LOOKUP_INFO
+        );
 
         return map;
     }

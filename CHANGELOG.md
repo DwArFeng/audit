@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 实现核心服务。
+  - com.dwarfeng.audit.stack.service.AuditEntryLookupService。
   - com.dwarfeng.audit.stack.service.AuditRecordService。
 
 - 完成 `audit-node-all-he` 模块，启动测试通过。

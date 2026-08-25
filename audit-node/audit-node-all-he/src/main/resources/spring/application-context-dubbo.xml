@@ -60,6 +60,11 @@
             ref="auditRecordServiceImpl"
             group="${com.dwarfeng.audit.dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.AuditEntryLookupService"
+            ref="auditEntryLookupServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
 
     <!-- endregion -->
 
