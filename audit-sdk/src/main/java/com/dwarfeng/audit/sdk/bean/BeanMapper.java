@@ -1,14 +1,12 @@
 package com.dwarfeng.audit.sdk.bean;
 
-import com.dwarfeng.audit.sdk.bean.dto.FastJsonAuditEntryLookupResult;
-import com.dwarfeng.audit.sdk.bean.dto.JSFixedFastJsonAuditEntryLookupResult;
-import com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryCompositeLookupInfo;
-import com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryGroupedLookupInfo;
+import com.dwarfeng.audit.sdk.bean.dto.*;
 import com.dwarfeng.audit.sdk.bean.entity.*;
 import com.dwarfeng.audit.sdk.bean.key.*;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult;
+import com.dwarfeng.audit.stack.bean.dto.AuditRecordInfo;
 import com.dwarfeng.audit.stack.bean.entity.AuditCategory;
 import com.dwarfeng.audit.stack.bean.entity.AuditEntry;
 import com.dwarfeng.audit.stack.bean.entity.AuditEntryProperty;
@@ -206,6 +204,11 @@ public interface BeanMapper {
     AuditEntryGroupedLookupInfo auditEntryGroupedLookupInfoFromWebInput(
             WebInputAuditEntryGroupedLookupInfo webInputAuditEntryGroupedLookupInfo
     );
+
+    WebInputAuditRecordInfo auditRecordInfoToWebInput(AuditRecordInfo auditRecordInfo);
+
+    @InheritInverseConfiguration
+    AuditRecordInfo auditRecordInfoFromWebInput(WebInputAuditRecordInfo webInputAuditRecordInfo);
 
     // endregion
 }

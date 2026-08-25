@@ -1,5 +1,6 @@
 package com.dwarfeng.audit.sdk.util;
 
+import com.dwarfeng.audit.stack.exception.*;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 
 import java.util.HashMap;
@@ -29,6 +30,21 @@ public final class ServiceExceptionHelper {
         if (Objects.isNull(map)) {
             map = new HashMap<>();
         }
+
+        map.put(AuditCategoryDisabledException.class, ServiceExceptionCodes.AUDIT_CATEGORY_DISABLED);
+        map.put(AuditCategoryNotExistsException.class, ServiceExceptionCodes.AUDIT_CATEGORY_NOT_EXISTS);
+        map.put(
+                AuditPropertyIndicatorNotExistsException.class,
+                ServiceExceptionCodes.AUDIT_PROPERTY_INDICATOR_NOT_EXISTS
+        );
+        map.put(
+                AuditPropertyValueTypeMismatchException.class,
+                ServiceExceptionCodes.AUDIT_PROPERTY_VALUE_TYPE_MISMATCH
+        );
+        map.put(AuditRecordHandlerStoppedException.class, ServiceExceptionCodes.AUDIT_RECORD_HANDLER_STOPPED);
+        map.put(ConsumeStoppedException.class, ServiceExceptionCodes.CONSUME_STOPPED);
+        map.put(InvalidAuditPropertyTypeException.class, ServiceExceptionCodes.INVALID_AUDIT_PROPERTY_TYPE);
+        map.put(InvalidAuditRecordInfoException.class, ServiceExceptionCodes.INVALID_AUDIT_RECORD_INFO);
 
         return map;
     }

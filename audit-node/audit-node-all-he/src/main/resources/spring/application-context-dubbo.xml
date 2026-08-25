@@ -55,6 +55,11 @@
             ref="auditEntryPropertyMaintainServiceImpl"
             group="${com.dwarfeng.audit.dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.AuditRecordService"
+            ref="auditRecordServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
 
     <!-- endregion -->
 

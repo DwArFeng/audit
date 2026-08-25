@@ -1,5 +1,7 @@
 package com.dwarfeng.audit.sdk.util;
 
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
+
 /**
  * 服务异常代码。
  *
@@ -10,7 +12,23 @@ public final class ServiceExceptionCodes {
 
     private static int EXCEPTION_CODE_OFFSET = 1000;
 
-    @SuppressWarnings("unused")
+    public static final ServiceException.Code AUDIT_CATEGORY_DISABLED =
+            new ServiceException.Code(offset(0), "audit category disabled");
+    public static final ServiceException.Code AUDIT_CATEGORY_NOT_EXISTS =
+            new ServiceException.Code(offset(10), "audit category not exists");
+    public static final ServiceException.Code AUDIT_PROPERTY_INDICATOR_NOT_EXISTS =
+            new ServiceException.Code(offset(20), "audit property indicator not exists");
+    public static final ServiceException.Code AUDIT_PROPERTY_VALUE_TYPE_MISMATCH =
+            new ServiceException.Code(offset(30), "audit property value type mismatch");
+    public static final ServiceException.Code AUDIT_RECORD_HANDLER_STOPPED =
+            new ServiceException.Code(offset(40), "audit record handler stopped");
+    public static final ServiceException.Code CONSUME_STOPPED =
+            new ServiceException.Code(offset(50), "consume stopped");
+    public static final ServiceException.Code INVALID_AUDIT_PROPERTY_TYPE =
+            new ServiceException.Code(offset(60), "invalid audit property type");
+    public static final ServiceException.Code INVALID_AUDIT_RECORD_INFO =
+            new ServiceException.Code(offset(70), "invalid audit record info");
+
     private static int offset(int value) {
         return EXCEPTION_CODE_OFFSET + value;
     }
@@ -30,7 +48,18 @@ public final class ServiceExceptionCodes {
      * @param exceptionCodeOffset 指定的异常代号的偏移量。
      */
     public static void setExceptionCodeOffset(int exceptionCodeOffset) {
+        // 设置 EXCEPTION_CODE_OFFSET 的值。
         EXCEPTION_CODE_OFFSET = exceptionCodeOffset;
+
+        // 以新的 EXCEPTION_CODE_OFFSET 为基准，更新异常代码的值。
+        AUDIT_CATEGORY_DISABLED.setCode(offset(0));
+        AUDIT_CATEGORY_NOT_EXISTS.setCode(offset(10));
+        AUDIT_PROPERTY_INDICATOR_NOT_EXISTS.setCode(offset(20));
+        AUDIT_PROPERTY_VALUE_TYPE_MISMATCH.setCode(offset(30));
+        AUDIT_RECORD_HANDLER_STOPPED.setCode(offset(40));
+        CONSUME_STOPPED.setCode(offset(50));
+        INVALID_AUDIT_PROPERTY_TYPE.setCode(offset(60));
+        INVALID_AUDIT_RECORD_INFO.setCode(offset(70));
     }
 
     private ServiceExceptionCodes() {

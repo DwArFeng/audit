@@ -27,6 +27,11 @@ public final class Constants {
     @AuditPropertyTypeItem
     public static final int PROPERTY_TYPE_DATE = 4;
 
+    /**
+     * 检查任务的执行间隔。
+     */
+    public static final long SCHEDULER_CHECK_INTERVAL = 5000L;
+
     private static final Lock LOCK = new ReentrantLock();
 
     private static List<Integer> auditPropertyTypeSpace;
