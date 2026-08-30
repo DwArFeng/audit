@@ -558,6 +558,11 @@
                 <artifactId>audit-node-all-he</artifactId>
                 <version>1.0.0.a-beta-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>audit-distribute</artifactId>
+                <version>1.0.0.a-beta-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -603,5 +608,6 @@
         <module>audit-sdk</module>
         <module>audit-impl</module>
         <module>audit-node</module>
+        <module>audit-distribute</module>
     </modules>
 </project>

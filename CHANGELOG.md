@@ -4,6 +4,8 @@
 
 ### 功能构建
 
+- 完成 `audit-distribute` 模块，打包测试通过。
+
 - 实现运维指令。
   - com.dwarfeng.audit.impl.service.telqos.AuditEntryLookupCommand。
   - com.dwarfeng.audit.impl.service.telqos.AuditRecordCommand。
