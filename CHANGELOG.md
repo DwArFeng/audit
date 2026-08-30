@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- 实现运维指令。
+  - com.dwarfeng.audit.impl.service.telqos.AuditEntryLookupCommand。
+  - com.dwarfeng.audit.impl.service.telqos.AuditRecordCommand。
+  - com.dwarfeng.audit.impl.service.telqos.AuditRecordLocalCacheCommand。
+  - com.dwarfeng.audit.impl.service.telqos.AuditRecordLogicConsumerCommand。
+  - com.dwarfeng.audit.impl.service.telqos.AuditRecordPersistenceConsumerCommand。
+  - com.dwarfeng.audit.impl.service.telqos.ResetCommand。
+
 - 实现预设推送器。
   - com.dwarfeng.audit.impl.handler.pusher.DrainPusher。
   - com.dwarfeng.audit.impl.handler.pusher.LogPusher。
