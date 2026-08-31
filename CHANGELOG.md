@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增 `subgrade` 项目的集成组件。
+  - com.dwarfeng.audit.api.integration.subgrade.AuditRecordHandlerImpl。
+
 - 新增 api 模块。
 
 - 完成 `audit-distribute` 模块，打包测试通过。
