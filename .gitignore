@@ -73,12 +73,14 @@ buildNumber.properties
 #################
 /audit-impl/logs/
 /audit-node/audit-node-all-he/logs/
+/audit-api/logs/
 
 #################
 ## Configuration Files
 #################
 /audit-impl/conf/
 /audit-node/audit-node-all-he/conf/
+/audit-api/conf/
 
 #################
 ## Libext Files

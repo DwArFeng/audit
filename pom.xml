@@ -560,6 +560,11 @@
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
+                <artifactId>audit-api</artifactId>
+                <version>1.0.0.a-beta-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-distribute</artifactId>
                 <version>1.0.0.a-beta-SNAPSHOT</version>
             </dependency>
@@ -608,6 +613,7 @@
         <module>audit-sdk</module>
         <module>audit-impl</module>
         <module>audit-node</module>
+        <module>audit-api</module>
         <module>audit-distribute</module>
     </modules>
 </project>
