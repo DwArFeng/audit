@@ -4,6 +4,16 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/Contents.md。
+  - docs/wiki/zh-CN/Introduction.md。
+  - docs/wiki/zh-CN/README.md。
+  - docs/wiki/en-US/Contents.md。
+  - docs/wiki/en-US/Introduction.md。
+  - docs/wiki/en-US/README.md。
+
+- `README.md` 更新。
+
 - 新增 `subgrade` 项目的集成组件。
   - com.dwarfeng.audit.api.integration.subgrade.AuditRecordHandlerImpl。
 

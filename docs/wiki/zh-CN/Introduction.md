@@ -29,12 +29,12 @@ Audit 将记录入口处理与持久化处理拆分为两级可配置消费流�
 
 ## 国际化（I18N）
 
-您正在阅读的文档是中文文档，您可以在 [wiki](./docs/wiki) 目录下找到其他语言的文档。
+您正在阅读的文档是中文文档，您可以在 [wiki](..) 目录下找到其他语言的文档。
 
-You are reading the Chinese document. You can find documents in other languages in the [wiki](./docs/wiki) directory.
+You are reading the Chinese document. You can find documents in other languages in the [wiki](..) directory.
 
-- [简体中文](./docs/wiki/zh-CN/Introduction.md)
-- [English](./docs/wiki/en-US/Introduction.md)
+- [简体中文](./Introduction.md)
+- [English](../en-US/Introduction.md)
 
 ## 特性
 
@@ -103,21 +103,21 @@ flowchart LR
 
 ## 文档
 
-该项目的文档位于 [docs](./docs) 目录下，包括：
+该项目的文档位于 [docs](../..) 目录下，包括：
 
 ### wiki
 
 wiki 为项目开发人员和使用者编写的详细文档，包含不同语言的版本，主要入口为：
 
-1. [简介](./docs/wiki/zh-CN/Introduction.md) - 镜像的 `README.md`，与本文件内容基本相同。
-2. [目录](./docs/wiki/zh-CN/Contents.md) - 文档目录。
+1. [简介](./Introduction.md) - 镜像的 `README.md`，与根目录文件内容基本相同。
+2. [目录](./Contents.md) - 文档目录。
 
 ## 运行截图
 
 Telnet 运维平台指令合集：
 
-![Telnet 运维平台指令合集](./docs/wiki/zh-CN/images/TelqosCommands.png "Telnet 运维平台指令合集")
+![Telnet 运维平台指令合集](./images/TelqosCommands.png "Telnet 运维平台指令合集")
 
 在 Telnet 运维平台中查询审计记录功能状态：
 
-![Telnet 运维平台查询审计记录功能状态](./docs/wiki/zh-CN/images/TelqosAuditRecordStatus.png "Telnet 运维平台查询审计记录功能状态")
+![Telnet 运维平台查询审计记录功能状态](./images/TelqosAuditRecordStatus.png "Telnet 运维平台查询审计记录功能状态")
