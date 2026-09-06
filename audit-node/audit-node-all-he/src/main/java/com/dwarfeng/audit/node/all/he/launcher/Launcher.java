@@ -2,6 +2,7 @@ package com.dwarfeng.audit.node.all.he.launcher;
 
 import com.dwarfeng.audit.node.all.he.handler.LauncherSettingHandler;
 import com.dwarfeng.audit.stack.service.AuditRecordQosService;
+import com.dwarfeng.audit.stack.service.InspectionTaskCheckQosService;
 import com.dwarfeng.audit.stack.service.ResetQosService;
 import com.dwarfeng.audit.stack.service.SupportQosService;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
@@ -37,6 +38,11 @@ public class Launcher {
 
             // 根据启动器设置处理器的设置，选择性地开启重置服务。
             mayStartReset(ctx);
+
+            // 根据启动器设置处理器的设置，选择性地上线自动审计任务检查服务。
+            mayOnlineInspectionTaskCheck(ctx);
+            // 根据启动器设置处理器的设置，选择性地启动自动审计任务检查服务。
+            mayEnableInspectionTaskCheck(ctx);
         });
     }
 
@@ -125,6 +131,78 @@ public class Launcher {
                         }
                     },
                     new Date(System.currentTimeMillis() + startResetDelay)
+            );
+        }
+    }
+
+    private static void mayOnlineInspectionTaskCheck(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 获取程序中的 ThreadPoolTaskScheduler，用于处理计划任务。
+        ThreadPoolTaskScheduler scheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+
+        // 获取自动审计任务检查 QOS 服务。
+        InspectionTaskCheckQosService inspectionTaskCheckQosService =
+                ctx.getBean(InspectionTaskCheckQosService.class);
+
+        // 判断自动审计任务检查处理器是否上线自动审计任务检查服务，并按条件执行不同的操作。
+        long onlineInspectionTaskCheckDelay = launcherSettingHandler.getOnlineInspectionTaskCheckDelay();
+        if (onlineInspectionTaskCheckDelay == 0) {
+            LOGGER.info("立即上线自动审计任务检查服务...");
+            try {
+                inspectionTaskCheckQosService.online();
+            } catch (ServiceException e) {
+                LOGGER.error("无法上线自动审计任务检查服务，异常原因如下", e);
+            }
+        } else if (onlineInspectionTaskCheckDelay > 0) {
+            LOGGER.info("{} 毫秒后上线自动审计任务检查服务...", onlineInspectionTaskCheckDelay);
+            scheduler.schedule(
+                    () -> {
+                        LOGGER.info("上线自动审计任务检查服务...");
+                        try {
+                            inspectionTaskCheckQosService.online();
+                        } catch (ServiceException e) {
+                            LOGGER.error("无法上线自动审计任务检查服务，异常原因如下", e);
+                        }
+                    },
+                    new Date(System.currentTimeMillis() + onlineInspectionTaskCheckDelay)
+            );
+        }
+    }
+
+    private static void mayEnableInspectionTaskCheck(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 获取程序中的 ThreadPoolTaskScheduler，用于处理计划任务。
+        ThreadPoolTaskScheduler scheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+
+        // 获取自动审计任务检查 QOS 服务。
+        InspectionTaskCheckQosService inspectionTaskCheckQosService =
+                ctx.getBean(InspectionTaskCheckQosService.class);
+
+        // 判断自动审计任务检查处理器是否启动自动审计任务检查服务，并按条件执行不同的操作。
+        long enableInspectionTaskCheckDelay = launcherSettingHandler.getEnableInspectionTaskCheckDelay();
+        if (enableInspectionTaskCheckDelay == 0) {
+            LOGGER.info("立即启动自动审计任务检查服务...");
+            try {
+                inspectionTaskCheckQosService.start();
+            } catch (ServiceException e) {
+                LOGGER.error("无法启动自动审计任务检查服务，异常原因如下", e);
+            }
+        } else if (enableInspectionTaskCheckDelay > 0) {
+            LOGGER.info("{} 毫秒后启动自动审计任务检查服务...", enableInspectionTaskCheckDelay);
+            scheduler.schedule(
+                    () -> {
+                        LOGGER.info("启动自动审计任务检查服务...");
+                        try {
+                            inspectionTaskCheckQosService.start();
+                        } catch (ServiceException e) {
+                            LOGGER.error("无法启动自动审计任务检查服务，异常原因如下", e);
+                        }
+                    },
+                    new Date(System.currentTimeMillis() + enableInspectionTaskCheckDelay)
             );
         }
     }

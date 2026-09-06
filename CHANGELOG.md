@@ -8,6 +8,7 @@
   - com.dwarfeng.audit.impl.handler.inspector.groovy.GroovyInspectorRegistry。
 
 - 实现核心机制。
+  - 自动审计任务检查机制。
   - 自动审计作业机制。
   - 审计机制。
 

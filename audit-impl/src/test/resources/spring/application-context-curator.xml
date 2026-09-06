@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+    <bean id="curatorRetryPolicy" class="org.apache.curator.retry.ExponentialBackoffRetry">
+        <constructor-arg index="0" value="${com.dwarfeng.audit.curator.retry_policy.base_sleep_time}"/>
+        <constructor-arg index="1" value="${com.dwarfeng.audit.curator.retry_policy.max_retries}"/>
+        <constructor-arg index="2" value="${com.dwarfeng.audit.curator.retry_policy.max_sleep}"/>
+    </bean>
+
+    <!--suppress SpringXmlModelInspection -->
+    <bean
+            id="curatorFramework"
+            class="org.apache.curator.framework.CuratorFrameworkFactory"
+            factory-method="newClient"
+            init-method="start"
+            destroy-method="close"
+    >
+        <constructor-arg index="0" value="${com.dwarfeng.audit.curator.connect.connect_string}"/>
+        <constructor-arg index="1" value="${com.dwarfeng.audit.curator.connect.session_timeout}"/>
+        <constructor-arg index="2" value="${com.dwarfeng.audit.curator.connect.connection_timeout}"/>
+        <constructor-arg index="3" ref="curatorRetryPolicy"/>
+    </bean>
+</beans>
