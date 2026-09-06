@@ -48,6 +48,14 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(160), "invalid variable value type");
     public static final ServiceException.Code VARIABLE_VALUE_TYPE_MISMATCH =
             new ServiceException.Code(offset(170), "variable value type mismatch");
+    public static final ServiceException.Code INSPECTOR_FAILED =
+            new ServiceException.Code(offset(180), "inspector failed");
+    public static final ServiceException.Code INSPECTOR_MAKE_FAILED =
+            new ServiceException.Code(offset(181), "inspector make failed");
+    public static final ServiceException.Code INSPECTOR_EXECUTION_FAILED =
+            new ServiceException.Code(offset(182), "inspector execution failed");
+    public static final ServiceException.Code INSPECTOR_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(183), "inspector type unsupported");
 
     private static int offset(int value) {
         return EXCEPTION_CODE_OFFSET + value;
@@ -90,6 +98,10 @@ public final class ServiceExceptionCodes {
         INSPECTOR_VARIABLE_NOT_EXISTS.setCode(offset(150));
         INVALID_VARIABLE_VALUE_TYPE.setCode(offset(160));
         VARIABLE_VALUE_TYPE_MISMATCH.setCode(offset(170));
+        INSPECTOR_FAILED.setCode(offset(180));
+        INSPECTOR_MAKE_FAILED.setCode(offset(181));
+        INSPECTOR_EXECUTION_FAILED.setCode(offset(182));
+        INSPECTOR_TYPE_UNSUPPORTED.setCode(offset(183));
     }
 
     private ServiceExceptionCodes() {

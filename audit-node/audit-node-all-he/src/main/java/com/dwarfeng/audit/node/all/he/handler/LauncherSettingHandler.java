@@ -7,10 +7,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class LauncherSettingHandler implements Handler {
 
+    @Value("${com.dwarfeng.audit.launcher.reset_inspector_support}")
+    private boolean resetInspectorSupport;
+
     @Value("${com.dwarfeng.audit.launcher.start_audit_record_delay}")
     private long startAuditRecordDelay;
     @Value("${com.dwarfeng.audit.launcher.start_reset_delay}")
     private long startResetDelay;
+
+    public boolean isResetInspectorSupport() {
+        return resetInspectorSupport;
+    }
 
     public long getStartAuditRecordDelay() {
         return startAuditRecordDelay;
@@ -31,7 +38,8 @@ public class LauncherSettingHandler implements Handler {
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
-                "startAuditRecordDelay=" + startAuditRecordDelay +
+                "resetInspectorSupport=" + resetInspectorSupport +
+                ", startAuditRecordDelay=" + startAuditRecordDelay +
                 ", startResetDelay=" + startResetDelay +
                 '}';
     }

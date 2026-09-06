@@ -67,6 +67,10 @@ public final class ServiceExceptionHelper {
         map.put(InspectorVariableNotExistsException.class, ServiceExceptionCodes.INSPECTOR_VARIABLE_NOT_EXISTS);
         map.put(InvalidVariableValueTypeException.class, ServiceExceptionCodes.INVALID_VARIABLE_VALUE_TYPE);
         map.put(VariableValueTypeMismatchException.class, ServiceExceptionCodes.VARIABLE_VALUE_TYPE_MISMATCH);
+        map.put(InspectorException.class, ServiceExceptionCodes.INSPECTOR_FAILED);
+        map.put(InspectorMakeException.class, ServiceExceptionCodes.INSPECTOR_MAKE_FAILED);
+        map.put(InspectorExecutionException.class, ServiceExceptionCodes.INSPECTOR_EXECUTION_FAILED);
+        map.put(UnsupportedInspectorTypeException.class, ServiceExceptionCodes.INSPECTOR_TYPE_UNSUPPORTED);
 
         return map;
     }

@@ -3,6 +3,7 @@ package com.dwarfeng.audit.node.all.he.launcher;
 import com.dwarfeng.audit.node.all.he.handler.LauncherSettingHandler;
 import com.dwarfeng.audit.stack.service.AuditRecordQosService;
 import com.dwarfeng.audit.stack.service.ResetQosService;
+import com.dwarfeng.audit.stack.service.SupportQosService;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
@@ -28,12 +29,34 @@ public class Launcher {
                 "file:opt/opt*.xml",
                 "file:optext/opt*.xml"
         }, ctx -> {
+            // 根据启动器设置处理器的设置，选择性重置审计器。
+            mayResetInspector(ctx);
+
             // 根据启动器设置处理器的设置，选择性地开启审计记录服务。
             mayStartAuditRecord(ctx);
 
             // 根据启动器设置处理器的设置，选择性地开启重置服务。
             mayStartReset(ctx);
         });
+    }
+
+    private static void mayResetInspector(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置审计器，则返回。
+        if (!launcherSettingHandler.isResetInspectorSupport()) {
+            return;
+        }
+
+        // 重置审计器支持。
+        LOGGER.info("重置审计器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetInspector();
+        } catch (ServiceException e) {
+            LOGGER.warn("审计器支持重置失败，异常信息如下", e);
+        }
     }
 
     private static void mayStartAuditRecord(ApplicationContext ctx) {

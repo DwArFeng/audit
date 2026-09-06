@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现预设审计器。
+  - com.dwarfeng.audit.impl.handler.inspector.groovy.GroovyInspectorRegistry。
+
+- 实现核心机制。
+  - 审计机制。
+
 - 优化部分 DTO 的字段。
   - com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult。
 
