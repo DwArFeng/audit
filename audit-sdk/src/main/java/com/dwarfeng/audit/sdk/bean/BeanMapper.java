@@ -421,5 +421,96 @@ public interface BeanMapper {
             WebInputInspectorVariableUpsertInfo webInputInspectorVariableUpsertInfo
     );
 
+    FastJsonInspectionTaskCreateResult inspectionTaskCreateResultToFastJson(
+            InspectionTaskCreateResult inspectionTaskCreateResult
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskCreateResult inspectionTaskCreateResultFromFastJson(
+            FastJsonInspectionTaskCreateResult fastJsonInspectionTaskCreateResult
+    );
+
+    JSFixedFastJsonInspectionTaskCreateResult inspectionTaskCreateResultToJSFixedFastJson(
+            InspectionTaskCreateResult inspectionTaskCreateResult
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskCreateResult inspectionTaskCreateResultFromJSFixedFastJson(
+            JSFixedFastJsonInspectionTaskCreateResult jSFixedFastJsonInspectionTaskCreateResult
+    );
+
+    WebInputInspectionTaskBeatInfo inspectionTaskBeatInfoToWebInput(InspectionTaskBeatInfo inspectionTaskBeatInfo);
+
+    @InheritInverseConfiguration
+    InspectionTaskBeatInfo inspectionTaskBeatInfoFromWebInput(
+            WebInputInspectionTaskBeatInfo webInputInspectionTaskBeatInfo
+    );
+
+    WebInputInspectionTaskCreateInfo inspectionTaskCreateInfoToWebInput(
+            InspectionTaskCreateInfo inspectionTaskCreateInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskCreateInfo inspectionTaskCreateInfoFromWebInput(
+            WebInputInspectionTaskCreateInfo webInputInspectionTaskCreateInfo
+    );
+
+    WebInputInspectionTaskDieInfo inspectionTaskDieInfoToWebInput(InspectionTaskDieInfo inspectionTaskDieInfo);
+
+    @InheritInverseConfiguration
+    InspectionTaskDieInfo inspectionTaskDieInfoFromWebInput(
+            WebInputInspectionTaskDieInfo webInputInspectionTaskDieInfo
+    );
+
+    WebInputInspectionTaskEventCreateInfo inspectionTaskEventCreateInfoToWebInput(
+            InspectionTaskEventCreateInfo inspectionTaskEventCreateInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskEventCreateInfo inspectionTaskEventCreateInfoFromWebInput(
+            WebInputInspectionTaskEventCreateInfo webInputInspectionTaskEventCreateInfo
+    );
+
+    WebInputInspectionTaskExpireInfo inspectionTaskExpireInfoToWebInput(
+            InspectionTaskExpireInfo inspectionTaskExpireInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskExpireInfo inspectionTaskExpireInfoFromWebInput(
+            WebInputInspectionTaskExpireInfo webInputInspectionTaskExpireInfo
+    );
+
+    WebInputInspectionTaskFailInfo inspectionTaskFailInfoToWebInput(InspectionTaskFailInfo inspectionTaskFailInfo);
+
+    @InheritInverseConfiguration
+    InspectionTaskFailInfo inspectionTaskFailInfoFromWebInput(
+            WebInputInspectionTaskFailInfo webInputInspectionTaskFailInfo
+    );
+
+    WebInputInspectionTaskFinishInfo inspectionTaskFinishInfoToWebInput(
+            InspectionTaskFinishInfo inspectionTaskFinishInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskFinishInfo inspectionTaskFinishInfoFromWebInput(
+            WebInputInspectionTaskFinishInfo webInputInspectionTaskFinishInfo
+    );
+
+    WebInputInspectionTaskStartInfo inspectionTaskStartInfoToWebInput(InspectionTaskStartInfo inspectionTaskStartInfo);
+
+    @InheritInverseConfiguration
+    InspectionTaskStartInfo inspectionTaskStartInfoFromWebInput(
+            WebInputInspectionTaskStartInfo webInputInspectionTaskStartInfo
+    );
+
+    WebInputInspectionTaskUpdateModalInfo inspectionTaskUpdateModalInfoToWebInput(
+            InspectionTaskUpdateModalInfo inspectionTaskUpdateModalInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionTaskUpdateModalInfo inspectionTaskUpdateModalInfoFromWebInput(
+            WebInputInspectionTaskUpdateModalInfo webInputInspectionTaskUpdateModalInfo
+    );
+
     // endregion
 }

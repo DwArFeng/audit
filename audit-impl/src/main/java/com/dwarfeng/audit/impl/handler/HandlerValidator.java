@@ -362,6 +362,25 @@ public class HandlerValidator {
         }
     }
 
+    public void makeSureInspectionTaskStatusValid(LongIdKey inspectionTaskKey, Set<Integer> validStatusSet)
+            throws HandlerException {
+        try {
+            InspectionTask inspectionTask = inspectionTaskMaintainService.getIfExists(inspectionTaskKey);
+            if (Objects.isNull(inspectionTask)) {
+                throw new InspectionTaskNotExistsException(inspectionTaskKey);
+            }
+            int status = inspectionTask.getStatus();
+            if (!Constants.inspectionTaskStatusSpace().contains(status)) {
+                throw new InvalidInspectionTaskStatusException(status);
+            }
+            if (!validStatusSet.contains(status)) {
+                throw new InspectionTaskStatusMismatchException(validStatusSet, status);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
     public void makeSureInspectorInfoExists(LongIdKey inspectorInfoKey) throws HandlerException {
         try {
             if (Objects.isNull(inspectorInfoKey) || !inspectorInfoMaintainService.exists(inspectorInfoKey)) {
