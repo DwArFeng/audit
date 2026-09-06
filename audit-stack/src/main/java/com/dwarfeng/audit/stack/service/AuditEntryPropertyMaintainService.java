@@ -20,4 +20,13 @@ public interface AuditEntryPropertyMaintainService extends BatchCrudService<Audi
     String CHILD_FOR_AUDIT_ENTRY = "child_for_audit_entry";
 
     // endregion
+
+    // region 预设查询 - 业务逻辑
+
+    /**
+     * @since 1.1.0
+     */
+    String CHILD_FOR_AUDIT_ENTRIES = "child_for_audit_entries";
+
+    // endregion
 }
