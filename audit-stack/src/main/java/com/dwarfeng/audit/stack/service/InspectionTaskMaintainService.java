@@ -20,4 +20,18 @@ public interface InspectionTaskMaintainService extends BatchCrudService<LongIdKe
     String CHILD_FOR_INSPECTION = "child_for_inspection";
 
     // endregion
+
+    // region 预设查询 - 业务逻辑
+
+    /**
+     * @since 1.1.0
+     */
+    String SHOULD_EXPIRE = "should_expire";
+
+    /**
+     * @since 1.1.0
+     */
+    String SHOULD_DIE = "should_die";
+
+    // endregion
 }

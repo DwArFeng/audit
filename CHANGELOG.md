@@ -5,6 +5,8 @@
 ### 功能构建
 
 - 增加预设查询。
+  - com.dwarfeng.audit.stack.service.InspectionTaskMaintainService.SHOULD_EXPIRE。
+  - com.dwarfeng.audit.stack.service.InspectionTaskMaintainService.SHOULD_DIE。
   - com.dwarfeng.audit.stack.service.AuditEntryPropertyMaintainService.CHILD_FOR_AUDIT_ENTRIES。
 
 - 新建实体以及维护服务，并通过单元测试。
