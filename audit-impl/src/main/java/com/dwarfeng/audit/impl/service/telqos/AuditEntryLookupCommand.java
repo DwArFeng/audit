@@ -3,11 +3,12 @@ package com.dwarfeng.audit.impl.service.telqos;
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryCompositeLookupInfo;
 import com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryGroupedLookupInfo;
-import com.dwarfeng.audit.sdk.bean.entity.FastJsonAuditEntry;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult;
+import com.dwarfeng.audit.stack.bean.entity.AuditCategory;
 import com.dwarfeng.audit.stack.bean.entity.AuditEntry;
+import com.dwarfeng.audit.stack.bean.entity.AuditEntryProperty;
 import com.dwarfeng.audit.stack.service.AuditEntryLookupQosService;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
 import com.dwarfeng.springtelqos.sdk.configuration.TelqosCommand;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -189,7 +191,9 @@ public class AuditEntryLookupCommand extends CliCommand {
         processLookupResultData(context, result.getData());
     }
 
-    private void processLookupResultData(CommandExecutor.Context context, List<AuditEntry> data) throws Exception {
+    private void processLookupResultData(
+            CommandExecutor.Context context, List<AuditEntryLookupResult.Data> data
+    ) throws Exception {
         if (Objects.isNull(data)) {
             context.sendMessage("  data: null");
             return;
@@ -201,21 +205,86 @@ public class AuditEntryLookupCommand extends CliCommand {
             }
             context.sendMessage("");
             for (int i = cropResult.getBeginIndex(); i < cropResult.getEndIndex(); i++) {
-                AuditEntry item = data.get(i);
-                printLookupResultDataItem(context, i, cropResult.getEndIndex(), item);
+                AuditEntryLookupResult.Data item = data.get(i);
+                printLookupResultDataItem(context, i, data.size(), item);
             }
         }
     }
 
     private void printLookupResultDataItem(
-            CommandExecutor.Context context, int i, int endIndex, AuditEntry item
+            CommandExecutor.Context context, int i, int total, AuditEntryLookupResult.Data item
     ) throws Exception {
-        context.sendMessage(String.format("索引: %d/%d", i, endIndex));
+        context.sendMessage(String.format("索引: %d/%d", i + 1, total));
         if (Objects.isNull(item)) {
             context.sendMessage("null");
         } else {
-            context.sendMessage(JSON.toJSONString(FastJsonAuditEntry.of(item), true));
+            printLookupResultDataItemDetail(context, item);
         }
         context.sendMessage("");
+    }
+
+    private void printLookupResultDataItemDetail(
+            CommandExecutor.Context context, AuditEntryLookupResult.Data item
+    ) throws Exception {
+        context.sendMessage("  审计条目:");
+        printAuditEntry(context, item.getAuditEntry());
+        context.sendMessage("  审计类别:");
+        printAuditCategory(context, item.getAuditCategory());
+        context.sendMessage("  审计条目属性:");
+        printAuditEntryPropertyMap(context, item.getAuditEntryPropertyMap());
+    }
+
+    private void printAuditEntry(CommandExecutor.Context context, AuditEntry auditEntry) throws Exception {
+        if (Objects.isNull(auditEntry)) {
+            context.sendMessage("    null");
+            return;
+        }
+        context.sendMessage("    key: " + auditEntry.getKey());
+        context.sendMessage("    categoryKey: " + auditEntry.getCategoryKey());
+        context.sendMessage("    createdDate: " + auditEntry.getCreatedDate());
+    }
+
+    private void printAuditCategory(CommandExecutor.Context context, AuditCategory auditCategory) throws Exception {
+        if (Objects.isNull(auditCategory)) {
+            context.sendMessage("    null");
+            return;
+        }
+        context.sendMessage("    key: " + auditCategory.getKey());
+        context.sendMessage("    enabled: " + auditCategory.isEnabled());
+        context.sendMessage("    name: " + auditCategory.getName());
+        context.sendMessage("    remark: " + auditCategory.getRemark());
+    }
+
+    private void printAuditEntryPropertyMap(
+            CommandExecutor.Context context, Map<String, AuditEntryProperty> propertyMap
+    ) throws Exception {
+        if (Objects.isNull(propertyMap)) {
+            context.sendMessage("    null");
+            return;
+        }
+        if (propertyMap.isEmpty()) {
+            context.sendMessage("    {}");
+            return;
+        }
+        for (Map.Entry<String, AuditEntryProperty> entry : propertyMap.entrySet()) {
+            context.sendMessage("    [" + entry.getKey() + "]:");
+            printAuditEntryProperty(context, entry.getValue());
+        }
+    }
+
+    private void printAuditEntryProperty(
+            CommandExecutor.Context context, AuditEntryProperty property
+    ) throws Exception {
+        if (Objects.isNull(property)) {
+            context.sendMessage("      null");
+            return;
+        }
+        context.sendMessage("      key: " + property.getKey());
+        context.sendMessage("      propertyType: " + property.getPropertyType());
+        context.sendMessage("      stringValue: " + property.getStringValue());
+        context.sendMessage("      longValue: " + property.getLongValue());
+        context.sendMessage("      doubleValue: " + property.getDoubleValue());
+        context.sendMessage("      booleanValue: " + property.getBooleanValue());
+        context.sendMessage("      dateValue: " + property.getDateValue());
     }
 }

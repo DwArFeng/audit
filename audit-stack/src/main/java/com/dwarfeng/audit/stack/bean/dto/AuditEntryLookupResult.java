@@ -1,10 +1,12 @@
 package com.dwarfeng.audit.stack.bean.dto;
 
+import com.dwarfeng.audit.stack.bean.entity.AuditCategory;
 import com.dwarfeng.audit.stack.bean.entity.AuditEntry;
+import com.dwarfeng.audit.stack.bean.entity.AuditEntryProperty;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 审计条目查询结果。
@@ -39,12 +41,14 @@ public class AuditEntryLookupResult implements Dto {
     /**
      * 当前页数据。
      */
-    private List<AuditEntry> data = new ArrayList<>();
+    private List<Data> data;
 
     public AuditEntryLookupResult() {
     }
 
-    public AuditEntryLookupResult(int currentPage, int totalPages, int rows, long count, List<AuditEntry> data) {
+    public AuditEntryLookupResult(
+            int currentPage, int totalPages, int rows, long count, List<Data> data
+    ) {
         this.currentPage = currentPage;
         this.totalPages = totalPages;
         this.rows = rows;
@@ -84,11 +88,11 @@ public class AuditEntryLookupResult implements Dto {
         this.count = count;
     }
 
-    public List<AuditEntry> getData() {
+    public List<Data> getData() {
         return data;
     }
 
-    public void setData(List<AuditEntry> data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
 
@@ -101,5 +105,69 @@ public class AuditEntryLookupResult implements Dto {
                 ", count=" + count +
                 ", data=" + data +
                 '}';
+    }
+
+    /**
+     * 审计条目查询详细数据。
+     *
+     * <p>
+     * 该类封装审计条目、所属审计类别以及按属性 ID 索引的审计条目属性。
+     *
+     * @author DwArFeng
+     * @since 1.1.0
+     */
+    public static class Data implements Dto {
+
+        private static final long serialVersionUID = -4721631729630383300L;
+
+        private AuditEntry auditEntry;
+        private AuditCategory auditCategory;
+        private Map<String, AuditEntryProperty> auditEntryPropertyMap;
+
+        public Data() {
+        }
+
+        public Data(
+                AuditEntry auditEntry,
+                AuditCategory auditCategory,
+                Map<String, AuditEntryProperty> auditEntryPropertyMap
+        ) {
+            this.auditEntry = auditEntry;
+            this.auditCategory = auditCategory;
+            this.auditEntryPropertyMap = auditEntryPropertyMap;
+        }
+
+        public AuditEntry getAuditEntry() {
+            return auditEntry;
+        }
+
+        public void setAuditEntry(AuditEntry auditEntry) {
+            this.auditEntry = auditEntry;
+        }
+
+        public AuditCategory getAuditCategory() {
+            return auditCategory;
+        }
+
+        public void setAuditCategory(AuditCategory auditCategory) {
+            this.auditCategory = auditCategory;
+        }
+
+        public Map<String, AuditEntryProperty> getAuditEntryPropertyMap() {
+            return auditEntryPropertyMap;
+        }
+
+        public void setAuditEntryPropertyMap(Map<String, AuditEntryProperty> auditEntryPropertyMap) {
+            this.auditEntryPropertyMap = auditEntryPropertyMap;
+        }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "auditEntry=" + auditEntry +
+                    ", auditCategory=" + auditCategory +
+                    ", auditEntryPropertyMap=" + auditEntryPropertyMap +
+                    '}';
+        }
     }
 }

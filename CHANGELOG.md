@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化部分 DTO 的字段。
+  - com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult。
+
 - 增加预设查询。
   - com.dwarfeng.audit.stack.service.InspectionTaskMaintainService.TO_PURGED。
   - com.dwarfeng.audit.stack.service.InspectionTaskMaintainService.SHOULD_EXPIRE。

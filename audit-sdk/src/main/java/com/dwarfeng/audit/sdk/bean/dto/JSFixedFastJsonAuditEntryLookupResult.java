@@ -1,13 +1,14 @@
 package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.audit.sdk.bean.entity.JSFixedFastJsonAuditCategory;
 import com.dwarfeng.audit.sdk.bean.entity.JSFixedFastJsonAuditEntry;
+import com.dwarfeng.audit.sdk.bean.entity.JSFixedFastJsonAuditEntryProperty;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult;
+import com.dwarfeng.audit.stack.bean.entity.AuditEntryProperty;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +31,7 @@ public class JSFixedFastJsonAuditEntryLookupResult implements Dto {
                     auditEntryLookupResult.getRows(),
                     auditEntryLookupResult.getCount(),
                     Optional.ofNullable(auditEntryLookupResult.getData()).map(
-                            f -> f.stream().map(JSFixedFastJsonAuditEntry::of).collect(Collectors.toList())
+                            f -> f.stream().map(Data::of).collect(Collectors.toList())
                     ).orElse(null)
             );
         }
@@ -64,13 +65,13 @@ public class JSFixedFastJsonAuditEntryLookupResult implements Dto {
      * 当前页数据。
      */
     @JSONField(name = "data", ordinal = 5)
-    private List<JSFixedFastJsonAuditEntry> data;
+    private List<Data> data;
 
     public JSFixedFastJsonAuditEntryLookupResult() {
     }
 
     public JSFixedFastJsonAuditEntryLookupResult(
-            int currentPage, int totalPages, int rows, long count, List<JSFixedFastJsonAuditEntry> data
+            int currentPage, int totalPages, int rows, long count, List<Data> data
     ) {
         this.currentPage = currentPage;
         this.totalPages = totalPages;
@@ -111,11 +112,11 @@ public class JSFixedFastJsonAuditEntryLookupResult implements Dto {
         this.count = count;
     }
 
-    public List<JSFixedFastJsonAuditEntry> getData() {
+    public List<Data> getData() {
         return data;
     }
 
-    public void setData(List<JSFixedFastJsonAuditEntry> data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
 
@@ -128,5 +129,95 @@ public class JSFixedFastJsonAuditEntryLookupResult implements Dto {
                 ", count=" + count +
                 ", data=" + data +
                 '}';
+    }
+
+    /**
+     * JSFixed FastJson 审计条目查询详细数据。
+     *
+     * <p>
+     * 该类封装审计条目、所属审计类别以及按属性 ID 索引的审计条目属性。
+     *
+     * @author DwArFeng
+     * @since 1.1.0
+     */
+    public static class Data implements Dto {
+
+        private static final long serialVersionUID = -1706160366153884027L;
+
+        public static Data of(AuditEntryLookupResult.Data data) {
+            if (Objects.isNull(data)) {
+                return null;
+            } else {
+                Map<String, JSFixedFastJsonAuditEntryProperty> propertyMap = null;
+                if (Objects.nonNull(data.getAuditEntryPropertyMap())) {
+                    propertyMap = new LinkedHashMap<>();
+                    for (Map.Entry<String, AuditEntryProperty> entry : data.getAuditEntryPropertyMap().entrySet()) {
+                        propertyMap.put(entry.getKey(), JSFixedFastJsonAuditEntryProperty.of(entry.getValue()));
+                    }
+                }
+                return new Data(
+                        JSFixedFastJsonAuditEntry.of(data.getAuditEntry()),
+                        JSFixedFastJsonAuditCategory.of(data.getAuditCategory()),
+                        propertyMap
+                );
+            }
+        }
+
+        @JSONField(name = "audit_entry", ordinal = 1)
+        private JSFixedFastJsonAuditEntry auditEntry;
+
+        @JSONField(name = "audit_category", ordinal = 2)
+        private JSFixedFastJsonAuditCategory auditCategory;
+
+        @JSONField(name = "audit_entry_property_map", ordinal = 3)
+        private Map<String, JSFixedFastJsonAuditEntryProperty> auditEntryPropertyMap;
+
+        public Data() {
+        }
+
+        public Data(
+                JSFixedFastJsonAuditEntry auditEntry,
+                JSFixedFastJsonAuditCategory auditCategory,
+                Map<String, JSFixedFastJsonAuditEntryProperty> auditEntryPropertyMap
+        ) {
+            this.auditEntry = auditEntry;
+            this.auditCategory = auditCategory;
+            this.auditEntryPropertyMap = auditEntryPropertyMap;
+        }
+
+        public JSFixedFastJsonAuditEntry getAuditEntry() {
+            return auditEntry;
+        }
+
+        public void setAuditEntry(JSFixedFastJsonAuditEntry auditEntry) {
+            this.auditEntry = auditEntry;
+        }
+
+        public JSFixedFastJsonAuditCategory getAuditCategory() {
+            return auditCategory;
+        }
+
+        public void setAuditCategory(JSFixedFastJsonAuditCategory auditCategory) {
+            this.auditCategory = auditCategory;
+        }
+
+        public Map<String, JSFixedFastJsonAuditEntryProperty> getAuditEntryPropertyMap() {
+            return auditEntryPropertyMap;
+        }
+
+        public void setAuditEntryPropertyMap(
+                Map<String, JSFixedFastJsonAuditEntryProperty> auditEntryPropertyMap
+        ) {
+            this.auditEntryPropertyMap = auditEntryPropertyMap;
+        }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "auditEntry=" + auditEntry +
+                    ", auditCategory=" + auditCategory +
+                    ", auditEntryPropertyMap=" + auditEntryPropertyMap +
+                    '}';
+        }
     }
 }
