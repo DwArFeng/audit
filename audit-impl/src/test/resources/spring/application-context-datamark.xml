@@ -24,4 +24,28 @@
             resource-charset="${com.dwarfeng.audit.datamark.audit_property_indicator.resource_charset}"
             update-allowed="${com.dwarfeng.audit.datamark.audit_property_indicator.update_allowed}"
     />
+
+    <!-- Inspection 数据标识。 -->
+    <datamark:handler
+            handler-name="inspectionDatamarkHandler"
+            resource-url="${com.dwarfeng.audit.datamark.inspection.resource_url}"
+            resource-charset="${com.dwarfeng.audit.datamark.inspection.resource_charset}"
+            update-allowed="${com.dwarfeng.audit.datamark.inspection.update_allowed}"
+    />
+
+    <!-- InspectionDriverInfo 数据标识。 -->
+    <datamark:handler
+            handler-name="inspectionDriverDatamarkHandler"
+            resource-url="${com.dwarfeng.audit.datamark.inspection_driver.resource_url}"
+            resource-charset="${com.dwarfeng.audit.datamark.inspection_driver.resource_charset}"
+            update-allowed="${com.dwarfeng.audit.datamark.inspection_driver.update_allowed}"
+    />
+
+    <!-- InspectorInfo 数据标识。 -->
+    <datamark:handler
+            handler-name="inspectorDatamarkHandler"
+            resource-url="${com.dwarfeng.audit.datamark.inspector.resource_url}"
+            resource-charset="${com.dwarfeng.audit.datamark.inspector.resource_charset}"
+            update-allowed="${com.dwarfeng.audit.datamark.inspector.update_allowed}"
+    />
 </beans>

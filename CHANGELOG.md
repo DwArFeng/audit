@@ -4,6 +4,18 @@
 
 ### 功能构建
 
+- 新建实体以及维护服务，并通过单元测试。
+  - com.dwarfeng.audit.stack.bean.entity.Inspection。
+  - com.dwarfeng.audit.stack.bean.entity.InspectionAlarm。
+  - com.dwarfeng.audit.stack.bean.entity.InspectionAlarmTypeIndicator。
+  - com.dwarfeng.audit.stack.bean.entity.InspectionDriverInfo。
+  - com.dwarfeng.audit.stack.bean.entity.InspectionDriverSupport。
+  - com.dwarfeng.audit.stack.bean.entity.InspectionTask。
+  - com.dwarfeng.audit.stack.bean.entity.InspectionTaskEvent。
+  - com.dwarfeng.audit.stack.bean.entity.InspectorInfo。
+  - com.dwarfeng.audit.stack.bean.entity.InspectorSupport。
+  - com.dwarfeng.audit.stack.bean.entity.InspectorVariable。
+
 - 依赖升级。
   - 升级 `jackson` 依赖版本为 `2.21.5` 以规避漏洞。
   - 升级 `spring-terminator` 依赖版本为 `2.0.3.a` 以规避漏洞。

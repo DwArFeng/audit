@@ -9,6 +9,11 @@ package com.dwarfeng.audit.sdk.util;
 public final class Constraints {
 
     /**
+     * 字符串 ID 的长度约束。
+     */
+    public static final int LENGTH_STRING_ID = 100;
+
+    /**
      * 属性 ID 的长度约束。
      */
     public static final int LENGTH_PROPERTY_ID = 100;
@@ -32,6 +37,11 @@ public final class Constraints {
      * 类型的长度约束。
      */
     public static final int LENGTH_TYPE = 50;
+
+    /**
+     * 消息的长度约束。
+     */
+    public static final int LENGTH_MESSAGE = 200;
 
     private Constraints() {
         throw new IllegalStateException("禁止实例化");

@@ -7,12 +7,10 @@ import com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult;
 import com.dwarfeng.audit.stack.bean.dto.AuditRecordInfo;
-import com.dwarfeng.audit.stack.bean.entity.AuditCategory;
-import com.dwarfeng.audit.stack.bean.entity.AuditEntry;
-import com.dwarfeng.audit.stack.bean.entity.AuditEntryProperty;
-import com.dwarfeng.audit.stack.bean.entity.AuditPropertyIndicator;
+import com.dwarfeng.audit.stack.bean.entity.*;
 import com.dwarfeng.audit.stack.bean.key.AuditEntryPropertyKey;
 import com.dwarfeng.audit.stack.bean.key.AuditPropertyIndicatorKey;
+import com.dwarfeng.audit.stack.bean.key.InspectorVariableKey;
 import com.dwarfeng.subgrade.sdk.bean.key.*;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -103,6 +101,27 @@ public interface BeanMapper {
             WebInputAuditPropertyIndicatorKey webInputAuditPropertyIndicatorKey
     );
 
+    FastJsonInspectorVariableKey inspectorVariableKeyToFastJson(InspectorVariableKey inspectorVariableKey);
+
+    @InheritInverseConfiguration
+    InspectorVariableKey inspectorVariableKeyFromFastJson(FastJsonInspectorVariableKey fastJsonInspectorVariableKey);
+
+    JSFixedFastJsonInspectorVariableKey inspectorVariableKeyToJSFixedFastJson(
+            InspectorVariableKey inspectorVariableKey
+    );
+
+    @InheritInverseConfiguration
+    InspectorVariableKey inspectorVariableKeyFromJSFixedFastJson(
+            JSFixedFastJsonInspectorVariableKey jSFixedFastJsonInspectorVariableKey
+    );
+
+    WebInputInspectorVariableKey inspectorVariableKeyToWebInput(InspectorVariableKey inspectorVariableKey);
+
+    @InheritInverseConfiguration
+    InspectorVariableKey inspectorVariableKeyFromWebInput(
+            WebInputInspectorVariableKey webInputInspectorVariableKey
+    );
+
     // endregion
 
     // region Audit Entity
@@ -166,6 +185,129 @@ public interface BeanMapper {
     AuditPropertyIndicator auditPropertyIndicatorFromWebInput(
             WebInputAuditPropertyIndicator webInputAuditPropertyIndicator
     );
+
+    FastJsonInspectionAlarmTypeIndicator inspectionAlarmTypeIndicatorToFastJson(
+            InspectionAlarmTypeIndicator inspectionAlarmTypeIndicator
+    );
+
+    @InheritInverseConfiguration
+    InspectionAlarmTypeIndicator inspectionAlarmTypeIndicatorFromFastJson(
+            FastJsonInspectionAlarmTypeIndicator fastJsonInspectionAlarmTypeIndicator
+    );
+
+    FastJsonInspection inspectionToFastJson(Inspection inspection);
+
+    @InheritInverseConfiguration
+    Inspection inspectionFromFastJson(FastJsonInspection fastJsonInspection);
+
+    FastJsonInspectionAlarm inspectionAlarmToFastJson(InspectionAlarm inspectionAlarm);
+
+    @InheritInverseConfiguration
+    InspectionAlarm inspectionAlarmFromFastJson(FastJsonInspectionAlarm fastJsonInspectionAlarm);
+
+    FastJsonInspectionDriverInfo inspectionDriverInfoToFastJson(InspectionDriverInfo inspectionDriverInfo);
+
+    @InheritInverseConfiguration
+    InspectionDriverInfo inspectionDriverInfoFromFastJson(FastJsonInspectionDriverInfo fastJsonInspectionDriverInfo);
+
+    FastJsonInspectionDriverSupport inspectionDriverSupportToFastJson(InspectionDriverSupport inspectionDriverSupport);
+
+    @InheritInverseConfiguration
+    InspectionDriverSupport inspectionDriverSupportFromFastJson(
+            FastJsonInspectionDriverSupport fastJsonInspectionDriverSupport
+    );
+
+    FastJsonInspectionTask inspectionTaskToFastJson(InspectionTask inspectionTask);
+
+    @InheritInverseConfiguration
+    InspectionTask inspectionTaskFromFastJson(FastJsonInspectionTask fastJsonInspectionTask);
+
+    FastJsonInspectionTaskEvent inspectionTaskEventToFastJson(InspectionTaskEvent inspectionTaskEvent);
+
+    @InheritInverseConfiguration
+    InspectionTaskEvent inspectionTaskEventFromFastJson(FastJsonInspectionTaskEvent fastJsonInspectionTaskEvent);
+
+    FastJsonInspectorInfo inspectorInfoToFastJson(InspectorInfo inspectorInfo);
+
+    @InheritInverseConfiguration
+    InspectorInfo inspectorInfoFromFastJson(FastJsonInspectorInfo fastJsonInspectorInfo);
+
+    FastJsonInspectorSupport inspectorSupportToFastJson(InspectorSupport inspectorSupport);
+
+    @InheritInverseConfiguration
+    InspectorSupport inspectorSupportFromFastJson(FastJsonInspectorSupport fastJsonInspectorSupport);
+
+    FastJsonInspectorVariable inspectorVariableToFastJson(InspectorVariable inspectorVariable);
+
+    @InheritInverseConfiguration
+    InspectorVariable inspectorVariableFromFastJson(FastJsonInspectorVariable fastJsonInspectorVariable);
+
+    JSFixedFastJsonInspection inspectionToJSFixedFastJson(Inspection inspection);
+
+    @InheritInverseConfiguration
+    Inspection inspectionFromJSFixedFastJson(JSFixedFastJsonInspection jSFixedFastJsonInspection);
+
+    JSFixedFastJsonInspectionAlarm inspectionAlarmToJSFixedFastJson(InspectionAlarm inspectionAlarm);
+
+    @InheritInverseConfiguration
+    InspectionAlarm inspectionAlarmFromJSFixedFastJson(JSFixedFastJsonInspectionAlarm jSFixedFastJsonInspectionAlarm);
+
+    JSFixedFastJsonInspectionDriverInfo inspectionDriverInfoToJSFixedFastJson(
+            InspectionDriverInfo inspectionDriverInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionDriverInfo inspectionDriverInfoFromJSFixedFastJson(
+            JSFixedFastJsonInspectionDriverInfo jSFixedFastJsonInspectionDriverInfo
+    );
+
+    JSFixedFastJsonInspectionTask inspectionTaskToJSFixedFastJson(InspectionTask inspectionTask);
+
+    @InheritInverseConfiguration
+    InspectionTask inspectionTaskFromJSFixedFastJson(JSFixedFastJsonInspectionTask jSFixedFastJsonInspectionTask);
+
+    JSFixedFastJsonInspectionTaskEvent inspectionTaskEventToJSFixedFastJson(InspectionTaskEvent inspectionTaskEvent);
+
+    @InheritInverseConfiguration
+    InspectionTaskEvent inspectionTaskEventFromJSFixedFastJson(
+            JSFixedFastJsonInspectionTaskEvent jSFixedFastJsonInspectionTaskEvent
+    );
+
+    JSFixedFastJsonInspectorInfo inspectorInfoToJSFixedFastJson(InspectorInfo inspectorInfo);
+
+    @InheritInverseConfiguration
+    InspectorInfo inspectorInfoFromJSFixedFastJson(JSFixedFastJsonInspectorInfo jSFixedFastJsonInspectorInfo);
+
+    JSFixedFastJsonInspectorVariable inspectorVariableToJSFixedFastJson(InspectorVariable inspectorVariable);
+
+    @InheritInverseConfiguration
+    InspectorVariable inspectorVariableFromJSFixedFastJson(
+            JSFixedFastJsonInspectorVariable jSFixedFastJsonInspectorVariable
+    );
+
+    WebInputInspectionAlarmTypeIndicator inspectionAlarmTypeIndicatorToWebInput(
+            InspectionAlarmTypeIndicator inspectionAlarmTypeIndicator
+    );
+
+    @InheritInverseConfiguration
+    InspectionAlarmTypeIndicator inspectionAlarmTypeIndicatorFromWebInput(
+            WebInputInspectionAlarmTypeIndicator webInputInspectionAlarmTypeIndicator
+    );
+
+    WebInputInspection inspectionToWebInput(Inspection inspection);
+
+    @InheritInverseConfiguration
+    Inspection inspectionFromWebInput(WebInputInspection webInputInspection);
+
+    WebInputInspectionDriverInfo inspectionDriverInfoToWebInput(InspectionDriverInfo inspectionDriverInfo);
+
+    @InheritInverseConfiguration
+    InspectionDriverInfo inspectionDriverInfoFromWebInput(WebInputInspectionDriverInfo webInputInspectionDriverInfo);
+
+    WebInputInspectorInfo inspectorInfoToWebInput(InspectorInfo inspectorInfo);
+
+    @InheritInverseConfiguration
+    InspectorInfo inspectorInfoFromWebInput(WebInputInspectorInfo webInputInspectorInfo);
 
     // endregion
 

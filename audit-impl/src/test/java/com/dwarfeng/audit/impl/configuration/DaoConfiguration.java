@@ -1,19 +1,15 @@
 package com.dwarfeng.audit.impl.configuration;
 
 import com.dwarfeng.audit.impl.bean.BeanMapper;
-import com.dwarfeng.audit.impl.bean.entity.HibernateAuditCategory;
-import com.dwarfeng.audit.impl.bean.entity.HibernateAuditEntry;
-import com.dwarfeng.audit.impl.bean.entity.HibernateAuditEntryProperty;
-import com.dwarfeng.audit.impl.bean.entity.HibernateAuditPropertyIndicator;
+import com.dwarfeng.audit.impl.bean.entity.*;
 import com.dwarfeng.audit.impl.bean.key.HibernateAuditEntryPropertyKey;
 import com.dwarfeng.audit.impl.bean.key.HibernateAuditPropertyIndicatorKey;
+import com.dwarfeng.audit.impl.bean.key.HibernateInspectorVariableKey;
 import com.dwarfeng.audit.impl.dao.preset.*;
-import com.dwarfeng.audit.stack.bean.entity.AuditCategory;
-import com.dwarfeng.audit.stack.bean.entity.AuditEntry;
-import com.dwarfeng.audit.stack.bean.entity.AuditEntryProperty;
-import com.dwarfeng.audit.stack.bean.entity.AuditPropertyIndicator;
+import com.dwarfeng.audit.stack.bean.entity.*;
 import com.dwarfeng.audit.stack.bean.key.AuditEntryPropertyKey;
 import com.dwarfeng.audit.stack.bean.key.AuditPropertyIndicatorKey;
+import com.dwarfeng.audit.stack.bean.key.InspectorVariableKey;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -39,6 +35,16 @@ public class DaoConfiguration {
     private final AuditEntryPresetCriteriaMaker auditEntryPresetCriteriaMaker;
     private final AuditEntryPresetConditionMaker auditEntryPresetConditionMaker;
     private final AuditEntryPropertyPresetCriteriaMaker auditEntryPropertyPresetCriteriaMaker;
+    private final InspectionAlarmTypeIndicatorPresetCriteriaMaker inspectionAlarmTypeIndicatorPresetCriteriaMaker;
+    private final InspectionPresetCriteriaMaker inspectionPresetCriteriaMaker;
+    private final InspectionAlarmPresetCriteriaMaker inspectionAlarmPresetCriteriaMaker;
+    private final InspectionDriverInfoPresetCriteriaMaker inspectionDriverInfoPresetCriteriaMaker;
+    private final InspectionDriverSupportPresetCriteriaMaker inspectionDriverSupportPresetCriteriaMaker;
+    private final InspectionTaskPresetCriteriaMaker inspectionTaskPresetCriteriaMaker;
+    private final InspectionTaskEventPresetCriteriaMaker inspectionTaskEventPresetCriteriaMaker;
+    private final InspectorInfoPresetCriteriaMaker inspectorInfoPresetCriteriaMaker;
+    private final InspectorSupportPresetCriteriaMaker inspectorSupportPresetCriteriaMaker;
+    private final InspectorVariablePresetCriteriaMaker inspectorVariablePresetCriteriaMaker;
 
     @Value("${com.dwarfeng.audit.hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -49,7 +55,17 @@ public class DaoConfiguration {
             AuditPropertyIndicatorPresetCriteriaMaker auditPropertyIndicatorPresetCriteriaMaker,
             AuditEntryPresetCriteriaMaker auditEntryPresetCriteriaMaker,
             AuditEntryPresetConditionMaker auditEntryPresetConditionMaker,
-            AuditEntryPropertyPresetCriteriaMaker auditEntryPropertyPresetCriteriaMaker
+            AuditEntryPropertyPresetCriteriaMaker auditEntryPropertyPresetCriteriaMaker,
+            InspectionAlarmTypeIndicatorPresetCriteriaMaker inspectionAlarmTypeIndicatorPresetCriteriaMaker,
+            InspectionPresetCriteriaMaker inspectionPresetCriteriaMaker,
+            InspectionAlarmPresetCriteriaMaker inspectionAlarmPresetCriteriaMaker,
+            InspectionDriverInfoPresetCriteriaMaker inspectionDriverInfoPresetCriteriaMaker,
+            InspectionDriverSupportPresetCriteriaMaker inspectionDriverSupportPresetCriteriaMaker,
+            InspectionTaskPresetCriteriaMaker inspectionTaskPresetCriteriaMaker,
+            InspectionTaskEventPresetCriteriaMaker inspectionTaskEventPresetCriteriaMaker,
+            InspectorInfoPresetCriteriaMaker inspectorInfoPresetCriteriaMaker,
+            InspectorSupportPresetCriteriaMaker inspectorSupportPresetCriteriaMaker,
+            InspectorVariablePresetCriteriaMaker inspectorVariablePresetCriteriaMaker
     ) {
         this.template = template;
         this.auditCategoryPresetCriteriaMaker = auditCategoryPresetCriteriaMaker;
@@ -57,6 +73,16 @@ public class DaoConfiguration {
         this.auditEntryPresetCriteriaMaker = auditEntryPresetCriteriaMaker;
         this.auditEntryPresetConditionMaker = auditEntryPresetConditionMaker;
         this.auditEntryPropertyPresetCriteriaMaker = auditEntryPropertyPresetCriteriaMaker;
+        this.inspectionAlarmTypeIndicatorPresetCriteriaMaker = inspectionAlarmTypeIndicatorPresetCriteriaMaker;
+        this.inspectionPresetCriteriaMaker = inspectionPresetCriteriaMaker;
+        this.inspectionAlarmPresetCriteriaMaker = inspectionAlarmPresetCriteriaMaker;
+        this.inspectionDriverInfoPresetCriteriaMaker = inspectionDriverInfoPresetCriteriaMaker;
+        this.inspectionDriverSupportPresetCriteriaMaker = inspectionDriverSupportPresetCriteriaMaker;
+        this.inspectionTaskPresetCriteriaMaker = inspectionTaskPresetCriteriaMaker;
+        this.inspectionTaskEventPresetCriteriaMaker = inspectionTaskEventPresetCriteriaMaker;
+        this.inspectorInfoPresetCriteriaMaker = inspectorInfoPresetCriteriaMaker;
+        this.inspectorSupportPresetCriteriaMaker = inspectorSupportPresetCriteriaMaker;
+        this.inspectorVariablePresetCriteriaMaker = inspectorVariablePresetCriteriaMaker;
     }
 
     @Bean
@@ -215,6 +241,387 @@ public class DaoConfiguration {
                 ),
                 HibernateAuditEntryProperty.class,
                 auditEntryPropertyPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, InspectionAlarmTypeIndicator,
+            HibernateInspectionAlarmTypeIndicator> inspectionAlarmTypeIndicatorHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        InspectionAlarmTypeIndicator.class, HibernateInspectionAlarmTypeIndicator.class,
+                        BeanMapper.class
+                ),
+                HibernateInspectionAlarmTypeIndicator.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectionAlarmTypeIndicator, HibernateInspectionAlarmTypeIndicator>
+    inspectionAlarmTypeIndicatorHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionAlarmTypeIndicator.class, HibernateInspectionAlarmTypeIndicator.class,
+                        BeanMapper.class
+                ),
+                HibernateInspectionAlarmTypeIndicator.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectionAlarmTypeIndicator, HibernateInspectionAlarmTypeIndicator>
+    inspectionAlarmTypeIndicatorHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionAlarmTypeIndicator.class, HibernateInspectionAlarmTypeIndicator.class,
+                        BeanMapper.class
+                ),
+                HibernateInspectionAlarmTypeIndicator.class,
+                inspectionAlarmTypeIndicatorPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Inspection, HibernateInspection>
+    inspectionHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(Inspection.class, HibernateInspection.class, BeanMapper.class),
+                HibernateInspection.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Inspection, HibernateInspection> inspectionHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(Inspection.class, HibernateInspection.class, BeanMapper.class),
+                HibernateInspection.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Inspection, HibernateInspection> inspectionHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(Inspection.class, HibernateInspection.class, BeanMapper.class),
+                HibernateInspection.class,
+                inspectionPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, InspectionAlarm, HibernateInspectionAlarm>
+    inspectionAlarmHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        InspectionAlarm.class, HibernateInspectionAlarm.class, BeanMapper.class
+                ),
+                HibernateInspectionAlarm.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectionAlarm, HibernateInspectionAlarm>
+    inspectionAlarmHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionAlarm.class, HibernateInspectionAlarm.class, BeanMapper.class
+                ),
+                HibernateInspectionAlarm.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectionAlarm, HibernateInspectionAlarm>
+    inspectionAlarmHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionAlarm.class, HibernateInspectionAlarm.class, BeanMapper.class
+                ),
+                HibernateInspectionAlarm.class,
+                inspectionAlarmPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, InspectionDriverInfo,
+            HibernateInspectionDriverInfo> inspectionDriverInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        InspectionDriverInfo.class, HibernateInspectionDriverInfo.class, BeanMapper.class
+                ),
+                HibernateInspectionDriverInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectionDriverInfo, HibernateInspectionDriverInfo>
+    inspectionDriverInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionDriverInfo.class, HibernateInspectionDriverInfo.class, BeanMapper.class
+                ),
+                HibernateInspectionDriverInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectionDriverInfo, HibernateInspectionDriverInfo>
+    inspectionDriverInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionDriverInfo.class, HibernateInspectionDriverInfo.class, BeanMapper.class
+                ),
+                HibernateInspectionDriverInfo.class,
+                inspectionDriverInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, InspectionDriverSupport,
+            HibernateInspectionDriverSupport> inspectionDriverSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        InspectionDriverSupport.class, HibernateInspectionDriverSupport.class, BeanMapper.class
+                ),
+                HibernateInspectionDriverSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectionDriverSupport, HibernateInspectionDriverSupport>
+    inspectionDriverSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionDriverSupport.class, HibernateInspectionDriverSupport.class, BeanMapper.class
+                ),
+                HibernateInspectionDriverSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectionDriverSupport, HibernateInspectionDriverSupport>
+    inspectionDriverSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionDriverSupport.class, HibernateInspectionDriverSupport.class, BeanMapper.class
+                ),
+                HibernateInspectionDriverSupport.class,
+                inspectionDriverSupportPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, InspectionTask, HibernateInspectionTask>
+    inspectionTaskHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(InspectionTask.class, HibernateInspectionTask.class, BeanMapper.class),
+                HibernateInspectionTask.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectionTask, HibernateInspectionTask> inspectionTaskHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(InspectionTask.class, HibernateInspectionTask.class, BeanMapper.class),
+                HibernateInspectionTask.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectionTask, HibernateInspectionTask> inspectionTaskHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(InspectionTask.class, HibernateInspectionTask.class, BeanMapper.class),
+                HibernateInspectionTask.class,
+                inspectionTaskPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, InspectionTaskEvent,
+            HibernateInspectionTaskEvent> inspectionTaskEventHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        InspectionTaskEvent.class, HibernateInspectionTaskEvent.class, BeanMapper.class
+                ),
+                HibernateInspectionTaskEvent.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectionTaskEvent, HibernateInspectionTaskEvent>
+    inspectionTaskEventHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionTaskEvent.class, HibernateInspectionTaskEvent.class, BeanMapper.class
+                ),
+                HibernateInspectionTaskEvent.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectionTaskEvent, HibernateInspectionTaskEvent>
+    inspectionTaskEventHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectionTaskEvent.class, HibernateInspectionTaskEvent.class, BeanMapper.class
+                ),
+                HibernateInspectionTaskEvent.class,
+                inspectionTaskEventPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, InspectorInfo, HibernateInspectorInfo>
+    inspectorInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(InspectorInfo.class, HibernateInspectorInfo.class, BeanMapper.class),
+                HibernateInspectorInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectorInfo, HibernateInspectorInfo> inspectorInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(InspectorInfo.class, HibernateInspectorInfo.class, BeanMapper.class),
+                HibernateInspectorInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectorInfo, HibernateInspectorInfo> inspectorInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(InspectorInfo.class, HibernateInspectorInfo.class, BeanMapper.class),
+                HibernateInspectorInfo.class,
+                inspectorInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, InspectorSupport, HibernateInspectorSupport>
+    inspectorSupportHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, BeanMapper.class),
+                new MapStructBeanTransformer<>(
+                        InspectorSupport.class, HibernateInspectorSupport.class, BeanMapper.class
+                ),
+                HibernateInspectorSupport.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectorSupport, HibernateInspectorSupport>
+    inspectorSupportHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectorSupport.class, HibernateInspectorSupport.class, BeanMapper.class
+                ),
+                HibernateInspectorSupport.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectorSupport, HibernateInspectorSupport>
+    inspectorSupportHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectorSupport.class, HibernateInspectorSupport.class, BeanMapper.class
+                ),
+                HibernateInspectorSupport.class,
+                inspectorSupportPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<InspectorVariableKey, HibernateInspectorVariableKey, InspectorVariable,
+            HibernateInspectorVariable> inspectorVariableHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectorVariableKey.class, HibernateInspectorVariableKey.class, BeanMapper.class
+                ),
+                new MapStructBeanTransformer<>(
+                        InspectorVariable.class, HibernateInspectorVariable.class, BeanMapper.class
+                ),
+                HibernateInspectorVariable.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<InspectorVariable, HibernateInspectorVariable>
+    inspectorVariableHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectorVariable.class, HibernateInspectorVariable.class, BeanMapper.class
+                ),
+                HibernateInspectorVariable.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<InspectorVariable, HibernateInspectorVariable>
+    inspectorVariableHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        InspectorVariable.class, HibernateInspectorVariable.class, BeanMapper.class
+                ),
+                HibernateInspectorVariable.class,
+                inspectorVariablePresetCriteriaMaker
         );
     }
 }

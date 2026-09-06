@@ -65,6 +65,56 @@
             ref="auditEntryLookupServiceImpl"
             group="${com.dwarfeng.audit.dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionAlarmTypeIndicatorMaintainService"
+            ref="inspectionAlarmTypeIndicatorMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionMaintainService"
+            ref="inspectionMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService"
+            ref="inspectionAlarmMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionDriverInfoMaintainService"
+            ref="inspectionDriverInfoMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionDriverSupportMaintainService"
+            ref="inspectionDriverSupportMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionTaskMaintainService"
+            ref="inspectionTaskMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionTaskEventMaintainService"
+            ref="inspectionTaskEventMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectorInfoMaintainService"
+            ref="inspectorInfoMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectorSupportMaintainService"
+            ref="inspectorSupportMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectorVariableMaintainService"
+            ref="inspectorVariableMaintainServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
 
     <!-- endregion -->
 

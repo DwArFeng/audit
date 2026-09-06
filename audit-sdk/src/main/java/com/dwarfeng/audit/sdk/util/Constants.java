@@ -16,6 +16,19 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public final class Constants {
 
+    @InspectionTaskStatusItem
+    public static final int INSPECTION_TASK_STATUS_CREATED = 0;
+    @InspectionTaskStatusItem
+    public static final int INSPECTION_TASK_STATUS_PROCESSING = 1;
+    @InspectionTaskStatusItem
+    public static final int INSPECTION_TASK_STATUS_FINISHED = 2;
+    @InspectionTaskStatusItem
+    public static final int INSPECTION_TASK_STATUS_FAILED = 3;
+    @InspectionTaskStatusItem
+    public static final int INSPECTION_TASK_STATUS_EXPIRED = 4;
+    @InspectionTaskStatusItem
+    public static final int INSPECTION_TASK_STATUS_DIED = 5;
+
     @AuditPropertyTypeItem
     public static final int PROPERTY_TYPE_STRING = 0;
     @AuditPropertyTypeItem
@@ -27,6 +40,17 @@ public final class Constants {
     @AuditPropertyTypeItem
     public static final int PROPERTY_TYPE_DATE = 4;
 
+    @InspectorVariableValueTypeItem
+    public static final int INSPECTOR_VARIABLE_VALUE_TYPE_STRING = 0;
+    @InspectorVariableValueTypeItem
+    public static final int INSPECTOR_VARIABLE_VALUE_TYPE_LONG = 1;
+    @InspectorVariableValueTypeItem
+    public static final int INSPECTOR_VARIABLE_VALUE_TYPE_DOUBLE = 2;
+    @InspectorVariableValueTypeItem
+    public static final int INSPECTOR_VARIABLE_VALUE_TYPE_BOOLEAN = 3;
+    @InspectorVariableValueTypeItem
+    public static final int INSPECTOR_VARIABLE_VALUE_TYPE_DATE = 4;
+
     /**
      * 检查任务的执行间隔。
      */
@@ -34,7 +58,41 @@ public final class Constants {
 
     private static final Lock LOCK = new ReentrantLock();
 
+    private static List<Integer> inspectionTaskStatusSpace;
     private static List<Integer> auditPropertyTypeSpace;
+    private static List<Integer> inspectorVariableValueTypeSpace;
+
+    /**
+     * 自动审计任务状态空间。
+     *
+     * @return 自动审计任务状态空间。
+     */
+    public static List<Integer> inspectionTaskStatusSpace() {
+        if (Objects.nonNull(inspectionTaskStatusSpace)) {
+            return inspectionTaskStatusSpace;
+        }
+        LOCK.lock();
+        try {
+            if (Objects.nonNull(inspectionTaskStatusSpace)) {
+                return inspectionTaskStatusSpace;
+            }
+            List<Integer> result = new ArrayList<>();
+            for (Field declaredField : Constants.class.getDeclaredFields()) {
+                if (!declaredField.isAnnotationPresent(InspectionTaskStatusItem.class)) {
+                    continue;
+                }
+                try {
+                    result.add((Integer) declaredField.get(null));
+                } catch (Exception e) {
+                    throw new IllegalStateException("初始化自动审计任务状态空间失败", e);
+                }
+            }
+            inspectionTaskStatusSpace = Collections.unmodifiableList(result);
+            return inspectionTaskStatusSpace;
+        } finally {
+            LOCK.unlock();
+        }
+    }
 
     /**
      * 属性类型空间。
@@ -63,6 +121,38 @@ public final class Constants {
             }
             auditPropertyTypeSpace = Collections.unmodifiableList(result);
             return auditPropertyTypeSpace;
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    /**
+     * 审计器变量值类型空间。
+     *
+     * @return 审计器变量值类型空间。
+     */
+    public static List<Integer> inspectorVariableValueTypeSpace() {
+        if (Objects.nonNull(inspectorVariableValueTypeSpace)) {
+            return inspectorVariableValueTypeSpace;
+        }
+        LOCK.lock();
+        try {
+            if (Objects.nonNull(inspectorVariableValueTypeSpace)) {
+                return inspectorVariableValueTypeSpace;
+            }
+            List<Integer> result = new ArrayList<>();
+            for (Field declaredField : Constants.class.getDeclaredFields()) {
+                if (!declaredField.isAnnotationPresent(InspectorVariableValueTypeItem.class)) {
+                    continue;
+                }
+                try {
+                    result.add((Integer) declaredField.get(null));
+                } catch (Exception e) {
+                    throw new IllegalStateException("初始化审计器变量值类型空间失败", e);
+                }
+            }
+            inspectorVariableValueTypeSpace = Collections.unmodifiableList(result);
+            return inspectorVariableValueTypeSpace;
         } finally {
             LOCK.unlock();
         }
