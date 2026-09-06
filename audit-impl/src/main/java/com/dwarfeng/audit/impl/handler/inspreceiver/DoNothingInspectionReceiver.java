@@ -1,0 +1,34 @@
+package com.dwarfeng.audit.impl.handler.inspreceiver;
+
+import com.dwarfeng.audit.sdk.handler.inspreceiver.AbstractInspectionReceiver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+/**
+ * 什么也不做的接收器。
+ *
+ * @author DwArFeng
+ * @since 1.1.0
+ */
+@Component
+public class DoNothingInspectionReceiver extends AbstractInspectionReceiver {
+
+    public static final String RECEIVER_TYPE = "do_nothing";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DoNothingInspectionReceiver.class);
+
+    public DoNothingInspectionReceiver() {
+        super(RECEIVER_TYPE);
+    }
+
+    @Override
+    protected void doStart() {
+        LOGGER.info("Do nothing 接收器启动, 该接收器仅用于测试和调试");
+    }
+
+    @Override
+    protected void doStop() {
+        LOGGER.info("Do nothing 接收器停止, 该接收器仅用于测试和调试");
+    }
+}

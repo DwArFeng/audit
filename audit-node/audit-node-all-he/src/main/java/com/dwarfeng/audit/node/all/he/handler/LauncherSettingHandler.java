@@ -19,6 +19,8 @@ public class LauncherSettingHandler implements Handler {
     private long onlineInspectionTaskCheckDelay;
     @Value("${com.dwarfeng.audit.launcher.enable_inspection_task_check_delay}")
     private long enableInspectionTaskCheckDelay;
+    @Value("${com.dwarfeng.audit.launcher.start_inspection_receiver_delay}")
+    private long startInspectionReceiverDelay;
 
     public boolean isResetInspectorSupport() {
         return resetInspectorSupport;
@@ -48,6 +50,10 @@ public class LauncherSettingHandler implements Handler {
         return enableInspectionTaskCheckDelay;
     }
 
+    public long getStartInspectionReceiverDelay() {
+        return startInspectionReceiverDelay;
+    }
+
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
@@ -56,6 +62,7 @@ public class LauncherSettingHandler implements Handler {
                 ", startResetDelay=" + startResetDelay +
                 ", onlineInspectionTaskCheckDelay=" + onlineInspectionTaskCheckDelay +
                 ", enableInspectionTaskCheckDelay=" + enableInspectionTaskCheckDelay +
+                ", startInspectionReceiverDelay=" + startInspectionReceiverDelay +
                 '}';
     }
 }

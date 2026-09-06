@@ -56,6 +56,12 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(182), "inspector execution failed");
     public static final ServiceException.Code INSPECTOR_TYPE_UNSUPPORTED =
             new ServiceException.Code(offset(183), "inspector type unsupported");
+    public static final ServiceException.Code INSPECTION_RECEIVER_FAILED =
+            new ServiceException.Code(offset(190), "inspection receiver failed");
+    public static final ServiceException.Code INSPECTION_RECEIVER_NOT_START =
+            new ServiceException.Code(offset(191), "inspection receiver not start");
+    public static final ServiceException.Code INSPECTION_RECEIVER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(192), "inspection receiver execution failed");
 
     private static int offset(int value) {
         return EXCEPTION_CODE_OFFSET + value;
@@ -102,6 +108,9 @@ public final class ServiceExceptionCodes {
         INSPECTOR_MAKE_FAILED.setCode(offset(181));
         INSPECTOR_EXECUTION_FAILED.setCode(offset(182));
         INSPECTOR_TYPE_UNSUPPORTED.setCode(offset(183));
+        INSPECTION_RECEIVER_FAILED.setCode(offset(190));
+        INSPECTION_RECEIVER_NOT_START.setCode(offset(191));
+        INSPECTION_RECEIVER_EXECUTION_FAILED.setCode(offset(192));
     }
 
     private ServiceExceptionCodes() {

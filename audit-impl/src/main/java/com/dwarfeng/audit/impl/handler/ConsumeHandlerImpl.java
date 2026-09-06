@@ -83,7 +83,7 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
                 return;
             }
 
-            LOGGER.info("消费者为 {} 的记录侧消费处理器开启消费线程...", consumer.getClass().getSimpleName());
+            LOGGER.info("消费者为 {} 的消费处理器开启消费线程...", consumer.getClass().getSimpleName());
             consumeBuffer.block();
             for (int i = 0; i < thread; i++) {
                 ConsumeTask<D> consumeTask = new ConsumeTask<>(consumeBuffer, consumer);
@@ -93,7 +93,7 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
             capacityCheckFuture = scheduler.scheduleAtFixedRate(() -> {
                 double ratio = (double) consumeBuffer.bufferedSize() / (double) consumeBuffer.getBufferSize();
                 if (ratio >= warnThreshold) {
-                    String message = "消费者为 {} 的记录侧的待消费元素占用缓存比例为 {}, 超过报警值 {}, 请检查";
+                    String message = "消费者为 {} 的待消费元素占用缓存比例为 {}, 超过报警值 {}, 请检查";
                     LOGGER.warn(message, consumer.getClass().getSimpleName(), ratio, warnThreshold);
                 }
             }, Constants.SCHEDULER_CHECK_INTERVAL);
@@ -113,7 +113,7 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
                 return;
             }
 
-            LOGGER.info("消费者为 {} 的记录侧消费处理器结束消费线程...", consumer.getClass().getSimpleName());
+            LOGGER.info("消费者为 {} 的消费处理器结束消费线程...", consumer.getClass().getSimpleName());
             if (Objects.nonNull(capacityCheckFuture)) {
                 capacityCheckFuture.cancel(true);
                 capacityCheckFuture = null;
@@ -125,7 +125,7 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
             processRemainingElement();
             endingConsumeTasks.removeIf(AbstractTask::isFinished);
             if (!endingConsumeTasks.isEmpty()) {
-                String message = "消费者为 {} 的记录侧消费处理器中的线程还未完全结束, 等待线程结束...";
+                String message = "消费者为 {} 的消费处理器中的线程还未完全结束, 等待线程结束...";
                 LOGGER.info(message, consumer.getClass().getSimpleName());
                 endingConsumeTasks.forEach(
                         task -> {
@@ -139,7 +139,7 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
             processingConsumeTasks.clear();
             endingConsumeTasks.clear();
             LOGGER.info(
-                    "消费者为 {} 的记录侧消费处理器已经妥善处理数据, 消费线程结束",
+                    "消费者为 {} 的消费处理器已经妥善处理数据, 消费线程结束",
                     consumer.getClass().getSimpleName()
             );
 
@@ -153,17 +153,17 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
         // 如果没有剩余元素，直接跳过。
         if (consumeBuffer.bufferedSize() <= 0) return;
         LOGGER.info(
-                "消费者 {} 消费记录侧消费处理器中剩余的元素 {} 个...",
+                "消费者 {} 的消费处理器中剩余的元素 {} 个...",
                 consumer.getClass().getSimpleName(),
                 consumeBuffer.bufferedSize()
         );
         LOGGER.info(
-                "消费者为 {} 的记录侧消费处理器中剩余的元素过多时, 需要较长时间消费, 请耐心等待...",
+                "消费者为 {} 的消费处理器中剩余的元素过多时, 需要较长时间消费, 请耐心等待...",
                 consumer.getClass().getSimpleName()
         );
         ScheduledFuture<?> scheduledFuture = scheduler.scheduleAtFixedRate(
                 () -> {
-                    String message = "消费者 {} 消费记录侧消费处理器中剩余的元素 {} 个, 请耐心等待...";
+                    String message = "消费者 {} 的消费处理器中剩余的元素 {} 个, 请耐心等待...";
                     LOGGER.info(message, consumer.getClass().getSimpleName(), consumeBuffer.bufferedSize());
                 },
                 new Date(System.currentTimeMillis() + Constants.SCHEDULER_CHECK_INTERVAL),
@@ -174,7 +174,7 @@ public class ConsumeHandlerImpl<D> implements ConsumeHandler<D> {
             try {
                 consumer.consume(element2Consume);
             } catch (Exception e) {
-                LOGGER.warn("记录侧消费处理器消费元素时发生异常, 最多抛弃 {} 个元素", element2Consume.size(), e);
+                LOGGER.warn("消费处理器消费元素时发生异常, 最多抛弃 {} 个元素", element2Consume.size(), e);
             }
         }
         scheduledFuture.cancel(true);

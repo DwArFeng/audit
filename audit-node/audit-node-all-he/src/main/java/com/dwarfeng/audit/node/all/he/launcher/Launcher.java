@@ -1,10 +1,7 @@
 package com.dwarfeng.audit.node.all.he.launcher;
 
 import com.dwarfeng.audit.node.all.he.handler.LauncherSettingHandler;
-import com.dwarfeng.audit.stack.service.AuditRecordQosService;
-import com.dwarfeng.audit.stack.service.InspectionTaskCheckQosService;
-import com.dwarfeng.audit.stack.service.ResetQosService;
-import com.dwarfeng.audit.stack.service.SupportQosService;
+import com.dwarfeng.audit.stack.service.*;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
@@ -43,6 +40,9 @@ public class Launcher {
             mayOnlineInspectionTaskCheck(ctx);
             // 根据启动器设置处理器的设置，选择性地启动自动审计任务检查服务。
             mayEnableInspectionTaskCheck(ctx);
+
+            // 根据启动器设置处理器的设置，选择性地启动自动审计接收服务。
+            mayStartInspectionReceiver(ctx);
         });
     }
 
@@ -203,6 +203,42 @@ public class Launcher {
                         }
                     },
                     new Date(System.currentTimeMillis() + enableInspectionTaskCheckDelay)
+            );
+        }
+    }
+
+    private static void mayStartInspectionReceiver(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 获取程序中的 ThreadPoolTaskScheduler，用于处理计划任务。
+        ThreadPoolTaskScheduler scheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+
+        // 获取自动审计接收 QoS 服务。
+        InspectionReceiverQosService inspectionReceiverQosService =
+                ctx.getBean(InspectionReceiverQosService.class);
+
+        // 判断自动审计接收服务是否启动，并按条件执行不同的操作。
+        long startInspectionReceiverDelay = launcherSettingHandler.getStartInspectionReceiverDelay();
+        if (startInspectionReceiverDelay == 0) {
+            LOGGER.info("立即启动自动审计接收服务...");
+            try {
+                inspectionReceiverQosService.start();
+            } catch (ServiceException e) {
+                LOGGER.error("无法启动自动审计接收服务，异常原因如下", e);
+            }
+        } else if (startInspectionReceiverDelay > 0) {
+            LOGGER.info("{} 毫秒后启动自动审计接收服务...", startInspectionReceiverDelay);
+            scheduler.schedule(
+                    () -> {
+                        LOGGER.info("启动自动审计接收服务...");
+                        try {
+                            inspectionReceiverQosService.start();
+                        } catch (ServiceException e) {
+                            LOGGER.error("无法启动自动审计接收服务，异常原因如下", e);
+                        }
+                    },
+                    new Date(System.currentTimeMillis() + startInspectionReceiverDelay)
             );
         }
     }
