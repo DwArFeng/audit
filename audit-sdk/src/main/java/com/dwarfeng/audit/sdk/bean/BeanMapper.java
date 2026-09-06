@@ -3,10 +3,7 @@ package com.dwarfeng.audit.sdk.bean;
 import com.dwarfeng.audit.sdk.bean.dto.*;
 import com.dwarfeng.audit.sdk.bean.entity.*;
 import com.dwarfeng.audit.sdk.bean.key.*;
-import com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo;
-import com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo;
-import com.dwarfeng.audit.stack.bean.dto.AuditEntryLookupResult;
-import com.dwarfeng.audit.stack.bean.dto.AuditRecordInfo;
+import com.dwarfeng.audit.stack.bean.dto.*;
 import com.dwarfeng.audit.stack.bean.entity.*;
 import com.dwarfeng.audit.stack.bean.key.AuditEntryPropertyKey;
 import com.dwarfeng.audit.stack.bean.key.AuditPropertyIndicatorKey;
@@ -351,6 +348,78 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     AuditRecordInfo auditRecordInfoFromWebInput(WebInputAuditRecordInfo webInputAuditRecordInfo);
+
+    FastJsonInspectionAlarmCreateResult inspectionAlarmCreateResultToFastJson(
+            InspectionAlarmCreateResult inspectionAlarmCreateResult
+    );
+
+    @InheritInverseConfiguration
+    InspectionAlarmCreateResult inspectionAlarmCreateResultFromFastJson(
+            FastJsonInspectionAlarmCreateResult fastJsonInspectionAlarmCreateResult
+    );
+
+    FastJsonInspectorVariableInspectResult inspectorVariableInspectResultToFastJson(
+            InspectorVariableInspectResult inspectorVariableInspectResult
+    );
+
+    @InheritInverseConfiguration
+    InspectorVariableInspectResult inspectorVariableInspectResultFromFastJson(
+            FastJsonInspectorVariableInspectResult fastJsonInspectorVariableInspectResult
+    );
+
+    JSFixedFastJsonInspectionAlarmCreateResult inspectionAlarmCreateResultToJSFixedFastJson(
+            InspectionAlarmCreateResult inspectionAlarmCreateResult
+    );
+
+    @InheritInverseConfiguration
+    InspectionAlarmCreateResult inspectionAlarmCreateResultFromJSFixedFastJson(
+            JSFixedFastJsonInspectionAlarmCreateResult jSFixedFastJsonInspectionAlarmCreateResult
+    );
+
+    JSFixedFastJsonInspectorVariableInspectResult inspectorVariableInspectResultToJSFixedFastJson(
+            InspectorVariableInspectResult inspectorVariableInspectResult
+    );
+
+    @InheritInverseConfiguration
+    InspectorVariableInspectResult inspectorVariableInspectResultFromJSFixedFastJson(
+            JSFixedFastJsonInspectorVariableInspectResult jSFixedFastJsonInspectorVariableInspectResult
+    );
+
+    WebInputInspectionAlarmCreateInfo inspectionAlarmCreateInfoToWebInput(
+            InspectionAlarmCreateInfo inspectionAlarmCreateInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionAlarmCreateInfo inspectionAlarmCreateInfoFromWebInput(
+            WebInputInspectionAlarmCreateInfo webInputInspectionAlarmCreateInfo
+    );
+
+    WebInputInspectorVariableInspectInfo inspectorVariableInspectInfoToWebInput(
+            InspectorVariableInspectInfo inspectorVariableInspectInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectorVariableInspectInfo inspectorVariableInspectInfoFromWebInput(
+            WebInputInspectorVariableInspectInfo webInputInspectorVariableInspectInfo
+    );
+
+    WebInputInspectorVariableRemoveInfo inspectorVariableRemoveInfoToWebInput(
+            InspectorVariableRemoveInfo inspectorVariableRemoveInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectorVariableRemoveInfo inspectorVariableRemoveInfoFromWebInput(
+            WebInputInspectorVariableRemoveInfo webInputInspectorVariableRemoveInfo
+    );
+
+    WebInputInspectorVariableUpsertInfo inspectorVariableUpsertInfoToWebInput(
+            InspectorVariableUpsertInfo inspectorVariableUpsertInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectorVariableUpsertInfo inspectorVariableUpsertInfoFromWebInput(
+            WebInputInspectorVariableUpsertInfo webInputInspectorVariableUpsertInfo
+    );
 
     // endregion
 }

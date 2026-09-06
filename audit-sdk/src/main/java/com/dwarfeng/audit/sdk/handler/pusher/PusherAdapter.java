@@ -1,5 +1,6 @@
 package com.dwarfeng.audit.sdk.handler.pusher;
 
+import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 /**
@@ -25,6 +26,11 @@ public abstract class PusherAdapter extends AbstractPusher {
     @SuppressWarnings("RedundantThrows")
     @Override
     public void auditRecordReset() throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
     }
 
     @Override

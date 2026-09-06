@@ -1,5 +1,6 @@
 package com.dwarfeng.audit.stack.handler;
 
+import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -20,4 +21,13 @@ public interface PushHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     void auditRecordReset() throws HandlerException;
+
+    /**
+     * 自动审计报警创建时执行的推送操作。
+     *
+     * @param inspectionAlarm 创建的自动审计报警。
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException;
 }

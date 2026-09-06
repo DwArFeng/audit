@@ -1,6 +1,7 @@
 package com.dwarfeng.audit.impl.handler;
 
 import com.dwarfeng.audit.sdk.handler.Pusher;
+import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.audit.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +46,11 @@ public class PushHandlerImpl implements PushHandler {
     @Override
     public void auditRecordReset() throws HandlerException {
         pusher.auditRecordReset();
+    }
+
+    @Override
+    public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
+        pusher.inspectionAlarmCreated(inspectionAlarm);
     }
 
     @Override

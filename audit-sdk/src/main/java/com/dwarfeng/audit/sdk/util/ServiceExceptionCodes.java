@@ -32,6 +32,22 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(80), "invalid audit entry composite lookup info");
     public static final ServiceException.Code INVALID_AUDIT_ENTRY_GROUPED_LOOKUP_INFO =
             new ServiceException.Code(offset(90), "invalid audit entry grouped lookup info");
+    public static final ServiceException.Code INSPECTION_NOT_EXISTS =
+            new ServiceException.Code(offset(100), "inspection not exists");
+    public static final ServiceException.Code INSPECTION_TASK_NOT_EXISTS =
+            new ServiceException.Code(offset(110), "inspection task not exists");
+    public static final ServiceException.Code INSPECTOR_INFO_NOT_EXISTS =
+            new ServiceException.Code(offset(120), "inspector info not exists");
+    public static final ServiceException.Code INSPECTION_TASK_INSPECTION_MISMATCH =
+            new ServiceException.Code(offset(130), "inspection task inspection mismatch");
+    public static final ServiceException.Code INSPECTOR_INFO_INSPECTION_MISMATCH =
+            new ServiceException.Code(offset(140), "inspector info inspection mismatch");
+    public static final ServiceException.Code INSPECTOR_VARIABLE_NOT_EXISTS =
+            new ServiceException.Code(offset(150), "inspector variable not exists");
+    public static final ServiceException.Code INVALID_VARIABLE_VALUE_TYPE =
+            new ServiceException.Code(offset(160), "invalid variable value type");
+    public static final ServiceException.Code VARIABLE_VALUE_TYPE_MISMATCH =
+            new ServiceException.Code(offset(170), "variable value type mismatch");
 
     private static int offset(int value) {
         return EXCEPTION_CODE_OFFSET + value;
@@ -66,6 +82,14 @@ public final class ServiceExceptionCodes {
         INVALID_AUDIT_RECORD_INFO.setCode(offset(70));
         INVALID_AUDIT_ENTRY_COMPOSITE_LOOKUP_INFO.setCode(offset(80));
         INVALID_AUDIT_ENTRY_GROUPED_LOOKUP_INFO.setCode(offset(90));
+        INSPECTION_NOT_EXISTS.setCode(offset(100));
+        INSPECTION_TASK_NOT_EXISTS.setCode(offset(110));
+        INSPECTOR_INFO_NOT_EXISTS.setCode(offset(120));
+        INSPECTION_TASK_INSPECTION_MISMATCH.setCode(offset(130));
+        INSPECTOR_INFO_INSPECTION_MISMATCH.setCode(offset(140));
+        INSPECTOR_VARIABLE_NOT_EXISTS.setCode(offset(150));
+        INVALID_VARIABLE_VALUE_TYPE.setCode(offset(160));
+        VARIABLE_VALUE_TYPE_MISMATCH.setCode(offset(170));
     }
 
     private ServiceExceptionCodes() {

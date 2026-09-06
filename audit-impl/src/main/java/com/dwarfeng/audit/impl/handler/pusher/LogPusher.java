@@ -1,6 +1,9 @@
 package com.dwarfeng.audit.impl.handler.pusher;
 
+import com.alibaba.fastjson.JSON;
+import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,30 +39,36 @@ public class LogPusher extends AbstractPusher {
 
     @Override
     public void auditRecordReset() throws HandlerException {
-        logData();
+        logData("推送审核记录重置消息:");
     }
 
-    private void logData() throws HandlerException {
+    @Override
+    public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
+        logData("推送自动审计报警创建消息:");
+        logData(JSON.toJSONString(FastJsonInspectionAlarm.of(inspectionAlarm), true));
+    }
+
+    private void logData(String message) throws HandlerException {
         String currentLogLevel = StringUtils.upperCase(logLevel);
-        logString(currentLogLevel);
+        logString(message, currentLogLevel);
     }
 
-    private void logString(String currentLogLevel) throws HandlerException {
+    private void logString(String message, String currentLogLevel) throws HandlerException {
         switch (currentLogLevel) {
             case LEVEL_TRACE:
-                LOGGER.trace("推送审核记录重置消息:");
+                LOGGER.trace(message);
                 return;
             case LEVEL_DEBUG:
-                LOGGER.debug("推送审核记录重置消息:");
+                LOGGER.debug(message);
                 return;
             case LEVEL_INFO:
-                LOGGER.info("推送审核记录重置消息:");
+                LOGGER.info(message);
                 return;
             case LEVEL_WARN:
-                LOGGER.warn("推送审核记录重置消息:");
+                LOGGER.warn(message);
                 return;
             case LEVEL_ERROR:
-                LOGGER.error("推送审核记录重置消息:");
+                LOGGER.error(message);
                 return;
             default:
                 throw new HandlerException("未知的日志等级: " + currentLogLevel);

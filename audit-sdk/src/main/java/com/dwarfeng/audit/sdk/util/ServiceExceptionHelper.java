@@ -53,6 +53,20 @@ public final class ServiceExceptionHelper {
                 InvalidAuditEntryGroupedLookupInfoException.class,
                 ServiceExceptionCodes.INVALID_AUDIT_ENTRY_GROUPED_LOOKUP_INFO
         );
+        map.put(InspectionNotExistsException.class, ServiceExceptionCodes.INSPECTION_NOT_EXISTS);
+        map.put(InspectionTaskNotExistsException.class, ServiceExceptionCodes.INSPECTION_TASK_NOT_EXISTS);
+        map.put(InspectorInfoNotExistsException.class, ServiceExceptionCodes.INSPECTOR_INFO_NOT_EXISTS);
+        map.put(
+                InspectionTaskInspectionMismatchException.class,
+                ServiceExceptionCodes.INSPECTION_TASK_INSPECTION_MISMATCH
+        );
+        map.put(
+                InspectorInfoInspectionMismatchException.class,
+                ServiceExceptionCodes.INSPECTOR_INFO_INSPECTION_MISMATCH
+        );
+        map.put(InspectorVariableNotExistsException.class, ServiceExceptionCodes.INSPECTOR_VARIABLE_NOT_EXISTS);
+        map.put(InvalidVariableValueTypeException.class, ServiceExceptionCodes.INVALID_VARIABLE_VALUE_TYPE);
+        map.put(VariableValueTypeMismatchException.class, ServiceExceptionCodes.VARIABLE_VALUE_TYPE_MISMATCH);
 
         return map;
     }

@@ -6,12 +6,21 @@ import com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo;
 import com.dwarfeng.audit.stack.bean.dto.AuditRecordInfo;
 import com.dwarfeng.audit.stack.bean.entity.AuditCategory;
 import com.dwarfeng.audit.stack.bean.entity.AuditPropertyIndicator;
+import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
+import com.dwarfeng.audit.stack.bean.entity.InspectorInfo;
 import com.dwarfeng.audit.stack.bean.key.AuditPropertyIndicatorKey;
+import com.dwarfeng.audit.stack.bean.key.InspectorVariableKey;
 import com.dwarfeng.audit.stack.exception.*;
 import com.dwarfeng.audit.stack.handler.AuditRecordLocalCacheHandler;
+import com.dwarfeng.audit.stack.service.InspectionMaintainService;
+import com.dwarfeng.audit.stack.service.InspectionTaskMaintainService;
+import com.dwarfeng.audit.stack.service.InspectorInfoMaintainService;
+import com.dwarfeng.audit.stack.service.InspectorVariableMaintainService;
 import com.dwarfeng.audit.stack.struct.AuditRecordLocalCache;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -29,9 +38,23 @@ import java.util.*;
 public class HandlerValidator {
 
     private final AuditRecordLocalCacheHandler auditRecordLocalCacheHandler;
+    private final InspectionMaintainService inspectionMaintainService;
+    private final InspectionTaskMaintainService inspectionTaskMaintainService;
+    private final InspectorInfoMaintainService inspectorInfoMaintainService;
+    private final InspectorVariableMaintainService inspectorVariableMaintainService;
 
-    public HandlerValidator(AuditRecordLocalCacheHandler auditRecordLocalCacheHandler) {
+    public HandlerValidator(
+            AuditRecordLocalCacheHandler auditRecordLocalCacheHandler,
+            InspectionMaintainService inspectionMaintainService,
+            InspectionTaskMaintainService inspectionTaskMaintainService,
+            InspectorInfoMaintainService inspectorInfoMaintainService,
+            InspectorVariableMaintainService inspectorVariableMaintainService
+    ) {
         this.auditRecordLocalCacheHandler = auditRecordLocalCacheHandler;
+        this.inspectionMaintainService = inspectionMaintainService;
+        this.inspectionTaskMaintainService = inspectionTaskMaintainService;
+        this.inspectorInfoMaintainService = inspectorInfoMaintainService;
+        this.inspectorVariableMaintainService = inspectorVariableMaintainService;
     }
 
     public void makeSureAuditCategoryExists(StringIdKey categoryKey) throws HandlerException {
@@ -316,6 +339,115 @@ public class HandlerValidator {
         Class<?> actualType = value.getClass();
         if (!expectedType.isAssignableFrom(actualType)) {
             throw new AuditPropertyValueTypeMismatchException(propertyId, expectedType, actualType);
+        }
+    }
+
+    public void makeSureInspectionExists(LongIdKey inspectionKey) throws HandlerException {
+        try {
+            if (Objects.isNull(inspectionKey) || !inspectionMaintainService.exists(inspectionKey)) {
+                throw new InspectionNotExistsException(inspectionKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureInspectionTaskExists(LongIdKey inspectionTaskKey) throws HandlerException {
+        try {
+            if (Objects.isNull(inspectionTaskKey) || !inspectionTaskMaintainService.exists(inspectionTaskKey)) {
+                throw new InspectionTaskNotExistsException(inspectionTaskKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureInspectorInfoExists(LongIdKey inspectorInfoKey) throws HandlerException {
+        try {
+            if (Objects.isNull(inspectorInfoKey) || !inspectorInfoMaintainService.exists(inspectorInfoKey)) {
+                throw new InspectorInfoNotExistsException(inspectorInfoKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureInspectionTaskInspectionMatched(LongIdKey inspectionTaskKey, LongIdKey expectedInspectionKey)
+            throws HandlerException {
+        try {
+            InspectionTask inspectionTask = inspectionTaskMaintainService.getIfExists(inspectionTaskKey);
+            if (Objects.isNull(inspectionTask)) {
+                throw new InspectionTaskNotExistsException(inspectionTaskKey);
+            }
+            LongIdKey taskInspectionKey = inspectionTask.getInspectionKey();
+            if (!Objects.equals(taskInspectionKey, expectedInspectionKey)) {
+                throw new InspectionTaskInspectionMismatchException(
+                        inspectionTaskKey, taskInspectionKey, expectedInspectionKey
+                );
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureInspectorInfoInspectionMatched(LongIdKey inspectorInfoKey, LongIdKey expectedInspectionKey)
+            throws HandlerException {
+        try {
+            InspectorInfo inspectorInfo = inspectorInfoMaintainService.getIfExists(inspectorInfoKey);
+            if (Objects.isNull(inspectorInfo)) {
+                throw new InspectorInfoNotExistsException(inspectorInfoKey);
+            }
+            LongIdKey inspectorInspectionKey = inspectorInfo.getInspectionKey();
+            if (!Objects.equals(inspectorInspectionKey, expectedInspectionKey)) {
+                throw new InspectorInfoInspectionMismatchException(
+                        inspectorInfoKey, inspectorInspectionKey, expectedInspectionKey
+                );
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureInspectorVariableExists(InspectorVariableKey inspectorVariableKey) throws HandlerException {
+        try {
+            if (Objects.isNull(inspectorVariableKey) ||
+                    !inspectorVariableMaintainService.exists(inspectorVariableKey)) {
+                throw new InspectorVariableNotExistsException(inspectorVariableKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureVariableValueTypeValid(int valueType, Object value) throws HandlerException {
+        Class<?> expectedValueClazz;
+        switch (valueType) {
+            case Constants.INSPECTOR_VARIABLE_VALUE_TYPE_STRING:
+                expectedValueClazz = String.class;
+                break;
+            case Constants.INSPECTOR_VARIABLE_VALUE_TYPE_LONG:
+                expectedValueClazz = Long.class;
+                break;
+            case Constants.INSPECTOR_VARIABLE_VALUE_TYPE_DOUBLE:
+                expectedValueClazz = Double.class;
+                break;
+            case Constants.INSPECTOR_VARIABLE_VALUE_TYPE_BOOLEAN:
+                expectedValueClazz = Boolean.class;
+                break;
+            case Constants.INSPECTOR_VARIABLE_VALUE_TYPE_DATE:
+                expectedValueClazz = Date.class;
+                break;
+            default:
+                throw new InvalidVariableValueTypeException(valueType);
+        }
+
+        if (Objects.isNull(value)) {
+            return;
+        }
+
+        Class<?> actualValueClazz = value.getClass();
+        if (!expectedValueClazz.isAssignableFrom(actualValueClazz)) {
+            throw new VariableValueTypeMismatchException(valueType, expectedValueClazz, actualValueClazz);
         }
     }
 }

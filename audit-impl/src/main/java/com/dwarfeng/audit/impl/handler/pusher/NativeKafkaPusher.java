@@ -1,6 +1,9 @@
 package com.dwarfeng.audit.impl.handler.pusher;
 
+import com.alibaba.fastjson.JSON;
+import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -38,6 +41,8 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.audit_record_reset}")
     private String auditRecordResetTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_alarm_created}")
+    private String inspectionAlarmCreatedTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -53,10 +58,19 @@ public class NativeKafkaPusher extends AbstractPusher {
     }
 
     @Override
+    public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) {
+        kafkaTemplate.send(
+                inspectionAlarmCreatedTopic,
+                JSON.toJSONString(FastJsonInspectionAlarm.of(inspectionAlarm))
+        );
+    }
+
+    @Override
     public String toString() {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
                 ", auditRecordResetTopic='" + auditRecordResetTopic + '\'' +
+                ", inspectionAlarmCreatedTopic='" + inspectionAlarmCreatedTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }
