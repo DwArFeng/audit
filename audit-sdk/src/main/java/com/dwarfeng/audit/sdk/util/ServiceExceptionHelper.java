@@ -77,6 +77,18 @@ public final class ServiceExceptionHelper {
                 InspectionReceiverExecutionException.class,
                 ServiceExceptionCodes.INSPECTION_RECEIVER_EXECUTION_FAILED
         );
+        map.put(
+                InspectionDispatcherException.class,
+                ServiceExceptionCodes.INSPECTION_DISPATCHER_FAILED
+        );
+        map.put(
+                InspectionDispatcherNotStartException.class,
+                ServiceExceptionCodes.INSPECTION_DISPATCHER_NOT_START
+        );
+        map.put(
+                InspectionDispatcherExecutionException.class,
+                ServiceExceptionCodes.INSPECTION_DISPATCHER_EXECUTION_FAILED
+        );
 
         return map;
     }

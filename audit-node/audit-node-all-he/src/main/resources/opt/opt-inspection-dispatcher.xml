@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!-- 扫描自动审计调度器的实现包。 -->
+    <context:component-scan
+            base-package="com.dwarfeng.audit.impl.handler.inspdispatcher" use-default-filters="false"
+    >
+        <!-- 加载 DrainInspectionDispatcher。 -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdispatcher.DrainInspectionDispatcher"
+        />
+        -->
+
+        <!-- 加载 InjvmInspectionDispatcher。 -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdispatcher.InjvmInspectionDispatcher"
+        />
+        -->
+
+        <!-- 加载 KafkaInspectionDispatcher。 -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdispatcher.KafkaInspectionDispatcher"
+        />
+        -->
+
+        <!-- 加载 DubboInspectionDispatcher。 -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdispatcher.DubboInspectionDispatcher"
+        />
+        -->
+    </context:component-scan>
+</beans>

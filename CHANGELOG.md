@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现预设自动审计调度器。
+  - com.dwarfeng.audit.impl.handler.inspdispatcher.DrainInspectionDispatcher。
+  - com.dwarfeng.audit.impl.handler.inspdispatcher.InjvmInspectionDispatcher。
+  - com.dwarfeng.audit.impl.handler.inspdispatcher.KafkaInspectionDispatcher。
+  - com.dwarfeng.audit.impl.handler.inspdispatcher.DubboInspectionDispatcher。
+
 - 实现预设自动审计接收器。
   - com.dwarfeng.audit.impl.handler.inspreceiver.DoNothingInspectionReceiver。
   - com.dwarfeng.audit.impl.handler.inspreceiver.InjvmInspectionReceiver。
@@ -14,6 +20,7 @@
   - com.dwarfeng.audit.impl.handler.inspector.groovy.GroovyInspectorRegistry。
 
 - 实现核心机制。
+  - 自动审计调度机制。
   - 自动审计接收机制。
   - 自动审计任务检查机制。
   - 自动审计作业机制。

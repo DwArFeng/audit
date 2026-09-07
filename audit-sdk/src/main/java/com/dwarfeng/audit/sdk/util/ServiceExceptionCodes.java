@@ -62,6 +62,12 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(191), "inspection receiver not start");
     public static final ServiceException.Code INSPECTION_RECEIVER_EXECUTION_FAILED =
             new ServiceException.Code(offset(192), "inspection receiver execution failed");
+    public static final ServiceException.Code INSPECTION_DISPATCHER_FAILED =
+            new ServiceException.Code(offset(200), "inspection dispatcher failed");
+    public static final ServiceException.Code INSPECTION_DISPATCHER_NOT_START =
+            new ServiceException.Code(offset(201), "inspection dispatcher not start");
+    public static final ServiceException.Code INSPECTION_DISPATCHER_EXECUTION_FAILED =
+            new ServiceException.Code(offset(202), "inspection dispatcher execution failed");
 
     private static int offset(int value) {
         return EXCEPTION_CODE_OFFSET + value;
@@ -111,6 +117,9 @@ public final class ServiceExceptionCodes {
         INSPECTION_RECEIVER_FAILED.setCode(offset(190));
         INSPECTION_RECEIVER_NOT_START.setCode(offset(191));
         INSPECTION_RECEIVER_EXECUTION_FAILED.setCode(offset(192));
+        INSPECTION_DISPATCHER_FAILED.setCode(offset(200));
+        INSPECTION_DISPATCHER_NOT_START.setCode(offset(201));
+        INSPECTION_DISPATCHER_EXECUTION_FAILED.setCode(offset(202));
     }
 
     private ServiceExceptionCodes() {
