@@ -12,6 +12,14 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
 public interface SupportHandler extends Handler {
 
     /**
+     * 重置自动审计驱动器支持。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    void resetInspectionDriver() throws HandlerException;
+
+    /**
      * 重置审计器。
      *
      * @throws HandlerException 处理器异常。

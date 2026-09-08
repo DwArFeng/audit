@@ -68,6 +68,10 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(201), "inspection dispatcher not start");
     public static final ServiceException.Code INSPECTION_DISPATCHER_EXECUTION_FAILED =
             new ServiceException.Code(offset(202), "inspection dispatcher execution failed");
+    public static final ServiceException.Code INSPECTION_DRIVER_FAILED =
+            new ServiceException.Code(offset(210), "inspection driver failed");
+    public static final ServiceException.Code INSPECTION_DRIVER_TYPE_UNSUPPORTED =
+            new ServiceException.Code(offset(211), "inspection driver type unsupported");
 
     private static int offset(int value) {
         return EXCEPTION_CODE_OFFSET + value;
@@ -120,6 +124,8 @@ public final class ServiceExceptionCodes {
         INSPECTION_DISPATCHER_FAILED.setCode(offset(200));
         INSPECTION_DISPATCHER_NOT_START.setCode(offset(201));
         INSPECTION_DISPATCHER_EXECUTION_FAILED.setCode(offset(202));
+        INSPECTION_DRIVER_FAILED.setCode(offset(210));
+        INSPECTION_DRIVER_TYPE_UNSUPPORTED.setCode(offset(211));
     }
 
     private ServiceExceptionCodes() {

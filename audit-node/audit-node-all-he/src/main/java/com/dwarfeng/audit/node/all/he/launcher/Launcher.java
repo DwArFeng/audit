@@ -30,6 +30,9 @@ public class Launcher {
             // 根据启动器设置处理器的设置，选择性重置审计器。
             mayResetInspector(ctx);
 
+            // 根据启动器设置处理器的设置，选择性重置自动审计驱动器。
+            mayResetInspectionDriver(ctx);
+
             // 根据启动器设置处理器的设置，选择性地开启审计记录服务。
             mayStartAuditRecord(ctx);
 
@@ -62,6 +65,25 @@ public class Launcher {
             supportQosService.resetInspector();
         } catch (ServiceException e) {
             LOGGER.warn("审计器支持重置失败，异常信息如下", e);
+        }
+    }
+
+    private static void mayResetInspectionDriver(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 如果不重置自动审计驱动器，则返回。
+        if (!launcherSettingHandler.isResetInspectionDriverSupport()) {
+            return;
+        }
+
+        // 重置自动审计驱动器支持。
+        LOGGER.info("重置自动审计驱动器支持...");
+        SupportQosService supportQosService = ctx.getBean(SupportQosService.class);
+        try {
+            supportQosService.resetInspectionDriver();
+        } catch (ServiceException e) {
+            LOGGER.warn("自动审计驱动器支持重置失败，异常信息如下", e);
         }
     }
 

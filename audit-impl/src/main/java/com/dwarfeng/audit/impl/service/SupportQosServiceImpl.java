@@ -28,6 +28,15 @@ public class SupportQosServiceImpl implements SupportQosService {
     }
 
     @Override
+    public void resetInspectionDriver() throws ServiceException {
+        try {
+            supportHandler.resetInspectionDriver();
+        } catch (HandlerException e) {
+            throw ServiceExceptionHelper.logParse("重置自动审计驱动器时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
     public void resetInspector() throws ServiceException {
         try {
             supportHandler.resetInspector();

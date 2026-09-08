@@ -10,6 +10,9 @@ public class LauncherSettingHandler implements Handler {
     @Value("${com.dwarfeng.audit.launcher.reset_inspector_support}")
     private boolean resetInspectorSupport;
 
+    @Value("${com.dwarfeng.audit.launcher.reset_inspection_driver_support}")
+    private boolean resetInspectionDriverSupport;
+
     @Value("${com.dwarfeng.audit.launcher.start_audit_record_delay}")
     private long startAuditRecordDelay;
     @Value("${com.dwarfeng.audit.launcher.start_reset_delay}")
@@ -24,6 +27,10 @@ public class LauncherSettingHandler implements Handler {
 
     public boolean isResetInspectorSupport() {
         return resetInspectorSupport;
+    }
+
+    public boolean isResetInspectionDriverSupport() {
+        return resetInspectionDriverSupport;
     }
 
     public long getStartAuditRecordDelay() {
@@ -58,6 +65,7 @@ public class LauncherSettingHandler implements Handler {
     public String toString() {
         return "LauncherSettingHandler{" +
                 "resetInspectorSupport=" + resetInspectorSupport +
+                ", resetInspectionDriverSupport=" + resetInspectionDriverSupport +
                 ", startAuditRecordDelay=" + startAuditRecordDelay +
                 ", startResetDelay=" + startResetDelay +
                 ", onlineInspectionTaskCheckDelay=" + onlineInspectionTaskCheckDelay +

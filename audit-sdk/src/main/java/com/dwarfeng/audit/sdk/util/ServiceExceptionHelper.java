@@ -89,6 +89,11 @@ public final class ServiceExceptionHelper {
                 InspectionDispatcherExecutionException.class,
                 ServiceExceptionCodes.INSPECTION_DISPATCHER_EXECUTION_FAILED
         );
+        map.put(InspectionDriverException.class, ServiceExceptionCodes.INSPECTION_DRIVER_FAILED);
+        map.put(
+                UnsupportedInspectionDriverTypeException.class,
+                ServiceExceptionCodes.INSPECTION_DRIVER_TYPE_UNSUPPORTED
+        );
 
         return map;
     }

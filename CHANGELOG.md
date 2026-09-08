@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现预设自动审计驱动器。
+  - com.dwarfeng.audit.impl.handler.inspdriver.CronInspectionDriverProvider。
+  - com.dwarfeng.audit.impl.handler.inspdriver.DctiKafkaInspectionDriverProvider。
+  - com.dwarfeng.audit.impl.handler.inspdriver.FixedDelayInspectionDriverProvider。
+  - com.dwarfeng.audit.impl.handler.inspdriver.FixedRateInspectionDriverProvider。
+
 - 实现预设自动审计调度器。
   - com.dwarfeng.audit.impl.handler.inspdispatcher.DrainInspectionDispatcher。
   - com.dwarfeng.audit.impl.handler.inspdispatcher.InjvmInspectionDispatcher。
@@ -20,6 +26,7 @@
   - com.dwarfeng.audit.impl.handler.inspector.groovy.GroovyInspectorRegistry。
 
 - 实现核心机制。
+  - 自动审计驱动机制。
   - 自动审计调度机制。
   - 自动审计接收机制。
   - 自动审计任务检查机制。

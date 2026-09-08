@@ -12,6 +12,14 @@ import com.dwarfeng.subgrade.stack.service.Service;
 public interface SupportQosService extends Service {
 
     /**
+     * 重置自动审计驱动器支持。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 1.1.0
+     */
+    void resetInspectionDriver() throws ServiceException;
+
+    /**
      * 重置审计器。
      *
      * @throws ServiceException 服务异常。

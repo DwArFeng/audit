@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!-- 扫描自动审计驱动器实现包。 -->
+    <context:component-scan
+            base-package="com.dwarfeng.audit.impl.handler.inspdriver" use-default-filters="false"
+    >
+        <!-- 加载 CronInspectionDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.CronInspectionDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.CronInspectionDriverSupporter"
+        />
+        -->
+
+        <!-- 加载 DctiKafkaInspectionDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.DctiKafkaInspectionDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.DctiKafkaInspectionDriverSupporter"
+        />
+        -->
+
+        <!-- 加载 FixedDelayInspectionDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.FixedDelayInspectionDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.FixedDelayInspectionDriverSupporter"
+        />
+        -->
+
+        <!-- 加载 FixedRateInspectionDriver -->
+        <!--
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.FixedRateInspectionDriverProvider"
+        />
+        <context:include-filter
+                type="assignable"
+                expression="com.dwarfeng.audit.impl.handler.inspdriver.FixedRateInspectionDriverSupporter"
+        />
+        -->
+    </context:component-scan>
+</beans>
