@@ -63,6 +63,17 @@ public class MultiPusher extends AbstractPusher {
     }
 
     @Override
+    public void inspectionSuperviseReset() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.inspectionSuperviseReset();
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
     public void inspectionTaskFinished(InspectionTask inspectionTask) {
         for (Pusher delegate : delegates) {
             try {

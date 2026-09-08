@@ -84,6 +84,17 @@ public class ResetHandlerImpl implements ResetHandler {
 
     @BehaviorAnalyse
     @Override
+    public void resetInspectionSupervise() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetInspectionSupervise();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @BehaviorAnalyse
+    @Override
     public void resetInspectionJob() throws HandlerException {
         lock.lock();
         try {

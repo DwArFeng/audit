@@ -50,6 +50,11 @@ public class PushHandlerImpl implements PushHandler {
     }
 
     @Override
+    public void inspectionSuperviseReset() throws HandlerException {
+        pusher.inspectionSuperviseReset();
+    }
+
+    @Override
     public void inspectionTaskFinished(InspectionTask inspectionTask) throws HandlerException {
         pusher.inspectionTaskFinished(inspectionTask);
     }

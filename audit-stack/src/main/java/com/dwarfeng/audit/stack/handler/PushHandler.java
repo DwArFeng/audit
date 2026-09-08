@@ -24,6 +24,14 @@ public interface PushHandler extends Handler {
     void auditRecordReset() throws HandlerException;
 
     /**
+     * 自动审计主管功能重置时执行的推送操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    void inspectionSuperviseReset() throws HandlerException;
+
+    /**
      * 自动审计任务完成时执行的推送操作。
      *
      * @param inspectionTask 已完成的自动审计任务。

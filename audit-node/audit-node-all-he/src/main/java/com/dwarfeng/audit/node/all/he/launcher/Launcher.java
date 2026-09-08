@@ -46,6 +46,11 @@ public class Launcher {
 
             // 根据启动器设置处理器的设置，选择性地启动自动审计接收服务。
             mayStartInspectionReceiver(ctx);
+
+            // 根据启动器设置处理器的设置，选择性地上线自动审计主管服务。
+            mayOnlineInspectionSupervise(ctx);
+            // 根据启动器设置处理器的设置，选择性地启动自动审计主管服务。
+            mayEnableInspectionSupervise(ctx);
         });
     }
 
@@ -261,6 +266,78 @@ public class Launcher {
                         }
                     },
                     new Date(System.currentTimeMillis() + startInspectionReceiverDelay)
+            );
+        }
+    }
+
+    private static void mayOnlineInspectionSupervise(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 获取程序中的 ThreadPoolTaskScheduler，用于处理计划任务。
+        ThreadPoolTaskScheduler scheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+
+        // 获取自动审计主管 QoS 服务。
+        InspectionSuperviseQosService inspectionSuperviseQosService =
+                ctx.getBean(InspectionSuperviseQosService.class);
+
+        // 判断自动审计主管处理器是否上线自动审计主管服务，并按条件执行不同的操作。
+        long onlineInspectionSuperviseDelay = launcherSettingHandler.getOnlineInspectionSuperviseDelay();
+        if (onlineInspectionSuperviseDelay == 0) {
+            LOGGER.info("立即上线自动审计主管服务...");
+            try {
+                inspectionSuperviseQosService.online();
+            } catch (ServiceException e) {
+                LOGGER.error("无法上线自动审计主管服务，异常原因如下", e);
+            }
+        } else if (onlineInspectionSuperviseDelay > 0) {
+            LOGGER.info("{} 毫秒后上线自动审计主管服务...", onlineInspectionSuperviseDelay);
+            scheduler.schedule(
+                    () -> {
+                        LOGGER.info("上线自动审计主管服务...");
+                        try {
+                            inspectionSuperviseQosService.online();
+                        } catch (ServiceException e) {
+                            LOGGER.error("无法上线自动审计主管服务，异常原因如下", e);
+                        }
+                    },
+                    new Date(System.currentTimeMillis() + onlineInspectionSuperviseDelay)
+            );
+        }
+    }
+
+    private static void mayEnableInspectionSupervise(ApplicationContext ctx) {
+        // 获取启动器设置处理器，用于获取启动器设置，并按照设置选择性执行功能。
+        LauncherSettingHandler launcherSettingHandler = ctx.getBean(LauncherSettingHandler.class);
+
+        // 获取程序中的 ThreadPoolTaskScheduler，用于处理计划任务。
+        ThreadPoolTaskScheduler scheduler = ctx.getBean(ThreadPoolTaskScheduler.class);
+
+        // 获取自动审计主管 QoS 服务。
+        InspectionSuperviseQosService inspectionSuperviseQosService =
+                ctx.getBean(InspectionSuperviseQosService.class);
+
+        // 判断自动审计主管处理器是否启动自动审计主管服务，并按条件执行不同的操作。
+        long enableInspectionSuperviseDelay = launcherSettingHandler.getEnableInspectionSuperviseDelay();
+        if (enableInspectionSuperviseDelay == 0) {
+            LOGGER.info("立即启动自动审计主管服务...");
+            try {
+                inspectionSuperviseQosService.start();
+            } catch (ServiceException e) {
+                LOGGER.error("无法启动自动审计主管服务，异常原因如下", e);
+            }
+        } else if (enableInspectionSuperviseDelay > 0) {
+            LOGGER.info("{} 毫秒后启动自动审计主管服务...", enableInspectionSuperviseDelay);
+            scheduler.schedule(
+                    () -> {
+                        LOGGER.info("启动自动审计主管服务...");
+                        try {
+                            inspectionSuperviseQosService.start();
+                        } catch (ServiceException e) {
+                            LOGGER.error("无法启动自动审计主管服务，异常原因如下", e);
+                        }
+                    },
+                    new Date(System.currentTimeMillis() + enableInspectionSuperviseDelay)
             );
         }
     }

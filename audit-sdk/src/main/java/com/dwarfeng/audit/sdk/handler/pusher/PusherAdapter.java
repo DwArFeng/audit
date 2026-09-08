@@ -31,6 +31,11 @@ public abstract class PusherAdapter extends AbstractPusher {
 
     @SuppressWarnings("RedundantThrows")
     @Override
+    public void inspectionSuperviseReset() throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
     public void inspectionTaskFinished(InspectionTask inspectionTask) throws HandlerException {
     }
 

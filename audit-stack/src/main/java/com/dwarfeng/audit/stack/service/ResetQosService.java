@@ -55,6 +55,14 @@ public interface ResetQosService extends Service {
     void resetAuditRecord() throws ServiceException;
 
     /**
+     * 重置自动审计主管功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 1.1.0
+     */
+    void resetInspectionSupervise() throws ServiceException;
+
+    /**
      * 重置自动审计作业功能。
      *
      * @throws ServiceException 服务异常。

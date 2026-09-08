@@ -1,9 +1,6 @@
 package com.dwarfeng.audit.impl.handler;
 
-import com.dwarfeng.audit.stack.handler.AuditRecordHandler;
-import com.dwarfeng.audit.stack.handler.AuditRecordLocalCacheHandler;
-import com.dwarfeng.audit.stack.handler.InspectionJobLocalCacheHandler;
-import com.dwarfeng.audit.stack.handler.PushHandler;
+import com.dwarfeng.audit.stack.handler.*;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
@@ -29,6 +26,8 @@ public class ResetProcessor {
 
     private final AuditRecordHandler auditRecordHandler;
     private final AuditRecordLocalCacheHandler auditRecordLocalCacheHandler;
+    private final InspectionSuperviseHandler inspectionSuperviseHandler;
+    private final InspectionDriveLocalCacheHandler inspectionDriveLocalCacheHandler;
     private final InspectionJobLocalCacheHandler inspectionJobLocalCacheHandler;
     private final PushHandler pushHandler;
 
@@ -37,11 +36,15 @@ public class ResetProcessor {
     public ResetProcessor(
             AuditRecordHandler auditRecordHandler,
             AuditRecordLocalCacheHandler auditRecordLocalCacheHandler,
+            InspectionSuperviseHandler inspectionSuperviseHandler,
+            InspectionDriveLocalCacheHandler inspectionDriveLocalCacheHandler,
             InspectionJobLocalCacheHandler inspectionJobLocalCacheHandler,
             PushHandler pushHandler
     ) {
         this.auditRecordHandler = auditRecordHandler;
         this.auditRecordLocalCacheHandler = auditRecordLocalCacheHandler;
+        this.inspectionSuperviseHandler = inspectionSuperviseHandler;
+        this.inspectionDriveLocalCacheHandler = inspectionDriveLocalCacheHandler;
         this.inspectionJobLocalCacheHandler = inspectionJobLocalCacheHandler;
         this.pushHandler = pushHandler;
     }
@@ -82,6 +85,46 @@ public class ResetProcessor {
             pushHandler.auditRecordReset();
         } catch (Exception e) {
             LOGGER.warn("推送审核记录功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
+    }
+
+    /**
+     * 重置自动审计主管功能。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    public void resetInspectionSupervise() throws HandlerException {
+        lock.lock();
+        try {
+            doResetInspectionSupervise();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetInspectionSupervise() throws Exception {
+        // 获取当前自动审计主管处理器的状态。
+        boolean inspectionSuperviseStarted = inspectionSuperviseHandler.isStarted();
+
+        // 停止自动审计主管处理器，以妥善停止自动审计调度器和驱动器。
+        inspectionSuperviseHandler.stop();
+
+        // 清空自动审计驱动配置缓存，使后续驱动重新加载自动审计及驱动器信息。
+        inspectionDriveLocalCacheHandler.clear();
+
+        // 如果自动审计主管处理器之前已经启动，则恢复其运行状态。
+        if (inspectionSuperviseStarted) {
+            inspectionSuperviseHandler.start();
+        }
+
+        // 消息推送。
+        try {
+            pushHandler.inspectionSuperviseReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送自动审计主管功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 

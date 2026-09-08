@@ -145,6 +145,19 @@ public class DubboResetter extends AbstractResetter {
         boolean resetAuditRecord() throws ServiceException;
 
         /**
+         * 重置自动审计主管功能。
+         *
+         * <p>
+         * 因为 Dubbo 广播响应机制无法处理 void 返回类型，所以方法需要返回一个结果。
+         *
+         * @return 恒为 true。
+         * @throws ServiceException 服务异常。
+         * @since 1.1.0
+         */
+        @SuppressWarnings("SameReturnValue")
+        boolean resetInspectionSupervise() throws ServiceException;
+
+        /**
          * 重置自动审计作业功能。
          *
          * <p>
@@ -178,6 +191,17 @@ public class DubboResetter extends AbstractResetter {
             try {
                 LOGGER.info("接收到审计记录功能重置消息, 正在重置审计记录功能...");
                 context.resetAuditRecord();
+                return true;
+            } catch (Exception e) {
+                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
+            }
+        }
+
+        @Override
+        public boolean resetInspectionSupervise() throws ServiceException {
+            try {
+                LOGGER.info("接收到自动审计主管功能重置消息, 正在重置自动审计主管功能...");
+                context.resetInspectionSupervise();
                 return true;
             } catch (Exception e) {
                 throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);

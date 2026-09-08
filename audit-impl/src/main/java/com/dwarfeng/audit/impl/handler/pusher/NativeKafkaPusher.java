@@ -43,6 +43,8 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.audit_record_reset}")
     private String auditRecordResetTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_supervise_reset}")
+    private String inspectionSuperviseResetTopic;
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_task_finished}")
     private String inspectionTaskFinishedTopic;
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_task_failed}")
@@ -67,6 +69,12 @@ public class NativeKafkaPusher extends AbstractPusher {
     @Override
     public void auditRecordReset() {
         kafkaTemplate.send(auditRecordResetTopic, StringUtils.EMPTY);
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void inspectionSuperviseReset() {
+        kafkaTemplate.send(inspectionSuperviseResetTopic, StringUtils.EMPTY);
     }
 
     @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
@@ -125,6 +133,7 @@ public class NativeKafkaPusher extends AbstractPusher {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
                 ", auditRecordResetTopic='" + auditRecordResetTopic + '\'' +
+                ", inspectionSuperviseResetTopic='" + inspectionSuperviseResetTopic + '\'' +
                 ", inspectionTaskFinishedTopic='" + inspectionTaskFinishedTopic + '\'' +
                 ", inspectionTaskFailedTopic='" + inspectionTaskFailedTopic + '\'' +
                 ", inspectionTaskExpiredTopic='" + inspectionTaskExpiredTopic + '\'' +

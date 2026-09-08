@@ -36,6 +36,7 @@ public class ResetCommand extends CliCommand {
     private static final String COMMAND_OPTION_STOP = "stop";
     private static final String COMMAND_OPTION_STATUS = "status";
     private static final String COMMAND_OPTION_RESET_AUDIT_RECORD = "reset-audit-record";
+    private static final String COMMAND_OPTION_RESET_INSPECTION_SUPERVISE = "reset-inspection-supervise";
     private static final String COMMAND_OPTION_RESET_INSPECTION_JOB = "reset-inspection-job";
 
     private static final String[] COMMAND_OPTION_ARRAY = new String[]{
@@ -44,6 +45,7 @@ public class ResetCommand extends CliCommand {
             COMMAND_OPTION_STOP,
             COMMAND_OPTION_STATUS,
             COMMAND_OPTION_RESET_AUDIT_RECORD,
+            COMMAND_OPTION_RESET_INSPECTION_SUPERVISE,
             COMMAND_OPTION_RESET_INSPECTION_JOB
     };
 
@@ -74,6 +76,7 @@ public class ResetCommand extends CliCommand {
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_STOP),
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_STATUS),
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_AUDIT_RECORD),
+                identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_INSPECTION_SUPERVISE),
                 identity + " " + CliCommandUtil.concatOptionPrefix(COMMAND_OPTION_RESET_INSPECTION_JOB)
         };
         return CliCommandUtil.cliSyntax(patterns);
@@ -92,6 +95,8 @@ public class ResetCommand extends CliCommand {
                 .desc("查看重置处理器状态").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_AUDIT_RECORD).optionalArg(true).hasArg(false)
                 .desc("执行重置审计记录功能操作").build());
+        list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_INSPECTION_SUPERVISE).optionalArg(true).hasArg(false)
+                .desc("执行重置自动审计主管功能操作").build());
         list.add(Option.builder().longOpt(COMMAND_OPTION_RESET_INSPECTION_JOB).optionalArg(true).hasArg(false)
                 .desc("执行重置自动审计作业功能操作").build());
         return list;
@@ -122,6 +127,10 @@ public class ResetCommand extends CliCommand {
                 break;
             case COMMAND_OPTION_RESET_AUDIT_RECORD:
                 resetQosService.resetAuditRecord();
+                context.sendMessage("重置成功!");
+                break;
+            case COMMAND_OPTION_RESET_INSPECTION_SUPERVISE:
+                resetQosService.resetInspectionSupervise();
                 context.sendMessage("重置成功!");
                 break;
             case COMMAND_OPTION_RESET_INSPECTION_JOB:

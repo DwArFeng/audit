@@ -45,6 +45,11 @@ public class LogPusher extends AbstractPusher {
     }
 
     @Override
+    public void inspectionSuperviseReset() throws HandlerException {
+        logData("推送自动审计主管重置消息:");
+    }
+
+    @Override
     public void inspectionTaskFinished(InspectionTask inspectionTask) throws HandlerException {
         logInspectionTask("推送自动审计任务完成消息:", inspectionTask);
     }

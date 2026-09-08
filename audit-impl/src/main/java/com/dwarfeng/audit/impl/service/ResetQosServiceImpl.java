@@ -82,6 +82,15 @@ public class ResetQosServiceImpl implements ResetQosService {
     }
 
     @Override
+    public void resetInspectionSupervise() throws ServiceException {
+        try {
+            resetHandler.resetInspectionSupervise();
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("重置自动审计主管功能时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
     public void resetInspectionJob() throws ServiceException {
         try {
             resetHandler.resetInspectionJob();

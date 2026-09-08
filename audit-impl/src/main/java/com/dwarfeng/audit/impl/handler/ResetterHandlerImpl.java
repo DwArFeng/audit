@@ -58,6 +58,11 @@ public class ResetterHandlerImpl implements ResetterHandler {
         }
 
         @Override
+        public void resetInspectionSupervise() throws Exception {
+            resetProcessor.resetInspectionSupervise();
+        }
+
+        @Override
         public void resetInspectionJob() throws Exception {
             resetProcessor.resetInspectionJob();
         }

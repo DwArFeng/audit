@@ -59,6 +59,8 @@ public class CronResetter extends AbstractResetter {
                 LOGGER.info("计划时间已到, 重置相关功能...");
                 LOGGER.info("重置审计记录功能...");
                 context.resetAuditRecord();
+                LOGGER.info("重置自动审计主管功能...");
+                context.resetInspectionSupervise();
                 LOGGER.info("重置自动审计作业功能...");
                 context.resetInspectionJob();
             } catch (Exception e) {
