@@ -33,5 +33,10 @@ public interface InspectionTaskMaintainService extends BatchCrudService<LongIdKe
      */
     String SHOULD_DIE = "should_die";
 
+    /**
+     * @since 1.1.0
+     */
+    String TO_PURGED = "to_purged";
+
     // endregion
 }
