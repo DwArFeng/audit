@@ -48,5 +48,13 @@ public interface Resetter {
          * @throws Exception 执行重置时抛出的任何异常。
          */
         void resetAuditRecord() throws Exception;
+
+        /**
+         * 重置自动审计作业功能。
+         *
+         * @throws Exception 执行重置时抛出的任何异常。
+         * @since 1.1.0
+         */
+        void resetInspectionJob() throws Exception;
     }
 }

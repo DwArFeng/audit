@@ -17,4 +17,12 @@ public interface ResetHandler extends StartableHandler {
      * @throws HandlerException 处理器异常。
      */
     void resetAuditRecord() throws HandlerException;
+
+    /**
+     * 重置自动审计作业功能。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    void resetInspectionJob() throws HandlerException;
 }

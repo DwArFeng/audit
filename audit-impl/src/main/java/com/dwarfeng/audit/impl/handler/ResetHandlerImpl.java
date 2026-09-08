@@ -82,6 +82,17 @@ public class ResetHandlerImpl implements ResetHandler {
         }
     }
 
+    @BehaviorAnalyse
+    @Override
+    public void resetInspectionJob() throws HandlerException {
+        lock.lock();
+        try {
+            resetProcessor.resetInspectionJob();
+        } finally {
+            lock.unlock();
+        }
+    }
+
     /**
      * 重置器生命周期工作器。
      *

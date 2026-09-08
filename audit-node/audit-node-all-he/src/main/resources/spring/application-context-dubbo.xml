@@ -115,6 +115,11 @@
             ref="inspectorVariableMaintainServiceImpl"
             group="${com.dwarfeng.audit.dubbo.provider.group}"
     />
+    <dubbo:service
+            interface="com.dwarfeng.audit.stack.service.InspectionJobService"
+            ref="inspectionJobServiceImpl"
+            group="${com.dwarfeng.audit.dubbo.provider.group}"
+    />
 
     <!-- endregion -->
 

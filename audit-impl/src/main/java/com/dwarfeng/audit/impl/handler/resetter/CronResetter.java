@@ -56,11 +56,14 @@ public class CronResetter extends AbstractResetter {
         @Override
         public void run() {
             try {
-                LOGGER.info("计划时间已到, 重置审计记录功能...");
+                LOGGER.info("计划时间已到, 重置相关功能...");
+                LOGGER.info("重置审计记录功能...");
                 context.resetAuditRecord();
+                LOGGER.info("重置自动审计作业功能...");
+                context.resetInspectionJob();
             } catch (Exception e) {
                 String message = "重置器 " + CronResetter.this +
-                        " 执行重置调度时发生异常, 审计记录功能将不会重置, 异常信息如下: ";
+                        " 执行重置调度时发生异常, 相关功能可能不会完全重置, 异常信息如下: ";
                 LOGGER.warn(message, e);
             }
         }

@@ -2,8 +2,10 @@ package com.dwarfeng.audit.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
+import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionTask;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
+import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -41,6 +43,16 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.audit_record_reset}")
     private String auditRecordResetTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_task_finished}")
+    private String inspectionTaskFinishedTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_task_failed}")
+    private String inspectionTaskFailedTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_task_expired}")
+    private String inspectionTaskExpiredTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_task_died}")
+    private String inspectionTaskDiedTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_job_reset}")
+    private String inspectionJobResetTopic;
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_alarm_created}")
     private String inspectionAlarmCreatedTopic;
 
@@ -57,6 +69,49 @@ public class NativeKafkaPusher extends AbstractPusher {
         kafkaTemplate.send(auditRecordResetTopic, StringUtils.EMPTY);
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void inspectionTaskFinished(InspectionTask inspectionTask) {
+        kafkaTemplate.send(
+                inspectionTaskFinishedTopic,
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask))
+        );
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void inspectionTaskFailed(InspectionTask inspectionTask) {
+        kafkaTemplate.send(
+                inspectionTaskFailedTopic,
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask))
+        );
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void inspectionTaskExpired(InspectionTask inspectionTask) {
+        kafkaTemplate.send(
+                inspectionTaskExpiredTopic,
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask))
+        );
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void inspectionTaskDied(InspectionTask inspectionTask) {
+        kafkaTemplate.send(
+                inspectionTaskDiedTopic,
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask))
+        );
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void inspectionJobReset() {
+        kafkaTemplate.send(inspectionJobResetTopic, StringUtils.EMPTY);
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
     @Override
     public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) {
         kafkaTemplate.send(
@@ -70,6 +125,11 @@ public class NativeKafkaPusher extends AbstractPusher {
         return "NativeKafkaPusher{" +
                 "kafkaTemplate=" + kafkaTemplate +
                 ", auditRecordResetTopic='" + auditRecordResetTopic + '\'' +
+                ", inspectionTaskFinishedTopic='" + inspectionTaskFinishedTopic + '\'' +
+                ", inspectionTaskFailedTopic='" + inspectionTaskFailedTopic + '\'' +
+                ", inspectionTaskExpiredTopic='" + inspectionTaskExpiredTopic + '\'' +
+                ", inspectionTaskDiedTopic='" + inspectionTaskDiedTopic + '\'' +
+                ", inspectionJobResetTopic='" + inspectionJobResetTopic + '\'' +
                 ", inspectionAlarmCreatedTopic='" + inspectionAlarmCreatedTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';

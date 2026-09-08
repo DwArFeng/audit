@@ -512,5 +512,41 @@ public interface BeanMapper {
             WebInputInspectionTaskUpdateModalInfo webInputInspectionTaskUpdateModalInfo
     );
 
+    FastJsonInspectionJobCreateResult inspectionJobCreateResultToFastJson(
+            InspectionJobCreateResult inspectionJobCreateResult
+    );
+
+    @InheritInverseConfiguration
+    InspectionJobCreateResult inspectionJobCreateResultFromFastJson(
+            FastJsonInspectionJobCreateResult fastJsonInspectionJobCreateResult
+    );
+
+    JSFixedFastJsonInspectionJobCreateResult inspectionJobCreateResultToJSFixedFastJson(
+            InspectionJobCreateResult inspectionJobCreateResult
+    );
+
+    @InheritInverseConfiguration
+    InspectionJobCreateResult inspectionJobCreateResultFromJSFixedFastJson(
+            JSFixedFastJsonInspectionJobCreateResult jSFixedFastJsonInspectionJobCreateResult
+    );
+
+    WebInputInspectionJobCreateInfo inspectionJobCreateInfoToWebInput(
+            InspectionJobCreateInfo inspectionJobCreateInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionJobCreateInfo inspectionJobCreateInfoFromWebInput(
+            WebInputInspectionJobCreateInfo webInputInspectionJobCreateInfo
+    );
+
+    WebInputInspectionJobExecuteInfo inspectionJobExecuteInfoToWebInput(
+            InspectionJobExecuteInfo inspectionJobExecuteInfo
+    );
+
+    @InheritInverseConfiguration
+    InspectionJobExecuteInfo inspectionJobExecuteInfoFromWebInput(
+            WebInputInspectionJobExecuteInfo webInputInspectionJobExecuteInfo
+    );
+
     // endregion
 }

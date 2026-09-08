@@ -2,8 +2,10 @@ package com.dwarfeng.audit.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
+import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionTask;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
+import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -43,9 +45,39 @@ public class LogPusher extends AbstractPusher {
     }
 
     @Override
+    public void inspectionTaskFinished(InspectionTask inspectionTask) throws HandlerException {
+        logInspectionTask("推送自动审计任务完成消息:", inspectionTask);
+    }
+
+    @Override
+    public void inspectionTaskFailed(InspectionTask inspectionTask) throws HandlerException {
+        logInspectionTask("推送自动审计任务失败消息:", inspectionTask);
+    }
+
+    @Override
+    public void inspectionTaskExpired(InspectionTask inspectionTask) throws HandlerException {
+        logInspectionTask("推送自动审计任务过期消息:", inspectionTask);
+    }
+
+    @Override
+    public void inspectionTaskDied(InspectionTask inspectionTask) throws HandlerException {
+        logInspectionTask("推送自动审计任务死亡消息:", inspectionTask);
+    }
+
+    @Override
+    public void inspectionJobReset() throws HandlerException {
+        logData("推送自动审计作业重置消息:");
+    }
+
+    @Override
     public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
         logData("推送自动审计报警创建消息:");
         logData(JSON.toJSONString(FastJsonInspectionAlarm.of(inspectionAlarm), true));
+    }
+
+    private void logInspectionTask(String title, InspectionTask inspectionTask) throws HandlerException {
+        logData(title);
+        logData(JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask), true));
     }
 
     private void logData(String message) throws HandlerException {

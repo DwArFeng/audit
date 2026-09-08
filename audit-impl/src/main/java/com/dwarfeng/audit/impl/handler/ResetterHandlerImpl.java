@@ -15,7 +15,7 @@ import java.util.Optional;
  * 重置器处理器实现。
  *
  * <p>
- * 该处理器收集当前 Spring 上下文中启用的重置器，并在初始化后为它们提供统一的审计记录重置上下文。
+ * 该处理器收集当前 Spring 上下文中启用的重置器，并在初始化后为它们提供统一的重置上下文。
  *
  * @author DwArFeng
  * @since 1.0.0-beta
@@ -55,6 +55,11 @@ public class ResetterHandlerImpl implements ResetterHandler {
         @Override
         public void resetAuditRecord() throws Exception {
             resetProcessor.resetAuditRecord();
+        }
+
+        @Override
+        public void resetInspectionJob() throws Exception {
+            resetProcessor.resetInspectionJob();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.dwarfeng.audit.impl.handler;
 
 import com.dwarfeng.audit.stack.handler.AuditRecordHandler;
 import com.dwarfeng.audit.stack.handler.AuditRecordLocalCacheHandler;
+import com.dwarfeng.audit.stack.handler.InspectionJobLocalCacheHandler;
 import com.dwarfeng.audit.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -28,6 +29,7 @@ public class ResetProcessor {
 
     private final AuditRecordHandler auditRecordHandler;
     private final AuditRecordLocalCacheHandler auditRecordLocalCacheHandler;
+    private final InspectionJobLocalCacheHandler inspectionJobLocalCacheHandler;
     private final PushHandler pushHandler;
 
     private final Lock lock = new ReentrantLock();
@@ -35,10 +37,12 @@ public class ResetProcessor {
     public ResetProcessor(
             AuditRecordHandler auditRecordHandler,
             AuditRecordLocalCacheHandler auditRecordLocalCacheHandler,
+            InspectionJobLocalCacheHandler inspectionJobLocalCacheHandler,
             PushHandler pushHandler
     ) {
         this.auditRecordHandler = auditRecordHandler;
         this.auditRecordLocalCacheHandler = auditRecordLocalCacheHandler;
+        this.inspectionJobLocalCacheHandler = inspectionJobLocalCacheHandler;
         this.pushHandler = pushHandler;
     }
 
@@ -78,6 +82,35 @@ public class ResetProcessor {
             pushHandler.auditRecordReset();
         } catch (Exception e) {
             LOGGER.warn("推送审核记录功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
+    }
+
+    /**
+     * 重置自动审计作业功能。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    public void resetInspectionJob() throws HandlerException {
+        lock.lock();
+        try {
+            doResetInspectionJob();
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void doResetInspectionJob() throws Exception {
+        // 清空自动审计作业配置缓存，使后续执行重新加载自动审计及审计器信息。
+        inspectionJobLocalCacheHandler.clear();
+
+        // 消息推送。
+        try {
+            pushHandler.inspectionJobReset();
+        } catch (Exception e) {
+            LOGGER.warn("推送自动审计作业功能重置消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
         }
     }
 }

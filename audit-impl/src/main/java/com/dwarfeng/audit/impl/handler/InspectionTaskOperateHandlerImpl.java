@@ -4,12 +4,15 @@ import com.dwarfeng.audit.sdk.util.Constants;
 import com.dwarfeng.audit.stack.bean.dto.*;
 import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.audit.stack.handler.InspectionTaskOperateHandler;
+import com.dwarfeng.audit.stack.handler.PushHandler;
 import com.dwarfeng.audit.stack.service.InspectionTaskMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +29,8 @@ import java.util.Set;
  */
 @Component
 public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(InspectionTaskOperateHandlerImpl.class);
 
     private static final Set<Integer> VALID_STATUS_SET_START;
     private static final Set<Integer> VALID_STATUS_SET_FINISH;
@@ -59,6 +64,7 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
     }
 
     private final InspectionTaskMaintainService inspectionTaskMaintainService;
+    private final PushHandler pushHandler;
     private final KeyGenerator<LongIdKey> keyGenerator;
     private final HandlerValidator handlerValidator;
 
@@ -69,10 +75,12 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
 
     public InspectionTaskOperateHandlerImpl(
             InspectionTaskMaintainService inspectionTaskMaintainService,
+            PushHandler pushHandler,
             KeyGenerator<LongIdKey> keyGenerator,
             HandlerValidator handlerValidator
     ) {
         this.inspectionTaskMaintainService = inspectionTaskMaintainService;
+        this.pushHandler = pushHandler;
         this.keyGenerator = keyGenerator;
         this.handlerValidator = handlerValidator;
     }
@@ -146,6 +154,7 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
         task.setEndedDate(currentDate);
         task.setDuration(duration(task, currentDate));
         inspectionTaskMaintainService.update(task);
+        pushInspectionTaskEvent(task, Constants.INSPECTION_TASK_STATUS_FINISHED);
     }
 
     @BehaviorAnalyse
@@ -161,6 +170,7 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
             task.setEndedDate(currentDate);
             task.setDuration(duration(task, currentDate));
             inspectionTaskMaintainService.update(task);
+            pushInspectionTaskEvent(task, Constants.INSPECTION_TASK_STATUS_FAILED);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
@@ -180,6 +190,7 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
             task.setDuration(duration(task, currentDate));
             task.setExpiredDate(currentDate);
             inspectionTaskMaintainService.update(task);
+            pushInspectionTaskEvent(task, Constants.INSPECTION_TASK_STATUS_EXPIRED);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
@@ -199,6 +210,7 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
             task.setDuration(duration(task, currentDate));
             task.setDiedDate(currentDate);
             inspectionTaskMaintainService.update(task);
+            pushInspectionTaskEvent(task, Constants.INSPECTION_TASK_STATUS_DIED);
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
@@ -237,5 +249,28 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
     private static Long duration(InspectionTask task, Date endedDate) {
         Date startDate = task.getStartedDate() == null ? task.getCreatedDate() : task.getStartedDate();
         return startDate == null ? null : endedDate.getTime() - startDate.getTime();
+    }
+
+    private void pushInspectionTaskEvent(InspectionTask inspectionTask, int status) {
+        try {
+            switch (status) {
+                case Constants.INSPECTION_TASK_STATUS_FINISHED:
+                    pushHandler.inspectionTaskFinished(inspectionTask);
+                    break;
+                case Constants.INSPECTION_TASK_STATUS_FAILED:
+                    pushHandler.inspectionTaskFailed(inspectionTask);
+                    break;
+                case Constants.INSPECTION_TASK_STATUS_EXPIRED:
+                    pushHandler.inspectionTaskExpired(inspectionTask);
+                    break;
+                case Constants.INSPECTION_TASK_STATUS_DIED:
+                    pushHandler.inspectionTaskDied(inspectionTask);
+                    break;
+                default:
+                    throw new IllegalArgumentException("未知的自动审计任务终结状态: " + status);
+            }
+        } catch (Exception e) {
+            LOGGER.warn("推送自动审计任务终结消息时发生异常, 本次消息将不会被推送, 异常信息如下: ", e);
+        }
     }
 }

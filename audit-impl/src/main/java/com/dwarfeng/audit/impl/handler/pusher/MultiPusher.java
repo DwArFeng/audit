@@ -3,6 +3,7 @@ package com.dwarfeng.audit.impl.handler.pusher;
 import com.dwarfeng.audit.sdk.handler.Pusher;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
+import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,61 @@ public class MultiPusher extends AbstractPusher {
         for (Pusher delegate : delegates) {
             try {
                 delegate.auditRecordReset();
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void inspectionTaskFinished(InspectionTask inspectionTask) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.inspectionTaskFinished(inspectionTask);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void inspectionTaskFailed(InspectionTask inspectionTask) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.inspectionTaskFailed(inspectionTask);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void inspectionTaskExpired(InspectionTask inspectionTask) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.inspectionTaskExpired(inspectionTask);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void inspectionTaskDied(InspectionTask inspectionTask) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.inspectionTaskDied(inspectionTask);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void inspectionJobReset() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.inspectionJobReset();
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
             }

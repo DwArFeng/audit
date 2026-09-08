@@ -10,7 +10,7 @@ import java.util.List;
  * 重置 QOS 服务。
  *
  * <p>
- * 该服务为运维入口提供重置器查看、生命周期控制和审计记录功能重置能力。
+ * 该服务为运维入口提供重置器查看、生命周期控制和相关功能重置能力。
  *
  * @author DwArFeng
  * @since 1.0.0-beta
@@ -53,4 +53,12 @@ public interface ResetQosService extends Service {
      * @throws ServiceException 服务异常。
      */
     void resetAuditRecord() throws ServiceException;
+
+    /**
+     * 重置自动审计作业功能。
+     *
+     * @throws ServiceException 服务异常。
+     * @since 1.1.0
+     */
+    void resetInspectionJob() throws ServiceException;
 }
