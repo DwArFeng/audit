@@ -4,6 +4,21 @@
 
 ### 功能构建
 
+- 实现运维指令。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionConsumeCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionDispatchCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionDispatcherCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionDriveCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionDriveLocalCacheCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionJobCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionJobLocalCacheCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionReceiveCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionReceiverCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionSuperviseCommand。
+  - com.dwarfeng.audit.impl.service.telqos.InspectionTaskCheckCommand。
+  - com.dwarfeng.audit.impl.service.telqos.PurgeCommand。
+  - com.dwarfeng.audit.impl.service.telqos.SupportCommand。
+
 - 实现预设自动审计驱动器。
   - com.dwarfeng.audit.impl.handler.inspdriver.CronInspectionDriverProvider。
   - com.dwarfeng.audit.impl.handler.inspdriver.DctiKafkaInspectionDriverProvider。
