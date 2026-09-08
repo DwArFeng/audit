@@ -1,9 +1,11 @@
 package com.dwarfeng.audit.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
+import com.dwarfeng.audit.sdk.bean.dto.FastJsonPurgeFinishedResult;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionTask;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.audit.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import org.apache.commons.lang3.StringUtils;
@@ -57,6 +59,10 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String inspectionJobResetTopic;
     @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.inspection_alarm_created}")
     private String inspectionAlarmCreatedTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.purge_finished}")
+    private String purgeFinishedTopic;
+    @Value("${com.dwarfeng.audit.pusher.kafka.native.topic.purge_failed}")
+    private String purgeFailedTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate") KafkaTemplate<String, String> kafkaTemplate
@@ -128,6 +134,18 @@ public class NativeKafkaPusher extends AbstractPusher {
         );
     }
 
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void purgeFinished(PurgeFinishedResult result) {
+        kafkaTemplate.send(purgeFinishedTopic, JSON.toJSONString(FastJsonPurgeFinishedResult.of(result)));
+    }
+
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void purgeFailed() {
+        kafkaTemplate.send(purgeFailedTopic, StringUtils.EMPTY);
+    }
+
     @Override
     public String toString() {
         return "NativeKafkaPusher{" +
@@ -140,6 +158,8 @@ public class NativeKafkaPusher extends AbstractPusher {
                 ", inspectionTaskDiedTopic='" + inspectionTaskDiedTopic + '\'' +
                 ", inspectionJobResetTopic='" + inspectionJobResetTopic + '\'' +
                 ", inspectionAlarmCreatedTopic='" + inspectionAlarmCreatedTopic + '\'' +
+                ", purgeFinishedTopic='" + purgeFinishedTopic + '\'' +
+                ", purgeFailedTopic='" + purgeFailedTopic + '\'' +
                 ", pusherType='" + pusherType + '\'' +
                 '}';
     }

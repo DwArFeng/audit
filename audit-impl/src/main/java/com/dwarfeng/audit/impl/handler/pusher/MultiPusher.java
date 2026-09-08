@@ -2,6 +2,7 @@ package com.dwarfeng.audit.impl.handler.pusher;
 
 import com.dwarfeng.audit.sdk.handler.Pusher;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.audit.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -133,6 +134,28 @@ public class MultiPusher extends AbstractPusher {
         for (Pusher delegate : delegates) {
             try {
                 delegate.inspectionAlarmCreated(inspectionAlarm);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void purgeFinished(PurgeFinishedResult result) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.purgeFinished(result);
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
+            }
+        }
+    }
+
+    @Override
+    public void purgeFailed() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.purgeFailed();
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送消息失败，异常信息如下: ", e);
             }

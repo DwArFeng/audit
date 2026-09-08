@@ -1,8 +1,6 @@
 package com.dwarfeng.audit.impl.handler;
 
-import com.dwarfeng.audit.stack.handler.InspectionDispatchHandler;
-import com.dwarfeng.audit.stack.handler.InspectionDriveHandler;
-import com.dwarfeng.audit.stack.handler.InspectionSuperviseHandler;
+import com.dwarfeng.audit.stack.handler.PurgeHandler;
 import com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler;
 import com.dwarfeng.subgrade.impl.handler.Worker;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
@@ -14,21 +12,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * 自动审计主管处理器实现。
+ * 清除处理器实现。
  *
  * @author DwArFeng
  * @since 1.1.0
  */
 @Component
-public class InspectionSuperviseHandlerImpl implements InspectionSuperviseHandler {
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+public class PurgeHandlerImpl implements PurgeHandler {
 
     private final CuratorDistributedLockHandler handler;
 
-    public InspectionSuperviseHandlerImpl(
+    public PurgeHandlerImpl(
             CuratorFramework curatorFramework,
-            @Value("${com.dwarfeng.audit.curator.latch_path.supervise.leader_latch}")
-            String leaderLatchPath,
-            InspectionSuperviseWorker worker
+            @Value("${com.dwarfeng.audit.curator.latch_path.purge.leader_latch}") String leaderLatchPath,
+            PurgeWorker worker
     ) {
         handler = new CuratorDistributedLockHandler(curatorFramework, leaderLatchPath, worker);
     }
@@ -81,43 +79,27 @@ public class InspectionSuperviseHandlerImpl implements InspectionSuperviseHandle
         return handler.isWorking();
     }
 
-    /**
-     * 自动审计主管工作器。
-     *
-     * <p>
-     * 该工作器在主管开始工作时启动调度和驱动机制，在主管停止工作时按逆序停止驱动和调度机制。
-     *
-     * @author DwArFeng
-     * @since 1.1.0
-     */
     @Component
-    public static class InspectionSuperviseWorker implements Worker {
+    public static class PurgeWorker implements Worker {
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(InspectionSuperviseWorker.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(PurgeWorker.class);
 
-        private final InspectionDispatchHandler inspectionDispatchHandler;
-        private final InspectionDriveHandler driveHandler;
+        private final PurgeProcessor purgeProcessor;
 
-        public InspectionSuperviseWorker(
-                InspectionDispatchHandler inspectionDispatchHandler,
-                InspectionDriveHandler driveHandler
-        ) {
-            this.inspectionDispatchHandler = inspectionDispatchHandler;
-            this.driveHandler = driveHandler;
+        public PurgeWorker(PurgeProcessor purgeProcessor) {
+            this.purgeProcessor = purgeProcessor;
         }
 
         @Override
-        public void work() throws Exception {
-            LOGGER.info("自动审计主管处理器开始工作...");
-            inspectionDispatchHandler.start();
-            driveHandler.start();
+        public void work() {
+            LOGGER.info("清除处理器开始工作...");
+            purgeProcessor.work();
         }
 
         @Override
-        public void rest() throws Exception {
-            LOGGER.info("自动审计主管处理器停止工作...");
-            driveHandler.stop();
-            inspectionDispatchHandler.stop();
+        public void rest() {
+            LOGGER.info("清除处理器停止工作...");
+            purgeProcessor.rest();
         }
     }
 }

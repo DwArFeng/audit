@@ -1,9 +1,11 @@
 package com.dwarfeng.audit.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
+import com.dwarfeng.audit.sdk.bean.dto.FastJsonPurgeFinishedResult;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionTask;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
+import com.dwarfeng.audit.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -78,6 +80,17 @@ public class LogPusher extends AbstractPusher {
     public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
         logData("推送自动审计报警创建消息:");
         logData(JSON.toJSONString(FastJsonInspectionAlarm.of(inspectionAlarm), true));
+    }
+
+    @Override
+    public void purgeFinished(PurgeFinishedResult result) throws HandlerException {
+        logData("推送清除完成消息:");
+        logData(JSON.toJSONString(FastJsonPurgeFinishedResult.of(result), true));
+    }
+
+    @Override
+    public void purgeFailed() throws HandlerException {
+        logData("推送清除失败消息:");
     }
 
     private void logInspectionTask(String title, InspectionTask inspectionTask) throws HandlerException {

@@ -1,6 +1,7 @@
 package com.dwarfeng.audit.impl.handler;
 
 import com.dwarfeng.audit.sdk.handler.Pusher;
+import com.dwarfeng.audit.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.audit.stack.handler.PushHandler;
@@ -82,6 +83,16 @@ public class PushHandlerImpl implements PushHandler {
     @Override
     public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
         pusher.inspectionAlarmCreated(inspectionAlarm);
+    }
+
+    @Override
+    public void purgeFinished(PurgeFinishedResult result) throws HandlerException {
+        pusher.purgeFinished(result);
+    }
+
+    @Override
+    public void purgeFailed() throws HandlerException {
+        pusher.purgeFailed();
     }
 
     @Override

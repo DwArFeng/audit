@@ -29,6 +29,11 @@ public class LauncherSettingHandler implements Handler {
     @Value("${com.dwarfeng.audit.launcher.enable_inspection_supervise_delay}")
     private long enableInspectionSuperviseDelay;
 
+    @Value("${com.dwarfeng.audit.launcher.online_purge_delay}")
+    private long onlinePurgeDelay;
+    @Value("${com.dwarfeng.audit.launcher.enable_purge_delay}")
+    private long enablePurgeDelay;
+
     public boolean isResetInspectorSupport() {
         return resetInspectorSupport;
     }
@@ -73,6 +78,14 @@ public class LauncherSettingHandler implements Handler {
         return enableInspectionSuperviseDelay;
     }
 
+    public long getOnlinePurgeDelay() {
+        return onlinePurgeDelay;
+    }
+
+    public long getEnablePurgeDelay() {
+        return enablePurgeDelay;
+    }
+
     @Override
     public String toString() {
         return "LauncherSettingHandler{" +
@@ -85,6 +98,8 @@ public class LauncherSettingHandler implements Handler {
                 ", startInspectionReceiverDelay=" + startInspectionReceiverDelay +
                 ", onlineInspectionSuperviseDelay=" + onlineInspectionSuperviseDelay +
                 ", enableInspectionSuperviseDelay=" + enableInspectionSuperviseDelay +
+                ", onlinePurgeDelay=" + onlinePurgeDelay +
+                ", enablePurgeDelay=" + enablePurgeDelay +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.dwarfeng.audit.sdk.handler;
 
+import com.dwarfeng.audit.stack.bean.dto.PurgeFinishedResult;
 import com.dwarfeng.audit.stack.bean.entity.InspectionAlarm;
 import com.dwarfeng.audit.stack.bean.entity.InspectionTask;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -90,4 +91,21 @@ public interface Pusher {
      * @since 1.1.0
      */
     void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException;
+
+    /**
+     * 清除任务完成时执行的推送操作。
+     *
+     * @param result 清除任务完成结果。
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    void purgeFinished(PurgeFinishedResult result) throws HandlerException;
+
+    /**
+     * 清除任务失败时执行的推送操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.1.0
+     */
+    void purgeFailed() throws HandlerException;
 }
