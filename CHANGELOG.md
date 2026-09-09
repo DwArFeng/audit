@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
+
 - 实现运维指令。
   - com.dwarfeng.audit.impl.service.telqos.InspectionConsumeCommand。
   - com.dwarfeng.audit.impl.service.telqos.InspectionDispatchCommand。
