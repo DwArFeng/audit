@@ -193,6 +193,7 @@ public class NativeKafkaPusher extends AbstractPusher {
         @Value("${com.dwarfeng.audit.pusher.kafka.native.transaction_prefix}")
         private String transactionPrefix;
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaPusher.producerProperties")
         public Map<String, Object> producerProperties() {
             LOGGER.info("配置 Kafka 生产者属性...");

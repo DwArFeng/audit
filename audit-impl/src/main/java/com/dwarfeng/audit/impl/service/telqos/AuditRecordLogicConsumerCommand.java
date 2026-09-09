@@ -139,6 +139,7 @@ public class AuditRecordLogicConsumerCommand extends CliCommand {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void handleS(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         Integer newBufferSize = null;
         Integer newThread = null;

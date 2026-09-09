@@ -82,6 +82,7 @@ public class InspectionJobCommand extends CliCommand {
         handleExecute(context, cmd);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void handleExecute(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         long inspectionId;
         try {

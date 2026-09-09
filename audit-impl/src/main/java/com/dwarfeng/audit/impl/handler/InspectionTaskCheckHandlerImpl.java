@@ -29,7 +29,6 @@ import java.util.concurrent.Future;
  * @since 1.1.0
  */
 @Component
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class InspectionTaskCheckHandlerImpl implements InspectionTaskCheckHandler {
 
     private final CuratorDistributedLockHandler handler;

@@ -25,6 +25,7 @@ public class InspectionTaskEventPresetCriteriaMaker implements PresetCriteriaMak
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspectionTask(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {

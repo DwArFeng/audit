@@ -216,7 +216,6 @@ public class DctiKafkaInspectionDriverProvider implements InspectionDriverProvid
             return props;
         }
 
-        @SuppressWarnings("DuplicatedCode")
         @Bean("dctiKafkaInspectionDriver.consumerFactory")
         public ConsumerFactory<String, String> consumerFactory() {
             LOGGER.debug("配置 Kafka 消费者工厂...");
@@ -228,7 +227,6 @@ public class DctiKafkaInspectionDriverProvider implements InspectionDriverProvid
             return factory;
         }
 
-        @SuppressWarnings("DuplicatedCode")
         @Bean("dctiKafkaInspectionDriver.kafkaListenerContainerFactory")
         public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>>
         kafkaListenerContainerFactory() {

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
  * @since 1.1.0
  */
 @Component
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class PurgeHandlerImpl implements PurgeHandler {
 
     private final CuratorDistributedLockHandler handler;

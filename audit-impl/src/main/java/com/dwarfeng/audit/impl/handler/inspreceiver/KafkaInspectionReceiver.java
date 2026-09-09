@@ -117,6 +117,7 @@ public class KafkaInspectionReceiver extends AbstractInspectionReceiver {
         @Value("${com.dwarfeng.audit.inspection_receiver.kafka.max_poll_interval_ms}")
         private int maxPollIntervalMs;
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("inspectionReceiverKafka.consumerFactory")
         public ConsumerFactory<String, String> consumerFactory() {
             Map<String, Object> properties = new HashMap<>();

@@ -30,6 +30,7 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspection(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {
@@ -43,6 +44,7 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspectionTask(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {
@@ -56,6 +58,7 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspectorInfo(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {

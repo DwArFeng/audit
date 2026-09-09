@@ -25,6 +25,7 @@ public class InspectionDriverInfoPresetCriteriaMaker implements PresetCriteriaMa
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspection(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {

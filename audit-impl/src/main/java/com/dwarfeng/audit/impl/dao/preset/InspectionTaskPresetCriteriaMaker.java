@@ -45,6 +45,7 @@ public class InspectionTaskPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspection(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {

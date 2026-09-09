@@ -25,6 +25,7 @@ public class InspectorVariablePresetCriteriaMaker implements PresetCriteriaMaker
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForInspectorInfo(DetachedCriteria criteria, Object[] objs) {
         try {
             if (Objects.isNull(objs[0])) {

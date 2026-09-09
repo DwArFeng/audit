@@ -85,6 +85,8 @@ public class InspectionTaskOperateHandlerImpl implements InspectionTaskOperateHa
         this.handlerValidator = handlerValidator;
     }
 
+    // 为了保证代码的可读性，此处代码不做简化。
+    @SuppressWarnings("ExtractMethodRecommender")
     @BehaviorAnalyse
     @Override
     public InspectionTaskCreateResult create(InspectionTaskCreateInfo info) throws HandlerException {

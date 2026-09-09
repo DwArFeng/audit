@@ -81,6 +81,7 @@ public class InspectionDriveLocalCacheCommand extends CliCommand {
         return list;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     protected void executeWithCmd(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         Pair<String, Integer> pair = CliCommandUtil.analyseCommand(cmd, COMMAND_OPTION_ARRAY);
@@ -102,6 +103,7 @@ public class InspectionDriveLocalCacheCommand extends CliCommand {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void handleLookup(CommandExecutor.Context context, CommandLine cmd) throws Exception {
         long inspectionId;
         try {

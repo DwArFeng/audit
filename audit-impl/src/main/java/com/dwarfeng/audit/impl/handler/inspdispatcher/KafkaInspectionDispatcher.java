@@ -231,6 +231,7 @@ public class KafkaInspectionDispatcher extends AbstractInspectionDispatcher {
         @Value("${com.dwarfeng.audit.inspection_dispatcher.kafka.transaction_prefix}")
         private String transactionPrefix;
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("inspectionDispatcherKafka.producerProperties")
         public Map<String, Object> producerProperties() {
             Map<String, Object> properties = new HashMap<>();
