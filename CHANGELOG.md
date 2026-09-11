@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 新增实体操作服务。
+  - com.dwarfeng.audit.stack.service.InspectorVariableOperateService。
+
 - 优化文件格式。
   - 优化 `.gitignore` 文件的格式。
 
