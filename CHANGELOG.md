@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+
 - 优化项目的启动脚本。
   - binres/audit-start.sh。
 

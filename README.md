@@ -91,7 +91,7 @@ Audit 的主要运行链路如下：
 ### 可选环境
 
 - Kafka；使用原生 Kafka Pusher、DCTI Kafka 自动审计驱动器，或 Kafka 自动审计调度器、接收器时需要。
-- DCTI 数据主题；使用 DCTI Kafka 自动审计驱动器时需要与驱动器配置匹配的数据来源。
+- DCTI 数据收集传输接口；使用 DctiKafkaInspectionDriver 时需要 Kafka 中存在符合 DCTI 标准的数据消息。
 
 ## 文档
 
