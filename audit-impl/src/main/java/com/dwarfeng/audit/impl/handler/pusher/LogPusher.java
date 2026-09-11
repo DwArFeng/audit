@@ -1,7 +1,6 @@
 package com.dwarfeng.audit.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
-import com.dwarfeng.audit.sdk.bean.dto.FastJsonPurgeFinishedResult;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionAlarm;
 import com.dwarfeng.audit.sdk.bean.entity.FastJsonInspectionTask;
 import com.dwarfeng.audit.sdk.handler.pusher.AbstractPusher;
@@ -14,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * 将信息输出至日志的推送器。
@@ -43,85 +44,113 @@ public class LogPusher extends AbstractPusher {
 
     @Override
     public void auditRecordReset() throws HandlerException {
-        logData("推送审核记录重置消息:");
+        String title = "推送审核记录重置消息:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
     }
 
     @Override
     public void inspectionSuperviseReset() throws HandlerException {
-        logData("推送自动审计主管重置消息:");
+        String title = "推送自动审计主管重置消息:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
     }
 
     @Override
     public void inspectionTaskFinished(InspectionTask inspectionTask) throws HandlerException {
-        logInspectionTask("推送自动审计任务完成消息:", inspectionTask);
+        String title = "推送自动审计任务完成消息:";
+        String message = String.format(
+                "自动审计任务:\n%s",
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask), true)
+        );
+        logData(title, message);
     }
 
     @Override
     public void inspectionTaskFailed(InspectionTask inspectionTask) throws HandlerException {
-        logInspectionTask("推送自动审计任务失败消息:", inspectionTask);
+        String title = "推送自动审计任务失败消息:";
+        String message = String.format(
+                "自动审计任务:\n%s",
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask), true)
+        );
+        logData(title, message);
     }
 
     @Override
     public void inspectionTaskExpired(InspectionTask inspectionTask) throws HandlerException {
-        logInspectionTask("推送自动审计任务过期消息:", inspectionTask);
+        String title = "推送自动审计任务过期消息:";
+        String message = String.format(
+                "自动审计任务:\n%s",
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask), true)
+        );
+        logData(title, message);
     }
 
     @Override
     public void inspectionTaskDied(InspectionTask inspectionTask) throws HandlerException {
-        logInspectionTask("推送自动审计任务死亡消息:", inspectionTask);
+        String title = "推送自动审计任务死亡消息:";
+        String message = String.format(
+                "自动审计任务:\n%s",
+                JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask), true)
+        );
+        logData(title, message);
     }
 
     @Override
     public void inspectionJobReset() throws HandlerException {
-        logData("推送自动审计作业重置消息:");
+        String title = "推送自动审计作业重置消息:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
     }
 
     @Override
     public void inspectionAlarmCreated(InspectionAlarm inspectionAlarm) throws HandlerException {
-        logData("推送自动审计报警创建消息:");
-        logData(JSON.toJSONString(FastJsonInspectionAlarm.of(inspectionAlarm), true));
+        String title = "推送自动审计报警创建消息:";
+        String message = JSON.toJSONString(FastJsonInspectionAlarm.of(inspectionAlarm), true);
+        logData(title, message);
     }
 
     @Override
     public void purgeFinished(PurgeFinishedResult result) throws HandlerException {
-        logData("推送清除完成消息:");
-        logData(JSON.toJSONString(FastJsonPurgeFinishedResult.of(result), true));
+        String title = "推送清除完成消息:";
+        String message = Objects.toString(result);
+        logData(title, message);
     }
 
     @Override
     public void purgeFailed() throws HandlerException {
-        logData("推送清除失败消息:");
+        String title = "推送清除失败消息:";
+        String message = StringUtils.EMPTY;
+        logData(title, message);
     }
 
-    private void logInspectionTask(String title, InspectionTask inspectionTask) throws HandlerException {
-        logData(title);
-        logData(JSON.toJSONString(FastJsonInspectionTask.of(inspectionTask), true));
+    private void logData(String title, String message) throws HandlerException {
+        String logLevel = this.logLevel.toUpperCase();
+        logString(title, logLevel);
+        if (StringUtils.isNotEmpty(message)) {
+            logString(message, logLevel);
+        }
     }
 
-    private void logData(String message) throws HandlerException {
-        String currentLogLevel = StringUtils.upperCase(logLevel);
-        logString(message, currentLogLevel);
-    }
-
-    private void logString(String message, String currentLogLevel) throws HandlerException {
-        switch (currentLogLevel) {
+    private void logString(String title, String logLevel) throws HandlerException {
+        switch (logLevel) {
             case LEVEL_TRACE:
-                LOGGER.trace(message);
+                LOGGER.trace(title);
                 return;
             case LEVEL_DEBUG:
-                LOGGER.debug(message);
+                LOGGER.debug(title);
                 return;
             case LEVEL_INFO:
-                LOGGER.info(message);
+                LOGGER.info(title);
                 return;
             case LEVEL_WARN:
-                LOGGER.warn(message);
+                LOGGER.warn(title);
                 return;
             case LEVEL_ERROR:
-                LOGGER.error(message);
+                LOGGER.error(title);
                 return;
             default:
-                throw new HandlerException("未知的日志等级: " + currentLogLevel);
+                throw new HandlerException("未知的日志等级: " + logLevel);
         }
     }
 
