@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化项目的启动脚本。
+  - binres/audit-start.sh。
+
 - 优化项目中部分类的代码结构。
   - com.dwarfeng.audit.impl.handler.pusher.LogPusher。
 

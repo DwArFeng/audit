@@ -32,7 +32,7 @@ java_logging_opts="\
 cd "$basedir" || exit
 # shellcheck disable=SC2154
 eval \
-nohup java -classpath "lib/*:libext/*" \
+nohup /bin/java -classpath "lib/*:libext/*" \
 "$jvm_memory_opts" \
 "$java_jmxremote_opts" \
 "$java_logging_opts" \
