@@ -18,6 +18,8 @@ public class ServiceExceptionMapperConfiguration {
         des = com.dwarfeng.springtelqos.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
         des = com.dwarfeng.springterminator.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
         des = com.dwarfeng.datamark.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.dcti.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.dct.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
         des = com.dwarfeng.audit.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
         return new MapServiceExceptionMapper(des, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }

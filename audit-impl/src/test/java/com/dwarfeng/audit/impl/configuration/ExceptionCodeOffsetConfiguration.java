@@ -19,6 +19,10 @@ public class ExceptionCodeOffsetConfiguration {
     private int springTerminatorExceptionCodeOffset;
     @Value("${com.dwarfeng.audit.audit.exception_code_offset.dwarfeng_datamark}")
     private int dwarfengDatamarkExceptionCodeOffset;
+    @Value("${com.dwarfeng.audit.audit.exception_code_offset.dcti}")
+    private int dctiExceptionCodeOffset;
+    @Value("${com.dwarfeng.audit.audit.exception_code_offset.dwarfeng_dct}")
+    private int dwarfengDctExceptionCodeOffset;
 
     @PostConstruct
     public void init() {
@@ -34,6 +38,12 @@ public class ExceptionCodeOffsetConfiguration {
         );
         com.dwarfeng.datamark.sdk.util.ServiceExceptionCodes.setExceptionCodeOffset(
                 dwarfengDatamarkExceptionCodeOffset
+        );
+        com.dwarfeng.dcti.sdk.util.ServiceExceptionCodes.setExceptionCodeOffset(
+                dctiExceptionCodeOffset
+        );
+        com.dwarfeng.dct.sdk.util.ServiceExceptionCodes.setExceptionCodeOffset(
+                dwarfengDctExceptionCodeOffset
         );
     }
 }

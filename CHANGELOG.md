@@ -7,6 +7,10 @@
 - 优化项目的启动脚本。
   - binres/audit-start.sh。
 
+- 集成 `dcti` 与 `dwarfeng-dct` 组件。
+  - 新增相关依赖及 Spring 配置。
+  - 支持相关 Telqos 指令、服务异常映射及异常码偏移配置。
+
 - 优化项目中部分类的代码结构。
   - com.dwarfeng.audit.impl.handler.pusher.LogPusher。
 

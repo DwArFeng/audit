@@ -23,6 +23,8 @@
             <telqos:command-impl package-scan="com.dwarfeng.springtelqos.api.integration.system"/>
             <telqos:command-impl package-scan="com.dwarfeng.springterminator.api.integration.springtelqos"/>
             <telqos:command-impl package-scan="com.dwarfeng.datamark.api.integration.springtelqos"/>
+            <telqos:command-impl package-scan="com.dwarfeng.dcti.api.integration.springtelqos"/>
+            <telqos:command-impl package-scan="com.dwarfeng.dct.api.integration.springtelqos"/>
             <telqos:command-impl package-scan="com.dwarfeng.audit.impl.service.telqos"/>
         </telqos:command>
     </telqos:config>
