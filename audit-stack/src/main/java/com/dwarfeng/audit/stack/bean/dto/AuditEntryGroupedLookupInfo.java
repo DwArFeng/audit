@@ -16,10 +16,7 @@ import java.util.List;
  */
 public class AuditEntryGroupedLookupInfo implements Dto {
 
-    private static final long serialVersionUID = 5539171105183425625L;
-
-    public static final int LOGIC_OPERATOR_AND = 0;
-    public static final int LOGIC_OPERATOR_OR = 1;
+    private static final long serialVersionUID = -5964508476557915256L;
 
     /**
      * 分页信息。
@@ -28,6 +25,14 @@ public class AuditEntryGroupedLookupInfo implements Dto {
 
     /**
      * 逻辑连接符。
+     *
+     * <p>
+     * int 枚举，可能的状态为：
+     * <ul>
+     *     <li>与</li>
+     *     <li>或</li>
+     * </ul>
+     * 详细值参考 sdk 模块的常量工具类。
      */
     private int logicOperator;
 
@@ -107,6 +112,14 @@ public class AuditEntryGroupedLookupInfo implements Dto {
 
         /**
          * 逻辑连接符。
+         *
+         * <p>
+         * int 枚举，可能的状态为：
+         * <ul>
+         *     <li>与</li>
+         *     <li>或</li>
+         * </ul>
+         * 详细值参考 sdk 模块的常量工具类。
          */
         private int logicOperator;
 

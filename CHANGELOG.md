@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 部分 DTO 实体的内置常量提升至常量类。
+  - com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo。
+
 - 优化部分 DTO 实体字段的初始值。
   - com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryGroupedLookupInfo。
   - com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryCompositeLookupInfo。

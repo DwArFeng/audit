@@ -301,8 +301,8 @@ public class HandlerValidator {
 
     private void makeSureLogicOperatorValid(AuditEntryGroupedLookupInfo lookupInfo, int logicOperator)
             throws HandlerException {
-        if (logicOperator != AuditEntryGroupedLookupInfo.LOGIC_OPERATOR_AND &&
-                logicOperator != AuditEntryGroupedLookupInfo.LOGIC_OPERATOR_OR) {
+        if (logicOperator != Constants.LOGIC_OPERATOR_AND &&
+                logicOperator != Constants.LOGIC_OPERATOR_OR) {
             throw new InvalidAuditEntryGroupedLookupInfoException(
                     lookupInfo, "非法的逻辑连接符: " + logicOperator
             );

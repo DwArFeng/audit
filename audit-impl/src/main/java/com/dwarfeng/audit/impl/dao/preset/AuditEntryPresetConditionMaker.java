@@ -111,9 +111,9 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
         }
 
         switch (logicOperator) {
-            case AuditEntryGroupedLookupInfo.LOGIC_OPERATOR_AND:
+            case Constants.LOGIC_OPERATOR_AND:
                 return WhereHelper.and(predicateClauses);
-            case AuditEntryGroupedLookupInfo.LOGIC_OPERATOR_OR:
+            case Constants.LOGIC_OPERATOR_OR:
                 return WhereHelper.or(predicateClauses);
             default:
                 throw new IllegalArgumentException("非法的逻辑连接符: " + logicOperator);

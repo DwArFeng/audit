@@ -2,6 +2,7 @@
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.audit.sdk.util.ValidAuditPropertyType;
+import com.dwarfeng.audit.sdk.util.ValidLogicOperator;
 import com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
@@ -54,6 +55,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
      * 逻辑连接符。
      */
     @JSONField(name = "logic_operator")
+    @ValidLogicOperator
     private int logicOperator;
 
     /**
@@ -146,6 +148,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
          * 逻辑连接符。
          */
         @JSONField(name = "logic_operator")
+        @ValidLogicOperator
         private int logicOperator;
 
         /**

@@ -51,6 +51,11 @@ public final class Constants {
     @InspectorVariableValueTypeItem
     public static final int INSPECTOR_VARIABLE_VALUE_TYPE_DATE = 4;
 
+    @LogicOperatorItem
+    public static final int LOGIC_OPERATOR_AND = 0;
+    @LogicOperatorItem
+    public static final int LOGIC_OPERATOR_OR = 1;
+
     /**
      * 检查任务的执行间隔。
      */
@@ -61,6 +66,7 @@ public final class Constants {
     private static List<Integer> inspectionTaskStatusSpace;
     private static List<Integer> auditPropertyTypeSpace;
     private static List<Integer> inspectorVariableValueTypeSpace;
+    private static List<Integer> logicOperatorSpace;
 
     /**
      * 自动审计任务状态空间。
@@ -153,6 +159,38 @@ public final class Constants {
             }
             inspectorVariableValueTypeSpace = Collections.unmodifiableList(result);
             return inspectorVariableValueTypeSpace;
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    /**
+     * 逻辑运算符空间。
+     *
+     * @return 逻辑运算符空间。
+     */
+    public static List<Integer> logicOperatorSpace() {
+        if (Objects.nonNull(logicOperatorSpace)) {
+            return logicOperatorSpace;
+        }
+        LOCK.lock();
+        try {
+            if (Objects.nonNull(logicOperatorSpace)) {
+                return logicOperatorSpace;
+            }
+            List<Integer> result = new ArrayList<>();
+            for (Field declaredField : Constants.class.getDeclaredFields()) {
+                if (!declaredField.isAnnotationPresent(LogicOperatorItem.class)) {
+                    continue;
+                }
+                try {
+                    result.add((Integer) declaredField.get(null));
+                } catch (Exception e) {
+                    throw new IllegalStateException("初始化逻辑运算符空间失败", e);
+                }
+            }
+            logicOperatorSpace = Collections.unmodifiableList(result);
+            return logicOperatorSpace;
         } finally {
             LOCK.unlock();
         }
