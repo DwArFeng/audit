@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>audit</artifactId>
-    <version>1.1.2.a</version>
+    <version>1.2.0.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -536,37 +536,37 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-stack</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-sdk</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-impl</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-node</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-node-all-he</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-api</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>audit-distribute</artifactId>
-                <version>1.1.2.a</version>
+                <version>1.2.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
