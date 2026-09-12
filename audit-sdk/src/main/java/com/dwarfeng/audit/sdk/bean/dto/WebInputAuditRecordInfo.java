@@ -31,7 +31,7 @@ public class WebInputAuditRecordInfo implements Bean {
         }
     }
 
-    @JSONField(name = "categoryKey")
+    @JSONField(name = "category_key")
     @Valid
     @NotNull
     private WebInputStringIdKey categoryKey;

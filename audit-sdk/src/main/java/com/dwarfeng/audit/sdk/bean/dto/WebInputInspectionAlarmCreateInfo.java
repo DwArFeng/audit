@@ -38,17 +38,17 @@ public class WebInputInspectionAlarmCreateInfo implements Bean {
         }
     }
 
-    @JSONField(name = "inspectionKey")
+    @JSONField(name = "inspection_key")
     @Valid
     @NotNull
     private WebInputLongIdKey inspectionKey;
 
-    @JSONField(name = "inspectionTaskKey")
+    @JSONField(name = "inspection_task_key")
     @Valid
     @NotNull
     private WebInputLongIdKey inspectionTaskKey;
 
-    @JSONField(name = "inspectorInfoKey")
+    @JSONField(name = "inspector_info_key")
     @Valid
     @NotNull
     private WebInputLongIdKey inspectorInfoKey;

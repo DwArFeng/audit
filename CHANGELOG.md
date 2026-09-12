@@ -8,7 +8,12 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 WebInput 实体字段 @JSONField 主键中 name 属性的错误。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputAuditRecordInfo。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputInspectionAlarmCreateInfo。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputInspectorVariableInspectInfo。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputInspectorVariableRemoveInfo。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputInspectorVariableUpsertInfo。
 
 ### 功能移除
 

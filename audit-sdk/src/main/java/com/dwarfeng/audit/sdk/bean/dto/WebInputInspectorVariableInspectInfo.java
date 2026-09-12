@@ -35,12 +35,12 @@ public class WebInputInspectorVariableInspectInfo implements Bean {
         }
     }
 
-    @JSONField(name = "inspectorInfoKey")
+    @JSONField(name = "inspector_info_key")
     @Valid
     @NotNull
     private WebInputLongIdKey inspectorInfoKey;
 
-    @JSONField(name = "inspectorVariableId")
+    @JSONField(name = "inspector_variable_id")
     @NotNull
     @NotEmpty
     @Length(max = Constraints.LENGTH_STRING_ID)
