@@ -30,13 +30,38 @@
 
 ## 版本黑名单
 
-| 编号     | 大版本 | 起始版本 | 结束版本 | 原因 |
-|----------|--------|----------|----------|------|
-| （暂无） | -      | -        | -        | -    |
+| 编号                                         | 大版本 | 起始版本 | 结束版本 | 原因                                        |
+|----------------------------------------------|--------|----------|----------|---------------------------------------------|
+| [BLACKLIST-20260912.1](#BLACKLIST-202609121) | 1.1.x  | 1.1.1.a  | 1.1.1.a  | 部分 WebInput 实体 @JSONField name 命名错误 |
 
 ## 详细原因
 
-（暂无）
+### BLACKLIST-20260912.1
+
+原因：部分 WebInput 实体字段的 `@JSONField` 注解中，`name` 属性使用了驼峰命名，
+与项目要求的 snake_case JSON 字段命名规范不一致，可能导致 JSON 请求或响应字段名称与约定不符。
+
+- 受影响模块/类：
+   - `com.dwarfeng.audit.sdk.bean.dto.WebInputAuditRecordInfo`。
+   - `com.dwarfeng.audit.sdk.bean.dto.WebInputInspectionAlarmCreateInfo`。
+   - `com.dwarfeng.audit.sdk.bean.dto.WebInputInspectorVariableInspectInfo`。
+   - `com.dwarfeng.audit.sdk.bean.dto.WebInputInspectorVariableRemoveInfo`。
+   - `com.dwarfeng.audit.sdk.bean.dto.WebInputInspectorVariableUpsertInfo`。
+- 典型触发条件：
+   - 使用 `1.1.1.a` 版本中上述 WebInput 实体进行 JSON 序列化或反序列化。
+   - 调用方按照项目 snake_case 规范传递字段，但服务端实体的 `@JSONField` 映射仍使用驼峰字段名。
+   - 服务端序列化响应时，返回字段名称与调用方约定的 snake_case 名称不一致。
+- 典型症状：
+   - JSON 请求字段无法正确绑定到对应的 WebInput 实体属性。
+   - JSON 响应字段名称与接口约定不一致。
+   - 相关字段出现未绑定、取值为空或调用方无法识别的情况。
+- 影响范围：
+   - 直接或间接使用上述 WebInput 实体的接口与功能。
+   - 依赖 `category_key`、`inspection_key`、`inspection_task_key`、`inspector_info_key`、
+     `inspector_variable_id`、`value_type` 等 snake_case 字段名称的调用方。
+   - 仅使用 Java 属性名进行内部对象操作、未经过 JSON 序列化或反序列化的场景通常不命中。
+
+迁移建议：升级至 1.1.2.a 及以上版本。
 
 ## 注意事项
 
