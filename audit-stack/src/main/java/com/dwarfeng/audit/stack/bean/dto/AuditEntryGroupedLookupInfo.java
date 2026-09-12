@@ -1,11 +1,10 @@
-package com.dwarfeng.audit.stack.bean.dto;
+﻿package com.dwarfeng.audit.stack.bean.dto;
 
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,17 +29,17 @@ public class AuditEntryGroupedLookupInfo implements Dto {
     /**
      * 逻辑连接符。
      */
-    private int logicOperator = LOGIC_OPERATOR_AND;
+    private int logicOperator;
 
     /**
      * 查询项列表。
      */
-    private List<LookupItem> lookupItems = new ArrayList<>();
+    private List<LookupItem> lookupItems;
 
     /**
      * 子查询组列表。
      */
-    private List<QueryGroup> queryGroups = new ArrayList<>();
+    private List<QueryGroup> queryGroups;
 
     public AuditEntryGroupedLookupInfo() {
     }
@@ -109,22 +108,22 @@ public class AuditEntryGroupedLookupInfo implements Dto {
         /**
          * 逻辑连接符。
          */
-        private int logicOperator = LOGIC_OPERATOR_AND;
+        private int logicOperator;
 
         /**
          * 查询项列表。
          */
-        private List<LookupItem> lookupItems = new ArrayList<>();
+        private List<LookupItem> lookupItems;
 
         /**
          * 子查询组列表。
          */
-        private List<QueryGroup> queryGroups = new ArrayList<>();
+        private List<QueryGroup> queryGroups;
 
         /**
          * 是否启用。
          */
-        private boolean enabled = true;
+        private boolean enabled;
 
         public QueryGroup() {
         }
@@ -214,12 +213,12 @@ public class AuditEntryGroupedLookupInfo implements Dto {
         /**
          * 属性条件列表。
          */
-        private List<PropertyCondition> propertyConditions = new ArrayList<>();
+        private List<PropertyCondition> propertyConditions;
 
         /**
          * 是否启用。
          */
-        private boolean enabled = true;
+        private boolean enabled;
 
         public LookupItem() {
         }
@@ -325,7 +324,7 @@ public class AuditEntryGroupedLookupInfo implements Dto {
         /**
          * 是否启用。
          */
-        private boolean enabled = true;
+        private boolean enabled;
 
         public PropertyCondition() {
         }

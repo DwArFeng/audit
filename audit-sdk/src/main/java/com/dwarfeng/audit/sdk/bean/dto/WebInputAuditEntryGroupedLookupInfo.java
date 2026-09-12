@@ -1,4 +1,4 @@
-package com.dwarfeng.audit.sdk.bean.dto;
+﻿package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.audit.sdk.util.ValidAuditPropertyType;
@@ -54,7 +54,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
      * 逻辑连接符。
      */
     @JSONField(name = "logic_operator")
-    private int logicOperator = AuditEntryGroupedLookupInfo.LOGIC_OPERATOR_AND;
+    private int logicOperator;
 
     /**
      * 查询项列表。
@@ -146,7 +146,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
          * 逻辑连接符。
          */
         @JSONField(name = "logic_operator")
-        private int logicOperator = AuditEntryGroupedLookupInfo.LOGIC_OPERATOR_AND;
+        private int logicOperator;
 
         /**
          * 查询项列表。
@@ -166,7 +166,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
          * 是否启用。
          */
         @JSONField(name = "enabled")
-        private boolean enabled = true;
+        private boolean enabled;
 
         public WebInputQueryGroup() {
         }
@@ -278,7 +278,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
          * 是否启用。
          */
         @JSONField(name = "enabled")
-        private boolean enabled = true;
+        private boolean enabled;
 
         public WebInputLookupItem() {
         }
@@ -392,7 +392,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
          * 是否启用。
          */
         @JSONField(name = "enabled")
-        private boolean enabled = true;
+        private boolean enabled;
 
         public WebInputPropertyCondition() {
         }

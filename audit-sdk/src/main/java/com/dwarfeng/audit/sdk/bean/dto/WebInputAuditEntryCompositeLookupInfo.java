@@ -1,4 +1,4 @@
-package com.dwarfeng.audit.sdk.bean.dto;
+﻿package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.audit.sdk.util.ValidAuditPropertyType;
@@ -194,7 +194,7 @@ public class WebInputAuditEntryCompositeLookupInfo implements Dto {
          * 是否启用。
          */
         @JSONField(name = "enabled")
-        private boolean enabled = true;
+        private boolean enabled;
 
         public WebInputPropertyCondition() {
         }

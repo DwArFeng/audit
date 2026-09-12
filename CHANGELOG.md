@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 优化部分 DTO 实体字段的初始值。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryGroupedLookupInfo。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputAuditEntryCompositeLookupInfo。
+  - com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo。
+  - com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo。
+
 - `audit-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.audit.stack.bean.dto.InspectorVariableUpsertInfo。
 

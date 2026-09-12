@@ -1,11 +1,10 @@
-package com.dwarfeng.audit.stack.bean.dto;
+﻿package com.dwarfeng.audit.stack.bean.dto;
 
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class AuditEntryCompositeLookupInfo implements Dto {
     /**
      * 属性条件列表。
      */
-    private List<PropertyCondition> propertyConditions = new ArrayList<>();
+    private List<PropertyCondition> propertyConditions;
 
     public AuditEntryCompositeLookupInfo() {
     }
@@ -155,7 +154,7 @@ public class AuditEntryCompositeLookupInfo implements Dto {
         /**
          * 是否启用。
          */
-        private boolean enabled = true;
+        private boolean enabled;
 
         public PropertyCondition() {
         }
