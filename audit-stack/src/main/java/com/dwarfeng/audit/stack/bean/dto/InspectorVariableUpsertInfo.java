@@ -17,20 +17,52 @@ public class InspectorVariableUpsertInfo implements Dto {
     private String inspectorVariableId;
 
     /**
-     * 审计器变量值类型。
+     * 值类型。
      *
      * <p>
-     * int 枚举，可能的状态为：文本、整数、浮点数、布尔值、日期值。<br>
+     * int 枚举，可能的状态为：
+     * <ul>
+     *     <li>字符串</li>
+     *     <li>整数</li>
+     *     <li>浮点数</li>
+     *     <li>布尔值</li>
+     *     <li>日期值</li>
+     * </ul>
      * 详细值参考 sdk 模块的常量工具类。
      */
     private int valueType;
 
     /**
-     * 审计器变量值。
+     * 值。
      *
      * <p>
-     * 该字段的具体类型取决于 <code>valueType</code> 字段的值，依次为
-     * String、Long、Double、Boolean、Date。
+     * 此处的值是一个对象，其类型由 {@link #valueType} 决定。其对应关系如下：
+     * <table>
+     *     <tr>
+     *         <th>值类型</th>
+     *         <th>值类型对应的对象类型</th>
+     *     </tr>
+     *     <tr>
+     *         <td>字符串</td>
+     *         <td>String</td>
+     *     </tr>
+     *     <tr>
+     *         <td>整数</td>
+     *         <td>Long</td>
+     *     </tr>
+     *     <tr>
+     *         <td>浮点数</td>
+     *         <td>Double</td>
+     *     </tr>
+     *     <tr>
+     *         <td>布尔值</td>
+     *         <td>Boolean</td>
+     *     </tr>
+     *     <tr>
+     *         <td>日期值</td>
+     *         <td>{@linkplain java.util.Date}</td>
+     *     </tr>
+     * </table>
      */
     private Object value;
 
