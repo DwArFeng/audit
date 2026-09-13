@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/QuickStart.md。
+
 - 增加预设查询。
   - com.dwarfeng.audit.stack.service.AuditEntryMaintainService.CREATED_DATE_DESC。
 
