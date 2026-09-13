@@ -1,4 +1,4 @@
-﻿package com.dwarfeng.audit.sdk.bean.dto;
+package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.audit.sdk.util.ValidAuditPropertyType;
@@ -225,7 +225,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
      */
     public static class WebInputLookupItem implements Dto {
 
-        private static final long serialVersionUID = 4734050634226162376L;
+        private static final long serialVersionUID = 5099970090865832085L;
 
         public static AuditEntryGroupedLookupInfo.LookupItem toStackBean(WebInputLookupItem webInput) {
             if (Objects.isNull(webInput)) {
@@ -236,8 +236,8 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
                         WebInputLongIdKey.toStackBean(webInput.getAuditEntryKey()),
                         webInput.getStartCreatedDate(),
                         webInput.getEndCreatedDate(),
-                        Optional.ofNullable(webInput.getPropertyConditions()).map(
-                                f -> f.stream().map(WebInputPropertyCondition::toStackBean).collect(Collectors.toList())
+                        Optional.ofNullable(webInput.getCompositeItems()).map(
+                                f -> f.stream().map(WebInputCompositeItem::toStackBean).collect(Collectors.toList())
                         ).orElse(null),
                         webInput.isEnabled()
                 );
@@ -271,11 +271,11 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
         private Date endCreatedDate;
 
         /**
-         * 属性条件列表。
+         * 组合查询项列表。
          */
-        @JSONField(name = "property_conditions")
+        @JSONField(name = "composite_items")
         @Valid
-        private List<WebInputPropertyCondition> propertyConditions;
+        private List<WebInputCompositeItem> compositeItems;
 
         /**
          * 是否启用。
@@ -318,12 +318,12 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
             this.endCreatedDate = endCreatedDate;
         }
 
-        public List<WebInputPropertyCondition> getPropertyConditions() {
-            return propertyConditions;
+        public List<WebInputCompositeItem> getCompositeItems() {
+            return compositeItems;
         }
 
-        public void setPropertyConditions(List<WebInputPropertyCondition> propertyConditions) {
-            this.propertyConditions = propertyConditions;
+        public void setCompositeItems(List<WebInputCompositeItem> compositeItems) {
+            this.compositeItems = compositeItems;
         }
 
         public boolean isEnabled() {
@@ -341,30 +341,31 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
                     ", auditEntryKey=" + auditEntryKey +
                     ", startCreatedDate=" + startCreatedDate +
                     ", endCreatedDate=" + endCreatedDate +
-                    ", propertyConditions=" + propertyConditions +
+                    ", compositeItems=" + compositeItems +
                     ", enabled=" + enabled +
                     '}';
         }
     }
 
     /**
-     * WebInput 属性条件。
+     * WebInput 组合查询项。
      *
      * @author DwArFeng
      * @since 1.0.0-beta
      */
-    public static class WebInputPropertyCondition implements Dto {
+    public static class WebInputCompositeItem implements Dto {
 
-        private static final long serialVersionUID = 3216342054704041389L;
+        private static final long serialVersionUID = -8095531528483888827L;
 
-        public static AuditEntryGroupedLookupInfo.PropertyCondition toStackBean(WebInputPropertyCondition webInput) {
+        public static AuditEntryGroupedLookupInfo.CompositeItem toStackBean(WebInputCompositeItem webInput) {
             if (Objects.isNull(webInput)) {
                 return null;
             } else {
-                return new AuditEntryGroupedLookupInfo.PropertyCondition(
+                return new AuditEntryGroupedLookupInfo.CompositeItem(
                         webInput.getPropertyId(),
                         webInput.getPropertyType(),
-                        webInput.getPropertyValue(),
+                        webInput.getFirstCondition(),
+                        webInput.getSecondCondition(),
                         webInput.isEnabled()
                 );
             }
@@ -385,11 +386,11 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
         @ValidAuditPropertyType
         private int propertyType;
 
-        /**
-         * 属性值。
-         */
-        @JSONField(name = "property_value")
-        private Object propertyValue;
+        @JSONField(name = "first_condition")
+        private Object firstCondition;
+
+        @JSONField(name = "second_condition")
+        private Object secondCondition;
 
         /**
          * 是否启用。
@@ -397,7 +398,7 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
         @JSONField(name = "enabled")
         private boolean enabled;
 
-        public WebInputPropertyCondition() {
+        public WebInputCompositeItem() {
         }
 
         public String getPropertyId() {
@@ -416,12 +417,20 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
             this.propertyType = propertyType;
         }
 
-        public Object getPropertyValue() {
-            return propertyValue;
+        public Object getFirstCondition() {
+            return firstCondition;
         }
 
-        public void setPropertyValue(Object propertyValue) {
-            this.propertyValue = propertyValue;
+        public void setFirstCondition(Object firstCondition) {
+            this.firstCondition = firstCondition;
+        }
+
+        public Object getSecondCondition() {
+            return secondCondition;
+        }
+
+        public void setSecondCondition(Object secondCondition) {
+            this.secondCondition = secondCondition;
         }
 
         public boolean isEnabled() {
@@ -434,10 +443,11 @@ public class WebInputAuditEntryGroupedLookupInfo implements Dto {
 
         @Override
         public String toString() {
-            return "WebInputPropertyCondition{" +
+            return "WebInputCompositeItem{" +
                     "propertyId='" + propertyId + '\'' +
                     ", propertyType=" + propertyType +
-                    ", propertyValue=" + propertyValue +
+                    ", firstCondition=" + firstCondition +
+                    ", secondCondition=" + secondCondition +
                     ", enabled=" + enabled +
                     '}';
         }

@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- 重构审计条目查询机制。
+  - com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo。
+  - com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo。
+
 - 部分 DTO 实体的内置常量提升至常量类。
   - com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo。
 

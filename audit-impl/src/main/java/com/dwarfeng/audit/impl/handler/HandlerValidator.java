@@ -115,21 +115,20 @@ public class HandlerValidator {
                 lookupInfo, lookupInfo.getCategoryKey(), lookupInfo.getStartCreatedDate(),
                 lookupInfo.getEndCreatedDate()
         );
-        List<AuditEntryCompositeLookupInfo.PropertyCondition> propertyConditions =
-                lookupInfo.getPropertyConditions();
-        if (Objects.isNull(propertyConditions)) {
+        List<AuditEntryCompositeLookupInfo.CompositeItem> compositeItems = lookupInfo.getCompositeItems();
+        if (Objects.isNull(compositeItems)) {
             return;
         }
-        for (AuditEntryCompositeLookupInfo.PropertyCondition propertyCondition : propertyConditions) {
-            if (Objects.isNull(propertyCondition)) {
+        for (AuditEntryCompositeLookupInfo.CompositeItem compositeItem : compositeItems) {
+            if (Objects.isNull(compositeItem)) {
                 throw new InvalidAuditEntryCompositeLookupInfoException(lookupInfo, "属性条件不能为 null");
             }
-            if (!propertyCondition.isEnabled()) {
+            if (!compositeItem.isEnabled()) {
                 continue;
             }
-            makeSurePropertyConditionValid(
-                    lookupInfo, lookupInfo.getCategoryKey(), propertyCondition.getPropertyId(),
-                    propertyCondition.getPropertyType(), propertyCondition.getPropertyValue()
+            makeSureCompositeItemValid(
+                    lookupInfo, lookupInfo.getCategoryKey(), compositeItem.getPropertyId(),
+                    compositeItem.getPropertyType(), compositeItem.getFirstCondition(), compositeItem.getSecondCondition()
             );
         }
     }
@@ -201,20 +200,20 @@ public class HandlerValidator {
                 lookupInfo, lookupItem.getCategoryKey(), lookupItem.getStartCreatedDate(),
                 lookupItem.getEndCreatedDate()
         );
-        List<AuditEntryGroupedLookupInfo.PropertyCondition> propertyConditions = lookupItem.getPropertyConditions();
-        if (Objects.isNull(propertyConditions)) {
+        List<AuditEntryGroupedLookupInfo.CompositeItem> compositeItems = lookupItem.getCompositeItems();
+        if (Objects.isNull(compositeItems)) {
             return;
         }
-        for (AuditEntryGroupedLookupInfo.PropertyCondition propertyCondition : propertyConditions) {
-            if (Objects.isNull(propertyCondition)) {
+        for (AuditEntryGroupedLookupInfo.CompositeItem compositeItem : compositeItems) {
+            if (Objects.isNull(compositeItem)) {
                 throw new InvalidAuditEntryGroupedLookupInfoException(lookupInfo, "属性条件不能为 null");
             }
-            if (!propertyCondition.isEnabled()) {
+            if (!compositeItem.isEnabled()) {
                 continue;
             }
-            makeSurePropertyConditionValid(
-                    lookupInfo, lookupItem.getCategoryKey(), propertyCondition.getPropertyId(),
-                    propertyCondition.getPropertyType(), propertyCondition.getPropertyValue()
+            makeSureCompositeItemValid(
+                    lookupInfo, lookupItem.getCategoryKey(), compositeItem.getPropertyId(),
+                    compositeItem.getPropertyType(), compositeItem.getFirstCondition(), compositeItem.getSecondCondition()
             );
         }
     }
@@ -239,24 +238,24 @@ public class HandlerValidator {
         }
     }
 
-    private void makeSurePropertyConditionValid(
+    private void makeSureCompositeItemValid(
             AuditEntryCompositeLookupInfo lookupInfo, StringIdKey categoryKey,
-            String propertyId, int propertyType, Object propertyValue
+            String propertyId, int propertyType, Object firstCondition, Object secondCondition
     ) throws HandlerException {
         String invalidDetail = getPropertyConditionInvalidDetail(
-                categoryKey, propertyId, propertyType, propertyValue
+                categoryKey, propertyId, propertyType, firstCondition, secondCondition
         );
         if (Objects.nonNull(invalidDetail)) {
             throw new InvalidAuditEntryCompositeLookupInfoException(lookupInfo, invalidDetail);
         }
     }
 
-    private void makeSurePropertyConditionValid(
+    private void makeSureCompositeItemValid(
             AuditEntryGroupedLookupInfo lookupInfo, StringIdKey categoryKey,
-            String propertyId, int propertyType, Object propertyValue
+            String propertyId, int propertyType, Object firstCondition, Object secondCondition
     ) throws HandlerException {
         String invalidDetail = getPropertyConditionInvalidDetail(
-                categoryKey, propertyId, propertyType, propertyValue
+                categoryKey, propertyId, propertyType, firstCondition, secondCondition
         );
         if (Objects.nonNull(invalidDetail)) {
             throw new InvalidAuditEntryGroupedLookupInfoException(lookupInfo, invalidDetail);
@@ -278,13 +277,10 @@ public class HandlerValidator {
     }
 
     private String getPropertyConditionInvalidDetail(
-            StringIdKey categoryKey, String propertyId, int propertyType, Object propertyValue
+            StringIdKey categoryKey, String propertyId, int propertyType, Object firstCondition, Object secondCondition
     ) throws HandlerException {
         if (Objects.isNull(propertyId) || propertyId.trim().isEmpty()) {
             return "属性 ID 不能为 null 或空字符串";
-        }
-        if (Objects.isNull(propertyValue)) {
-            return "属性值不能为 null";
         }
 
         AuditPropertyIndicatorKey indicatorKey = new AuditPropertyIndicatorKey(categoryKey.getStringId(), propertyId);
@@ -295,7 +291,8 @@ public class HandlerValidator {
             return "属性 " + propertyId + " 的类型不匹配, 期望类型: " + indicator.getPropertyType() +
                     ", 实际类型: " + propertyType;
         }
-        makeSureAuditPropertyValueValid(propertyId, propertyType, propertyValue);
+        makeSureAuditPropertyValueValid(propertyId, propertyType, firstCondition);
+        makeSureAuditPropertyValueValid(propertyId, propertyType, secondCondition);
         return null;
     }
 

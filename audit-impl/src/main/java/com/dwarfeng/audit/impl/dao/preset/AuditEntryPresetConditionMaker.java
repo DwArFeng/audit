@@ -49,7 +49,7 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
             AtomicInteger propertyAliasIndex = new AtomicInteger(0);
             condition.addWhereClause(makeLookupItemPredicate(
                     lookupInfo.getCategoryKey(), lookupInfo.getAuditEntryKey(), lookupInfo.getStartCreatedDate(),
-                    lookupInfo.getEndCreatedDate(), lookupInfo.getPropertyConditions(), propertyAliasIndex
+                    lookupInfo.getEndCreatedDate(), lookupInfo.getCompositeItems(), propertyAliasIndex
             ));
             addOrderByClauses(condition);
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
                 }
                 predicateClauses.add(makeLookupItemPredicate(
                         lookupItem.getCategoryKey(), lookupItem.getAuditEntryKey(), lookupItem.getStartCreatedDate(),
-                        lookupItem.getEndCreatedDate(), lookupItem.getPropertyConditions(), propertyAliasIndex
+                        lookupItem.getEndCreatedDate(), lookupItem.getCompositeItems(), propertyAliasIndex
                 ));
             }
         }
@@ -122,7 +122,7 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
 
     private PredicateClause makeLookupItemPredicate(
             StringIdKey categoryKey, LongIdKey auditEntryKey, Date startCreatedDate, Date endCreatedDate,
-            List<?> propertyConditions, AtomicInteger propertyAliasIndex
+            List<?> compositeItems, AtomicInteger propertyAliasIndex
     ) {
         List<PredicateClause> predicateClauses = new ArrayList<>();
 
@@ -137,30 +137,30 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
                 ENTITY_ALIAS + ".createdDate", actualStartCreatedDate, actualEndCreatedDate
         ));
 
-        if (Objects.nonNull(propertyConditions)) {
-            for (Object propertyCondition : propertyConditions) {
-                if (propertyCondition instanceof AuditEntryCompositeLookupInfo.PropertyCondition) {
-                    AuditEntryCompositeLookupInfo.PropertyCondition condition =
-                            (AuditEntryCompositeLookupInfo.PropertyCondition) propertyCondition;
-                    if (!condition.isEnabled()) {
+        if (Objects.nonNull(compositeItems)) {
+            for (Object compositeItem : compositeItems) {
+                if (compositeItem instanceof AuditEntryCompositeLookupInfo.CompositeItem) {
+                    AuditEntryCompositeLookupInfo.CompositeItem item =
+                            (AuditEntryCompositeLookupInfo.CompositeItem) compositeItem;
+                    if (!item.isEnabled()) {
                         continue;
                     }
-                    predicateClauses.add(makePropertyPredicate(
-                            condition.getPropertyId(), condition.getPropertyType(), condition.getPropertyValue(),
-                            propertyAliasIndex
+                    predicateClauses.add(makeCompositeItemPredicate(
+                            item.getPropertyId(), item.getPropertyType(), item.getFirstCondition(),
+                            item.getSecondCondition(), propertyAliasIndex
                     ));
-                } else if (propertyCondition instanceof AuditEntryGroupedLookupInfo.PropertyCondition) {
-                    AuditEntryGroupedLookupInfo.PropertyCondition condition =
-                            (AuditEntryGroupedLookupInfo.PropertyCondition) propertyCondition;
-                    if (!condition.isEnabled()) {
+                } else if (compositeItem instanceof AuditEntryGroupedLookupInfo.CompositeItem) {
+                    AuditEntryGroupedLookupInfo.CompositeItem item =
+                            (AuditEntryGroupedLookupInfo.CompositeItem) compositeItem;
+                    if (!item.isEnabled()) {
                         continue;
                     }
-                    predicateClauses.add(makePropertyPredicate(
-                            condition.getPropertyId(), condition.getPropertyType(), condition.getPropertyValue(),
-                            propertyAliasIndex
+                    predicateClauses.add(makeCompositeItemPredicate(
+                            item.getPropertyId(), item.getPropertyType(), item.getFirstCondition(),
+                            item.getSecondCondition(), propertyAliasIndex
                     ));
                 } else {
-                    throw new IllegalArgumentException("非法的属性条件: " + propertyCondition);
+                    throw new IllegalArgumentException("非法的组合查询项: " + compositeItem);
                 }
             }
         }
@@ -168,11 +168,11 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
         return WhereHelper.and(predicateClauses);
     }
 
-    private PredicateClause makePropertyPredicate(
-            String propertyId, int propertyType, Object propertyValue, AtomicInteger propertyAliasIndex
+    private PredicateClause makeCompositeItemPredicate(
+            String propertyId, int propertyType, Object firstCondition, Object secondCondition,
+            AtomicInteger propertyAliasIndex
     ) {
         Objects.requireNonNull(propertyId, "属性 ID 不能为 null");
-        Objects.requireNonNull(propertyValue, "属性值不能为 null");
 
         String propertyAlias = PROPERTY_ALIAS_PREFIX + propertyAliasIndex.getAndIncrement();
         List<PredicateClause> predicateClauses = new ArrayList<>();
@@ -181,26 +181,61 @@ public class AuditEntryPresetConditionMaker implements PresetConditionMaker {
         ));
         predicateClauses.add(WhereHelper.eq(propertyAlias + ".propertyStringId", propertyId));
         predicateClauses.add(WhereHelper.eq(propertyAlias + ".propertyType", propertyType));
-        predicateClauses.add(WhereHelper.eq(
-                propertyAlias + "." + propertyValueFieldName(propertyType), propertyValue
-        ));
+        addPropertyValuePredicates(
+                predicateClauses, propertyType, propertyAlias, firstCondition, secondCondition
+        );
         return WhereHelper.exists(
                 HibernateAuditEntryProperty.class, propertyAlias, WhereHelper.and(predicateClauses)
         );
     }
 
-    private String propertyValueFieldName(int propertyType) {
+    private void addPropertyValuePredicates(
+            List<PredicateClause> predicateClauses, int propertyType, String propertyAlias,
+            Object firstCondition, Object secondCondition
+    ) {
         switch (propertyType) {
             case Constants.PROPERTY_TYPE_STRING:
-                return "stringValue";
+                predicateClauses.add(WhereHelper.like(
+                        propertyAlias + ".stringValue", (String) firstCondition, MatchType.ANYWHERE
+                ));
+                break;
             case Constants.PROPERTY_TYPE_LONG:
-                return "longValue";
+                Long longFirstCondition = Objects.isNull(firstCondition) ?
+                        Long.MIN_VALUE : Long.parseLong(firstCondition.toString());
+                Long longSecondCondition = Objects.isNull(secondCondition) ?
+                        Long.MAX_VALUE : Long.parseLong(secondCondition.toString());
+                predicateClauses.add(WhereHelper.between(
+                        propertyAlias + ".longValue", longFirstCondition, longSecondCondition
+                ));
+                break;
             case Constants.PROPERTY_TYPE_DOUBLE:
-                return "doubleValue";
+                Double doubleFirstCondition = Objects.isNull(firstCondition) ?
+                        Double.MIN_VALUE : Double.parseDouble(firstCondition.toString());
+                Double doubleSecondCondition = Objects.isNull(secondCondition) ?
+                        Double.MAX_VALUE : Double.parseDouble(secondCondition.toString());
+                predicateClauses.add(WhereHelper.between(
+                        propertyAlias + ".doubleValue", doubleFirstCondition, doubleSecondCondition
+                ));
+                break;
             case Constants.PROPERTY_TYPE_BOOLEAN:
-                return "booleanValue";
+                predicateClauses.add(WhereHelper.eq(propertyAlias + ".booleanValue", firstCondition));
+                break;
             case Constants.PROPERTY_TYPE_DATE:
-                return "dateValue";
+                Date dateFirstCondition = Objects.isNull(firstCondition) ?
+                        null : new Date(Long.parseLong(firstCondition.toString()));
+                Date dateSecondCondition = Objects.isNull(secondCondition) ?
+                        null : new Date(Long.parseLong(secondCondition.toString()));
+                String columnName = propertyAlias + ".dateValue";
+                if (dateFirstCondition != null && dateSecondCondition != null) {
+                    predicateClauses.add(WhereHelper.between(
+                            columnName, dateFirstCondition, dateSecondCondition
+                    ));
+                } else if (dateFirstCondition != null) {
+                    predicateClauses.add(WhereHelper.ge(columnName, dateFirstCondition));
+                } else if (dateSecondCondition != null) {
+                    predicateClauses.add(WhereHelper.le(columnName, dateSecondCondition));
+                }
+                break;
             default:
                 throw new IllegalArgumentException("非法的属性类型: " + propertyType);
         }

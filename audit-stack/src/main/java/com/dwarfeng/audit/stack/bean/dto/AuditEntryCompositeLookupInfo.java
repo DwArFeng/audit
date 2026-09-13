@@ -1,4 +1,4 @@
-﻿package com.dwarfeng.audit.stack.bean.dto;
+package com.dwarfeng.audit.stack.bean.dto;
 
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class AuditEntryCompositeLookupInfo implements Dto {
 
-    private static final long serialVersionUID = -334503079489523961L;
+    private static final long serialVersionUID = 5794843597397115496L;
 
     /**
      * 分页信息。
@@ -47,23 +47,23 @@ public class AuditEntryCompositeLookupInfo implements Dto {
     private Date endCreatedDate;
 
     /**
-     * 属性条件列表。
+     * 组合查询项列表。
      */
-    private List<PropertyCondition> propertyConditions;
+    private List<CompositeItem> compositeItems;
 
     public AuditEntryCompositeLookupInfo() {
     }
 
     public AuditEntryCompositeLookupInfo(
             PagingInfo pagingInfo, StringIdKey categoryKey, LongIdKey auditEntryKey, Date startCreatedDate,
-            Date endCreatedDate, List<PropertyCondition> propertyConditions
+            Date endCreatedDate, List<CompositeItem> compositeItems
     ) {
         this.pagingInfo = pagingInfo;
         this.categoryKey = categoryKey;
         this.auditEntryKey = auditEntryKey;
         this.startCreatedDate = startCreatedDate;
         this.endCreatedDate = endCreatedDate;
-        this.propertyConditions = propertyConditions;
+        this.compositeItems = compositeItems;
     }
 
     public PagingInfo getPagingInfo() {
@@ -106,12 +106,12 @@ public class AuditEntryCompositeLookupInfo implements Dto {
         this.endCreatedDate = endCreatedDate;
     }
 
-    public List<PropertyCondition> getPropertyConditions() {
-        return propertyConditions;
+    public List<CompositeItem> getCompositeItems() {
+        return compositeItems;
     }
 
-    public void setPropertyConditions(List<PropertyCondition> propertyConditions) {
-        this.propertyConditions = propertyConditions;
+    public void setCompositeItems(List<CompositeItem> compositeItems) {
+        this.compositeItems = compositeItems;
     }
 
     @Override
@@ -122,19 +122,19 @@ public class AuditEntryCompositeLookupInfo implements Dto {
                 ", auditEntryKey=" + auditEntryKey +
                 ", startCreatedDate=" + startCreatedDate +
                 ", endCreatedDate=" + endCreatedDate +
-                ", propertyConditions=" + propertyConditions +
+                ", compositeItems=" + compositeItems +
                 '}';
     }
 
     /**
-     * 属性条件。
+     * 组合查询项。
      *
      * @author DwArFeng
      * @since 1.0.0-beta
      */
-    public static class PropertyCondition implements Dto {
+    public static class CompositeItem implements Dto {
 
-        private static final long serialVersionUID = 7958581393922166888L;
+        private static final long serialVersionUID = -6010169825392203161L;
 
         /**
          * 属性 ID。
@@ -147,22 +147,30 @@ public class AuditEntryCompositeLookupInfo implements Dto {
         private int propertyType;
 
         /**
-         * 属性值。
+         * 第一条件。
          */
-        private Object propertyValue;
+        private Object firstCondition;
+
+        /**
+         * 第二条件。
+         */
+        private Object secondCondition;
 
         /**
          * 是否启用。
          */
         private boolean enabled;
 
-        public PropertyCondition() {
+        public CompositeItem() {
         }
 
-        public PropertyCondition(String propertyId, int propertyType, Object propertyValue, boolean enabled) {
+        public CompositeItem(
+                String propertyId, Integer propertyType, Object firstCondition, Object secondCondition, boolean enabled
+        ) {
             this.propertyId = propertyId;
             this.propertyType = propertyType;
-            this.propertyValue = propertyValue;
+            this.firstCondition = firstCondition;
+            this.secondCondition = secondCondition;
             this.enabled = enabled;
         }
 
@@ -182,12 +190,20 @@ public class AuditEntryCompositeLookupInfo implements Dto {
             this.propertyType = propertyType;
         }
 
-        public Object getPropertyValue() {
-            return propertyValue;
+        public Object getFirstCondition() {
+            return firstCondition;
         }
 
-        public void setPropertyValue(Object propertyValue) {
-            this.propertyValue = propertyValue;
+        public void setFirstCondition(Object firstCondition) {
+            this.firstCondition = firstCondition;
+        }
+
+        public Object getSecondCondition() {
+            return secondCondition;
+        }
+
+        public void setSecondCondition(Object secondCondition) {
+            this.secondCondition = secondCondition;
         }
 
         public boolean isEnabled() {
@@ -200,10 +216,11 @@ public class AuditEntryCompositeLookupInfo implements Dto {
 
         @Override
         public String toString() {
-            return "PropertyCondition{" +
+            return "CompositeItem{" +
                     "propertyId='" + propertyId + '\'' +
                     ", propertyType=" + propertyType +
-                    ", propertyValue=" + propertyValue +
+                    ", firstCondition=" + firstCondition +
+                    ", secondCondition=" + secondCondition +
                     ", enabled=" + enabled +
                     '}';
         }
