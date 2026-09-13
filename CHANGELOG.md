@@ -22,7 +22,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 JSFixedFastJson 实体 long 字段处理中的错误。
+  - com.dwarfeng.audit.sdk.bean.dto.JSFixedFastJsonAuditEntryLookupResult。
 
 ### 功能移除
 

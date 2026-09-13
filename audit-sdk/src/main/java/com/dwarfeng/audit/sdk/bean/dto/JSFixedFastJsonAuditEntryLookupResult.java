@@ -1,6 +1,7 @@
 package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.dwarfeng.audit.sdk.bean.entity.JSFixedFastJsonAuditCategory;
 import com.dwarfeng.audit.sdk.bean.entity.JSFixedFastJsonAuditEntry;
 import com.dwarfeng.audit.sdk.bean.entity.JSFixedFastJsonAuditEntryProperty;
@@ -58,7 +59,7 @@ public class JSFixedFastJsonAuditEntryLookupResult implements Dto {
     /**
      * 总记录数。
      */
-    @JSONField(name = "count", ordinal = 4)
+    @JSONField(name = "count", ordinal = 4, serializeUsing = ToStringSerializer.class)
     private long count;
 
     /**
