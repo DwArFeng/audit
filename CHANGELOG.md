@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- 优化部分 Hibernate 实体的 JPA 注解。
+  - com.dwarfeng.audit.impl.bean.entity.HibernateAuditEntryProperty。
 
 ### Bug 修复
 

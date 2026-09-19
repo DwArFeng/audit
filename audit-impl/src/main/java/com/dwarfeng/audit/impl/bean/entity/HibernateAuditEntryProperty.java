@@ -31,7 +31,7 @@ public class HibernateAuditEntryProperty implements Bean {
     @Column(name = "property_type", nullable = false)
     private int propertyType;
 
-    @Column(name = "string_value", length = Constraints.LENGTH_REMARK)
+    @Column(name = "string_value", columnDefinition = "TEXT")
     private String stringValue;
 
     @Column(name = "long_value")
