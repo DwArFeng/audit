@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/CompileBySource.md。
+
 - 增加预设查询。
   - com.dwarfeng.audit.stack.service.AuditCategoryMaintainService.ID_LIKE。
   - com.dwarfeng.audit.stack.service.AuditCategoryMaintainService.NAME_LIKE。
