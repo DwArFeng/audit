@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 增加预设查询。
+  - com.dwarfeng.audit.stack.service.AuditEntryMaintainService.CREATED_DATE_DESC。
+
 - 重构审计条目查询机制。
   - com.dwarfeng.audit.stack.bean.dto.AuditEntryCompositeLookupInfo。
   - com.dwarfeng.audit.stack.bean.dto.AuditEntryGroupedLookupInfo。

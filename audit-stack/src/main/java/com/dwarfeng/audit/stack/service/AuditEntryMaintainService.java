@@ -27,4 +27,13 @@ public interface AuditEntryMaintainService extends BatchCrudService<LongIdKey, A
     String GROUPED_LOOKUP = "grouped_lookup";
 
     // endregion
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.0.0-beta
+     */
+    String CREATED_DATE_DESC = "created_date_desc";
+
+    // endregion
 }
