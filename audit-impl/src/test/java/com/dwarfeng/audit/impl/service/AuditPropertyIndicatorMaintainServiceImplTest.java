@@ -132,4 +132,38 @@ public class AuditPropertyIndicatorMaintainServiceImplTest {
             }
         }
     }
+
+    @Test
+    public void testForChildForAuditCategoryOrderAsc() throws Exception {
+        try {
+            auditCategory.setKey(auditCategoryMaintainService.insert(auditCategory));
+            for (int i = auditPropertyIndicators.size() - 1; i >= 0; i--) {
+                AuditPropertyIndicator auditPropertyIndicator = auditPropertyIndicators.get(i);
+                auditPropertyIndicator.setKey(new AuditPropertyIndicatorKey(
+                        auditCategory.getKey().getStringId(), "test.property_id." + i + "." + UUID.randomUUID()
+                ));
+                auditPropertyIndicatorMaintainService.insertOrUpdate(auditPropertyIndicator);
+            }
+
+            List<AuditPropertyIndicator> result = auditPropertyIndicatorMaintainService.lookupAsList(
+                    AuditPropertyIndicatorMaintainService.CHILD_FOR_AUDIT_CATEGORY_ORDER_ASC,
+                    new Object[]{auditCategory.getKey()}
+            );
+
+            assertEquals(auditPropertyIndicators.size(), result.size());
+            for (int i = 0; i < result.size(); i++) {
+                assertEquals(i, result.get(i).getOrder());
+            }
+        } finally {
+            for (AuditPropertyIndicator auditPropertyIndicator : auditPropertyIndicators) {
+                if (Objects.isNull(auditPropertyIndicator.getKey())) {
+                    continue;
+                }
+                auditPropertyIndicatorMaintainService.deleteIfExists(auditPropertyIndicator.getKey());
+            }
+            if (Objects.nonNull(auditCategory.getKey())) {
+                auditCategoryMaintainService.deleteIfExists(auditCategory.getKey());
+            }
+        }
+    }
 }

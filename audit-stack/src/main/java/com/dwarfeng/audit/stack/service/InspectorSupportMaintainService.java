@@ -14,4 +14,18 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  */
 public interface InspectorSupportMaintainService extends BatchCrudService<StringIdKey, InspectorSupport>,
         EntireLookupService<InspectorSupport>, PresetLookupService<InspectorSupport> {
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.2.1
+     */
+    String ID_LIKE = "id_like";
+
+    /**
+     * @since 1.2.1
+     */
+    String LABEL_LIKE = "label_like";
+
+    // endregion
 }

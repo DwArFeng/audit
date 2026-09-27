@@ -14,4 +14,18 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  */
 public interface AuditCategoryMaintainService extends BatchCrudService<StringIdKey, AuditCategory>,
         EntireLookupService<AuditCategory>, PresetLookupService<AuditCategory> {
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.2.1
+     */
+    String ID_LIKE = "id_like";
+
+    /**
+     * @since 1.2.1
+     */
+    String NAME_LIKE = "name_like";
+
+    // endregion
 }

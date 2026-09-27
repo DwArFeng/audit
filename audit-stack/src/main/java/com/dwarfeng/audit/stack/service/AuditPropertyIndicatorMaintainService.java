@@ -21,4 +21,13 @@ public interface AuditPropertyIndicatorMaintainService extends
     String CHILD_FOR_AUDIT_CATEGORY = "child_for_audit_category";
 
     // endregion
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.2.1
+     */
+    String CHILD_FOR_AUDIT_CATEGORY_ORDER_ASC = "child_for_audit_category_order_asc";
+
+    // endregion
 }

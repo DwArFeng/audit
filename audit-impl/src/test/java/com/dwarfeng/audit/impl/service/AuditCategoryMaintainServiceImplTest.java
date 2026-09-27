@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -50,6 +51,31 @@ public class AuditCategoryMaintainServiceImplTest {
 
             auditCategoryMaintainService.deleteIfExists(auditCategory.getKey());
             assertFalse(auditCategoryMaintainService.exists(auditCategory.getKey()));
+        } finally {
+            if (Objects.nonNull(auditCategory.getKey())) {
+                auditCategoryMaintainService.deleteIfExists(auditCategory.getKey());
+            }
+        }
+    }
+
+    @Test
+    public void testForIdLikeAndNameLike() throws Exception {
+        try {
+            auditCategory.setKey(auditCategoryMaintainService.insert(auditCategory));
+
+            List<AuditCategory> idLikeResult = auditCategoryMaintainService.lookupAsList(
+                    AuditCategoryMaintainService.ID_LIKE,
+                    new Object[]{auditCategory.getKey().getStringId()}
+            );
+            assertEquals(1, idLikeResult.size());
+            assertEquals(BeanUtils.describe(auditCategory), BeanUtils.describe(idLikeResult.get(0)));
+
+            List<AuditCategory> nameLikeResult = auditCategoryMaintainService.lookupAsList(
+                    AuditCategoryMaintainService.NAME_LIKE,
+                    new Object[]{auditCategory.getName()}
+            );
+            assertEquals(1, nameLikeResult.size());
+            assertEquals(BeanUtils.describe(auditCategory), BeanUtils.describe(nameLikeResult.get(0)));
         } finally {
             if (Objects.nonNull(auditCategory.getKey())) {
                 auditCategoryMaintainService.deleteIfExists(auditCategory.getKey());

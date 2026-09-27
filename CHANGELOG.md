@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- 增加预设查询。
+  - com.dwarfeng.audit.stack.service.AuditCategoryMaintainService.ID_LIKE。
+  - com.dwarfeng.audit.stack.service.AuditCategoryMaintainService.NAME_LIKE。
+  - com.dwarfeng.audit.stack.service.AuditPropertyIndicatorMaintainService.CHILD_FOR_AUDIT_CATEGORY_ORDER_ASC。
+  - com.dwarfeng.audit.stack.service.InspectorSupportMaintainService.ID_LIKE。
+  - com.dwarfeng.audit.stack.service.InspectorSupportMaintainService.LABEL_LIKE。
+
 - 优化部分 Hibernate 实体的 JPA 注解。
   - com.dwarfeng.audit.impl.bean.entity.HibernateAuditEntryProperty。
 
