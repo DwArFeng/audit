@@ -1,6 +1,5 @@
 package com.dwarfeng.audit.impl.bean.entity;
 
-import com.dwarfeng.audit.sdk.util.Constraints;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
@@ -68,7 +67,7 @@ public class HibernateInspectionTask implements Bean {
     @Temporal(TemporalType.TIMESTAMP)
     private Date diedDate;
 
-    @Column(name = "anchor_message", length = Constraints.LENGTH_MESSAGE)
+    @Column(name = "anchor_message", columnDefinition = "TEXT")
     private String anchorMessage;
 
     // endregion

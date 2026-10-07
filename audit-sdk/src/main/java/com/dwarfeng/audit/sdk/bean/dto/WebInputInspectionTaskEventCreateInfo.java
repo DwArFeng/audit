@@ -1,11 +1,9 @@
 package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.audit.sdk.util.Constraints;
 import com.dwarfeng.audit.stack.bean.dto.InspectionTaskEventCreateInfo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -43,8 +41,6 @@ public class WebInputInspectionTaskEventCreateInfo implements Bean {
     private Date happenedDate;
 
     @JSONField(name = "message", ordinal = 3)
-    @NotNull
-    @Length(max = Constraints.LENGTH_MESSAGE)
     private String message;
 
     public WebInputInspectionTaskEventCreateInfo() {

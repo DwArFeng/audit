@@ -1,11 +1,9 @@
 package com.dwarfeng.audit.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.audit.sdk.util.Constraints;
 import com.dwarfeng.audit.stack.bean.dto.InspectionTaskUpdateModalInfo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -37,8 +35,6 @@ public class WebInputInspectionTaskUpdateModalInfo implements Bean {
     private WebInputLongIdKey inspectionTaskKey;
 
     @JSONField(name = "anchor_message", ordinal = 2)
-    @NotNull
-    @Length(max = Constraints.LENGTH_MESSAGE)
     private String anchorMessage;
 
     public WebInputInspectionTaskUpdateModalInfo() {

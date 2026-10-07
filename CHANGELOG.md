@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 优化自动审计任务及自动审计任务事件的消息字段存储与校验。
+  - com.dwarfeng.audit.impl.bean.entity.HibernateInspectionTask。
+  - com.dwarfeng.audit.impl.bean.entity.HibernateInspectionTaskEvent。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputInspectionTaskEventCreateInfo。
+  - com.dwarfeng.audit.sdk.bean.dto.WebInputInspectionTaskUpdateModalInfo。
+
 - 增加预设查询。
   - com.dwarfeng.audit.stack.service.InspectorInfoMaintainService.CHILD_FOR_INSPECTION_INDEX_ASC。
   - com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService.CHILD_FOR_INSPECTION_HAPPENED_DATE_DESC。
