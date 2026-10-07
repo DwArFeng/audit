@@ -20,4 +20,13 @@ public interface InspectorInfoMaintainService extends BatchCrudService<LongIdKey
     String CHILD_FOR_INSPECTION = "child_for_inspection";
 
     // endregion
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.3.0
+     */
+    String CHILD_FOR_INSPECTION_INDEX_ASC = "child_for_inspection_index_asc";
+
+    // endregion
 }

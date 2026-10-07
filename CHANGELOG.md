@@ -5,6 +5,7 @@
 ### 功能构建
 
 - 增加预设查询。
+  - com.dwarfeng.audit.stack.service.InspectorInfoMaintainService.CHILD_FOR_INSPECTION_INDEX_ASC。
   - com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService.CHILD_FOR_INSPECTION_HAPPENED_DATE_DESC。
   - com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService.CHILD_FOR_INSPECTION_TASK_HAPPENED_DATE_DESC。
   - com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService.CHILD_FOR_INSPECTOR_INFO_HAPPENED_DATE_DESC。
