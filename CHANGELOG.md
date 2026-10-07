@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化审计器接口。
+  - 优化 `com.dwarfeng.audit.stack.handler.Inspector` 接口签名。
+
 - 优化自动审计任务及自动审计任务事件的消息字段存储与校验。
   - com.dwarfeng.audit.impl.bean.entity.HibernateInspectionTask。
   - com.dwarfeng.audit.impl.bean.entity.HibernateInspectionTaskEvent。

@@ -286,5 +286,15 @@ public class InspectionJobHandlerImpl implements InspectionJobHandler {
         public void removeInspectorVariable(InspectorVariableRemoveInfo info) throws Exception {
             inspectorVariableOperateHandler.remove(info);
         }
+
+        @Override
+        public void updateInspectorTaskModal(InspectionTaskUpdateModalInfo info) throws Exception {
+            inspectionTaskOperateHandler.updateModal(info);
+        }
+
+        @Override
+        public void createInspectorTaskEvent(InspectionTaskEventCreateInfo info) throws Exception {
+            inspectionTaskEventOperateHandler.create(info);
+        }
     }
 }
