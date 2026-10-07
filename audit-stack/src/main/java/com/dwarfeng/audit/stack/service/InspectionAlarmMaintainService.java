@@ -22,4 +22,13 @@ public interface InspectionAlarmMaintainService extends BatchCrudService<LongIdK
     String CHILD_FOR_INSPECTOR_INFO = "child_for_inspector_info";
 
     // endregion
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.3.0
+     */
+    String HAPPENED_DATE_DESC = "happened_date_desc";
+
+    // endregion
 }

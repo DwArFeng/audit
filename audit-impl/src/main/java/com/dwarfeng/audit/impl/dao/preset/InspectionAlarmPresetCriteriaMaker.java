@@ -4,6 +4,7 @@ import com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService;
 import com.dwarfeng.subgrade.sdk.hibernate.criteria.PresetCriteriaMaker;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,9 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
                 break;
             case InspectionAlarmMaintainService.CHILD_FOR_INSPECTOR_INFO:
                 childForInspectorInfo(criteria, objs);
+                break;
+            case InspectionAlarmMaintainService.HAPPENED_DATE_DESC:
+                happenedDateDesc(criteria, objs);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
@@ -67,6 +71,15 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
                 LongIdKey longIdKey = (LongIdKey) objs[0];
                 criteria.add(Restrictions.eqOrIsNull("inspectorInfoLongId", longIdKey.getLongId()));
             }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void happenedDateDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            criteria.addOrder(Order.desc("happenedDate"));
+            criteria.addOrder(Order.desc("longId"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }

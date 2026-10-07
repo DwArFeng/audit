@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 增加预设查询。
+  - com.dwarfeng.audit.stack.service.InspectionAlarmMaintainService.HAPPENED_DATE_DESC。
+
 - `audit-impl` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.audit.impl.service.operation.AuditCategoryCrudOperation。
   - com.dwarfeng.audit.impl.service.operation.AuditEntryCrudOperation。
