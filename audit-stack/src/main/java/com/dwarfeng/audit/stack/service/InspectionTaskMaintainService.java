@@ -39,4 +39,13 @@ public interface InspectionTaskMaintainService extends BatchCrudService<LongIdKe
     String TO_PURGED = "to_purged";
 
     // endregion
+
+    // region 预设查询 - UI
+
+    /**
+     * @since 1.3.0
+     */
+    String CREATED_DATE_DESC = "created_date_desc";
+
+    // endregion
 }

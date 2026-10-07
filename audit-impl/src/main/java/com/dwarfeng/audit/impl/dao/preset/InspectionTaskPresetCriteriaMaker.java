@@ -40,6 +40,9 @@ public class InspectionTaskPresetCriteriaMaker implements PresetCriteriaMaker {
             case InspectionTaskMaintainService.TO_PURGED:
                 toPurged(criteria, objs);
                 break;
+            case InspectionTaskMaintainService.CREATED_DATE_DESC:
+                createdDateDesc(criteria, objs);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
@@ -86,6 +89,15 @@ public class InspectionTaskPresetCriteriaMaker implements PresetCriteriaMaker {
             criteria.add(Restrictions.in("status", TO_PURGED_STATUS_SET));
             criteria.add(Restrictions.lt("endedDate", objs[0]));
             criteria.addOrder(Order.asc("endedDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    private void createdDateDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            criteria.addOrder(Order.desc("createdDate"));
+            criteria.addOrder(Order.desc("longId"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
