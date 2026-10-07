@@ -9,7 +9,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分 `*.properties` 文件中错误的配置。
+  - redis/prefix.properties。
 
 ### 功能移除
 
