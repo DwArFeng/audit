@@ -27,8 +27,10 @@ public class AuditCategoryCrudOperation implements BatchCrudOperation<StringIdKe
 
     private final AuditCategoryDao auditCategoryDao;
     private final AuditCategoryCache auditCategoryCache;
+
     private final AuditPropertyIndicatorDao auditPropertyIndicatorDao;
     private final AuditPropertyIndicatorCache auditPropertyIndicatorCache;
+
     private final AuditEntryDao auditEntryDao;
     private final AuditEntryCache auditEntryCache;
 

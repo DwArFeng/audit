@@ -23,6 +23,7 @@ public class AuditEntryCrudOperation implements BatchCrudOperation<LongIdKey, Au
 
     private final AuditEntryDao auditEntryDao;
     private final AuditEntryCache auditEntryCache;
+
     private final AuditEntryPropertyDao auditEntryPropertyDao;
     private final AuditEntryPropertyCache auditEntryPropertyCache;
 

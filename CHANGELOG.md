@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `audit-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.audit.impl.service.operation.AuditCategoryCrudOperation。
+  - com.dwarfeng.audit.impl.service.operation.AuditEntryCrudOperation。
+
 - 依赖升级。
   - 升级 `jackson` 依赖版本为 `2.21.7` 以规避漏洞。
 
