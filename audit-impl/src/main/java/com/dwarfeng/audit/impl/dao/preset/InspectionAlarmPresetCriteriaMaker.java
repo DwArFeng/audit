@@ -29,6 +29,15 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
             case InspectionAlarmMaintainService.HAPPENED_DATE_DESC:
                 happenedDateDesc(criteria, objs);
                 break;
+            case InspectionAlarmMaintainService.CHILD_FOR_INSPECTION_HAPPENED_DATE_DESC:
+                childForInspectionHappenedDateDesc(criteria, objs);
+                break;
+            case InspectionAlarmMaintainService.CHILD_FOR_INSPECTION_TASK_HAPPENED_DATE_DESC:
+                childForInspectionTaskHappenedDateDesc(criteria, objs);
+                break;
+            case InspectionAlarmMaintainService.CHILD_FOR_INSPECTOR_INFO_HAPPENED_DATE_DESC:
+                childForInspectorInfoHappenedDateDesc(criteria, objs);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + preset);
         }
@@ -78,6 +87,54 @@ public class InspectionAlarmPresetCriteriaMaker implements PresetCriteriaMaker {
 
     private void happenedDateDesc(DetachedCriteria criteria, Object[] objs) {
         try {
+            criteria.addOrder(Order.desc("happenedDate"));
+            criteria.addOrder(Order.desc("longId"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForInspectionHappenedDateDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("inspectionLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("inspectionLongId", longIdKey.getLongId()));
+            }
+            criteria.addOrder(Order.desc("happenedDate"));
+            criteria.addOrder(Order.desc("longId"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForInspectionTaskHappenedDateDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("inspectionTaskLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("inspectionTaskLongId", longIdKey.getLongId()));
+            }
+            criteria.addOrder(Order.desc("happenedDate"));
+            criteria.addOrder(Order.desc("longId"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForInspectorInfoHappenedDateDesc(DetachedCriteria criteria, Object[] objs) {
+        try {
+            if (Objects.isNull(objs[0])) {
+                criteria.add(Restrictions.isNull("inspectorInfoLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objs[0];
+                criteria.add(Restrictions.eqOrIsNull("inspectorInfoLongId", longIdKey.getLongId()));
+            }
             criteria.addOrder(Order.desc("happenedDate"));
             criteria.addOrder(Order.desc("longId"));
         } catch (Exception e) {

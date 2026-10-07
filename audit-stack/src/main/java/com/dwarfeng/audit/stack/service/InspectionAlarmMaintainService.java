@@ -30,5 +30,20 @@ public interface InspectionAlarmMaintainService extends BatchCrudService<LongIdK
      */
     String HAPPENED_DATE_DESC = "happened_date_desc";
 
+    /**
+     * @since 1.3.0
+     */
+    String CHILD_FOR_INSPECTION_HAPPENED_DATE_DESC = "child_for_inspection_happened_date_desc";
+
+    /**
+     * @since 1.3.0
+     */
+    String CHILD_FOR_INSPECTION_TASK_HAPPENED_DATE_DESC = "child_for_inspection_task_happened_date_desc";
+
+    /**
+     * @since 1.3.0
+     */
+    String CHILD_FOR_INSPECTOR_INFO_HAPPENED_DATE_DESC = "child_for_inspector_info_happened_date_desc";
+
     // endregion
 }
