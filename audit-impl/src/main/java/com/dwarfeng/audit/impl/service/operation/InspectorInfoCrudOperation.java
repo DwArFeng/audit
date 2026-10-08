@@ -34,7 +34,7 @@ public class InspectorInfoCrudOperation implements BatchCrudOperation<LongIdKey,
     private final InspectionAlarmDao inspectionAlarmDao;
     private final InspectionAlarmCache inspectionAlarmCache;
 
-    @Value("${cache.timeout.entity.inspector_info}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspector_info}")
     private long inspectorInfoTimeout;
 
     public InspectorInfoCrudOperation(

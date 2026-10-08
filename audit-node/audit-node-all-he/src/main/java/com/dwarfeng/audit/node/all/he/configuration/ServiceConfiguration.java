@@ -60,19 +60,19 @@ public class ServiceConfiguration {
 
     @Value("${com.dwarfeng.audit.cache.timeout.entity.audit_entry_property}")
     private long auditEntryPropertyTimeout;
-    @Value("${cache.timeout.entity.inspection_alarm_type_indicator}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspection_alarm_type_indicator}")
     private long inspectionAlarmTypeIndicatorTimeout;
-    @Value("${cache.timeout.entity.inspection_alarm}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspection_alarm}")
     private long inspectionAlarmTimeout;
-    @Value("${cache.timeout.entity.inspection_driver_info}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspection_driver_info}")
     private long inspectionDriverInfoTimeout;
-    @Value("${cache.timeout.entity.inspection_driver_support}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspection_driver_support}")
     private long inspectionDriverSupportTimeout;
-    @Value("${cache.timeout.entity.inspection_task_event}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspection_task_event}")
     private long inspectionTaskEventTimeout;
-    @Value("${cache.timeout.entity.inspector_support}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspector_support}")
     private long inspectorSupportTimeout;
-    @Value("${cache.timeout.entity.inspector_variable}")
+    @Value("${com.dwarfeng.audit.cache.timeout.entity.inspector_variable}")
     private long inspectorVariableTimeout;
 
     public ServiceConfiguration(
