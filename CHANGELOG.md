@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/BatchScripts.md。
+  - docs/wiki/zh-CN/ShellScripts.md。
+
 - 优化审计器接口。
   - 优化 `com.dwarfeng.audit.stack.handler.Inspector` 接口签名。
 
